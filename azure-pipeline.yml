@@ -88,7 +88,6 @@ stages:
       jobs:
       - job: Test
         displayName: Test job
-        dependsOn: Build
         pool:
           vmImage: ${{ parameters.image }}
 

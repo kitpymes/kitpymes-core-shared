@@ -69,7 +69,6 @@ stages:
   jobs:
   - job: Build
     displayName: Build job
-    dependsOn: Restore
     pool: 
       vmImage: ${{ parameters.image }}
 

@@ -33,6 +33,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "screenshot", "screenshot", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "props", "props", "{9865DDDD-C2E1-4B44-A76A-2B63AAD0D36A}"
 	ProjectSection(SolutionItems) = preProject
+		azure-pipeline-template.yml = azure-pipeline-template.yml
 		azure-pipeline.yml = azure-pipeline.yml
 		docs\props\Common.Build.props = docs\props\Common.Build.props
 		.github\workflows\dotnetcore.yml = .github\workflows\dotnetcore.yml

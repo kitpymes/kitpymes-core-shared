@@ -1,0 +1,33 @@
+parameters:
+- name: image
+  displayName: Pool Image
+  type: string
+  default: windows-latest
+  values:
+  - windows-latest
+  - ubuntu-latest
+  - macOS-latest
+
+- name: 'stage'
+  type: string
+
+stages:
+- stage: ${{ parameters.stage }}
+  displayName: Build stage
+
+  jobs:
+  - job: Build
+    displayName: Build job
+    pool: 
+      vmImage: ${{ parameters.image }}
+
+    steps:
+    - script: echo ${{ parameters.stage }}
+    - task: UseDotNet@2
+      displayName: 'dotnet build $(buildConfiguration)'
+      dependsOn: Restore
+      inputs:
+        useGlobalJson: true
+        command: 'build'
+        projects: '**/*.csproj'
+        arguments: '--configuration $(buildConfiguration)'

@@ -7,16 +7,11 @@ parameters:
 - name: image
   displayName: Pool Image
   type: string
-  default: windows-latest
+  default: ubuntu-latest
   values:
-  - windows-latest
   - ubuntu-latest
+  - windows-latest(Not working)
   - macOS-latest
-
-- name: version
-  displayName: DotNet Version?
-  type: string
-  default: '8.x'
 
 - name: runTest
   displayName: Run Tests?

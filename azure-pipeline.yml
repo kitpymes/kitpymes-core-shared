@@ -1,5 +1,5 @@
 trigger:
-- {{ branch }}
+- master
 
 parameters:
 - name: image

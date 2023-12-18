@@ -1,0 +1,123 @@
+trigger:
+- {{ branch }}
+
+parameters:
+- name: image
+  displayName: Pool Image
+  type: string
+  default: windows-latest
+  values:
+  - windows-latest
+  - ubuntu-latest
+  - macOS-latest
+
+- name: version
+  displayName: DotNet Version?
+  type: string
+  default: '8.x'
+
+- name: runTest
+  displayName: Run Tests?
+  type: boolean
+  default: true
+
+- name: runDeploy
+  displayName: Run Deployment?
+  type: boolean
+  default: true
+
+- name: publishNuget
+  displayName: Publish Nuget?
+  type: boolean
+  default: false
+
+  # RC: versión candidata para lanzamiento
+- name: GenerateRC
+  type: boolean
+  default: false
+
+- name: RCNumber
+  type: number
+  default: 1
+
+variables:
+  # Azure Resource Manager connection created during pipeline creation
+  azureSubscription: '{{ azureRmConnection.Id }}'
+
+  # Working Directory
+  workingDirectory: '{{ workingDirectory }}'
+
+  # Build Configuration type
+  buildConfiguration: 'Release'
+
+stages:
+- stage: Restore
+  displayName: Restore stage
+
+  jobs:
+  - job: Restore
+    displayName: Restore
+    pool: 
+      vmImage: ${{ parameters.image }}
+
+    steps:
+    - task: UseDotNet@2
+      displayName: Restore
+      inputs:
+        command: restore
+        projects: '**/*.csproj'
+
+- stage: Build
+  displayName: Build stage
+
+  jobs:
+  - job: Build
+    displayName: Build job
+    pool: 
+      vmImage: ${{ parameters.image }}
+
+    steps:
+    - task: UseDotNet@2
+      displayName: 'dotnet build $(buildConfiguration)'
+      dependsOn: Restore
+      inputs:
+        useGlobalJson: true
+        command: 'build'
+        projects: '**/*.csproj'
+        arguments: '--configuration $(buildConfiguration)'
+
+- ${{ if eq(parameters.runTest, true) }}:
+    - stage: Test
+      displayName: Test stage
+
+      jobs:
+      - job: Test
+        displayName: Test job
+        dependsOn: Build
+        pool:
+          vmImage: ${{ parameters.image }}
+
+        steps:
+        - task: UseDotNet@2
+          displayName: Test step
+          dependsOn: Build
+          inputs:
+            useGlobalJson: true
+            command: test
+            projects: '**/*Tests/*.csproj'
+            arguments: '--configuration $(buildConfiguration)'
+
+- ${{ if eq(parameters.runDeploy, true) }}:
+    - stage: Deploy
+      displayName: Deploy stage
+
+      jobs:
+      - job: Deploy
+        displayName: Deploy job
+        dependsOn: Build
+        environment: 'development'
+        pool:
+          vmImage: ${{ parameters.image }}
+
+        steps:
+        - script: echo running Deploy

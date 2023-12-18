@@ -69,13 +69,13 @@ stages:
   jobs:
   - job: Build
     displayName: Build job
+    dependsOn: Restore
     pool: 
       vmImage: ${{ parameters.image }}
 
     steps:
     - task: UseDotNet@2
       displayName: 'dotnet build $(buildConfiguration)'
-      dependsOn: Restore
       inputs:
         useGlobalJson: true
         command: 'build'
@@ -96,7 +96,6 @@ stages:
         steps:
         - task: UseDotNet@2
           displayName: Test step
-          dependsOn: Build
           inputs:
             useGlobalJson: true
             command: test

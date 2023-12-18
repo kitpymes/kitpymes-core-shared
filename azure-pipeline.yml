@@ -31,7 +31,7 @@ parameters:
   type: boolean
   default: false
 
-  # RC: versión candidata para lanzamiento
+  # RC: versiÃ³n candidata para lanzamiento
 - name: GenerateRC
   type: boolean
   default: false
@@ -41,12 +41,6 @@ parameters:
   default: 1
 
 variables:
-  # Azure Resource Manager connection created during pipeline creation
-  azureSubscription: '{{ azureRmConnection.Id }}'
-
-  # Working Directory
-  workingDirectory: '{{ workingDirectory }}'
-
   # Build Configuration type
   buildConfiguration: 'Release'
 

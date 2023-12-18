@@ -1,0 +1,37 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="$(SolutionDir)docs/props/Common.Build.props" Condition="Exists('$(SolutionDir)docs/props/Common.Build.props')" />
+
+  <ItemGroup>
+    <ProjectReference Include="$(SolutionDir)Kitpymes.Core.Shared\Kitpymes.Core.Shared.csproj" />
+  </ItemGroup>
+    
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="Moq" Version="4.20.70" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.1.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.1.1" />
+    <PackageReference Include="coverlet.collector" Version="6.0.0" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Fakes\FakeResource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>FakeResource.Designer.cs</LastGenOutput>
+      <CustomToolNamespace></CustomToolNamespace>
+    </EmbeddedResource>
+    <Compile Update="Fakes\FakeResource.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>FakeResource.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Fakes\FakeAppSettings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

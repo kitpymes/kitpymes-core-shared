@@ -1,0 +1,95 @@
+# v.1.2.6
+- Se agregan los siguientes métodos de verificación en la clase "VerifyExtensions":
+  - IsRangeOrEqual: para verificar si un número se encuentra dentro de un rango.
+  - IsGreaterOrEqual: para verificar si un número es mayor o igual a un rango.
+  - ThrowIfGreaterOrEqual: para lanzar una excepción cuando se verifica que un número es mayor o igual a un rango.
+  - IsLessOrEqual: para verificar si un número es menor o igual a un rango.
+  - ThrowIfLessOrEqual: para lanzar una excepción cuando se verifica que un número es menor o igual a un rango.
+  - ThrowIfOutRange: para lanzar una excepción cuando se verifica que un número se encuentra fuera de un rango.
+  - ThrowIfInsideRange: para lanzar una excepción cuando se verifica que un número se encuentra dentro de un rango.
+  - ThrowIfInsideRangeOrEqual: para lanzar una excepción cuando se verifica que un número se encuentra dentro de un rango incluido los números min y max.
+
+# v.1.2.5
+- Se actualizan librerías.
+- Se arregla un bug en el método "IsContainsUniqueChars" de la clase "VerifyExtensions".
+
+# v.1.2.4
+- Se actualizan librerías.
+- Se migra a net7.
+- Se agrega la extensions "GuidExtensions" para crear Guid secuenciales.
+- Se agrega la extensions "VerifyExtensions" para las validaciones.
+- Se elimina la Utilidad Check.
+- Se actualizan extensiones.
+- Se actualizan utilidades.
+
+# v.1.2.3
+- Se actualizan las extensions "ToSettings" de la clase "ServiceCollectionExtensions".
+
+# v.1.2.2
+- Se actualizan librerías.
+
+# v.1.2.1
+- Se migra de la versión netcoreapp3 a net5 y se actualizan librerías.
+
+# v.1.2.0
+- Se realizan mejoras en "Result" y en varias extensiones.
+
+# v.1.1.9
+- Se agrega la extensions de string ToRandom.
+
+# v.1.1.8
+- Se corrigen tests que fallaban.
+
+# v.1.1.7
+- Se realizan mejoras en "Result".
+
+# v.1.1.6
+- Se corrigen tests que fallaban.
+
+# v.1.1.5
+- Se realizan mejoras en "Result".
+
+# v.1.1.4
+- Se realizan mejoras en "Result" y se agregan extensiones para "Dictionary".
+
+# v.1.1.3
+- Se realizan mejoras en "Result" y se agregan los "Resources".
+
+# v.1.1.2
+- Se realizan mejoras en "Result" y en varias extensiones.
+
+# v.1.1.1
+- Se actualizan las utilidades "Result" para devolver resultados.
+
+# v.1.1.0
+- Se actualizan utilidades y extensiones del proyecto.
+
+# v.1.0.9
+- Se actualizan las utilidades "Result" para devolver resultados.
+
+# v.1.0.8
+- Se agregan las utilidades de "Result" para devolver resultados.
+
+# v.1.0.7
+- Se agregan nuevas validaciones.
+
+# v.1.0.6
+- Se agregan nuevas extensiones y utilidades.
+
+# v.1.0.5
+- Se actualizan las validaciones "Check" para que no devuelvan nulos.
+
+# v.1.0.4
+- Se agregan utilidades de cifrado.
+
+# v.1.0.3
+- Actualización de dependencias.
+
+# v.1.0.2
+- Se agregan utilidades para validaciones.
+
+# v.1.0.1
+- Se cambia la versión de netcoreapp3.1 por netcoreapp3.0.
+
+# v.1.0.0
+- Se genera la primera versión del paquete del proyecto de herramientas comunes, como extensiones y utlidades.

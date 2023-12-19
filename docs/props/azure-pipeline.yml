@@ -3,6 +3,9 @@ trigger:
     include:
     - master
 
+variables:
+  buildConfiguration: 'Release'
+
 parameters:
 - name: image
   displayName: Pool Image
@@ -12,6 +15,11 @@ parameters:
   - ubuntu-latest
   - windows-latest(Not working)
   - macOS-latest
+
+- name: runBuild
+  displayName: Run Build?
+  type: boolean
+  default: true
 
 - name: runTest
   displayName: Run Tests?
@@ -28,7 +36,6 @@ parameters:
   type: boolean
   default: false
 
-  # RC: versión candidata para lanzamiento
 - name: GenerateRC
   type: boolean
   default: false
@@ -37,20 +44,14 @@ parameters:
   type: number
   default: 1
 
-variables:
-  # Build Configuration type
-  buildConfiguration: 'Release'
-
 stages:
 - stage: Restore
   displayName: Restore stage
-
   jobs:
   - job: Restore
-    displayName: Restore
+    displayName: Restore job
     pool: 
       vmImage: ${{ parameters.image }}
-
     steps:
     - task: UseDotNet@2
       displayName: Restore
@@ -58,34 +59,31 @@ stages:
         command: restore
         projects: '**/*.csproj'
 
-- stage: Build
-  displayName: Build stage
-
-  jobs:
-  - job: Build
-    displayName: Build job
-    pool: 
-      vmImage: ${{ parameters.image }}
-
-    steps:
-    - task: UseDotNet@2
-      displayName: 'dotnet build $(buildConfiguration)'
-      inputs:
-        useGlobalJson: true
-        command: 'build'
-        projects: '**/*.csproj'
-        arguments: '--configuration $(buildConfiguration)'
+- ${{ if eq(parameters.runBuild, true) }}:
+  - stage: Build
+    displayName: Build stage
+    jobs:
+    - job: Build
+      displayName: Build job
+      pool: 
+        vmImage: ${{ parameters.image }}
+      steps:
+      - task: UseDotNet@2
+        displayName: 'dotnet build $(buildConfiguration)'
+        inputs:
+          useGlobalJson: true
+          command: 'build'
+          projects: '**/*.csproj'
+          arguments: '--configuration $(buildConfiguration)'
 
 - ${{ if eq(parameters.runTest, true) }}:
     - stage: Test
       displayName: Test stage
-
       jobs:
       - job: Test
         displayName: Test job
         pool:
           vmImage: ${{ parameters.image }}
-
         steps:
         - task: UseDotNet@2
           displayName: Test step
@@ -98,7 +96,6 @@ stages:
 - ${{ if eq(parameters.runDeploy, true) }}:
     - stage: Deploy
       displayName: Deploy stage
-
       jobs:
       - job: Deploy
         displayName: Deploy job
@@ -106,6 +103,5 @@ stages:
         environment: 'development'
         pool:
           vmImage: ${{ parameters.image }}
-
         steps:
         - script: echo running Deploy

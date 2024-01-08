@@ -36,9 +36,28 @@ public static class QueryableExtensions
     public static IQueryable<T> ToWhere<T>(this IQueryable<T> queryable, Expression<Func<T, bool>>? where)
         where T : class
     {
-        if (where != default)
+        if (!where.ToIsNullOrEmpty())
         {
             queryable = queryable.Where(where);
+        }
+
+        return queryable;
+    }
+
+    /// <summary>
+    /// Filtra una secuencia de valores basada en un predicado.
+    /// </summary>
+    /// <typeparam name="T">Tipo de la lista.</typeparam>
+    /// <param name="queryable">Instancia IQueryable.</param>
+    /// <param name="condition">Si se cumple la condición se ejecuta la expresion.</param>
+    /// <param name="where">Predicado a evaluar.</param>
+    /// <returns>La lista con el filtro.</returns>
+    public static IQueryable<T> ToWhereIf<T>(this IQueryable<T> queryable, Func<bool> condition, Expression<Func<T, bool>>? where)
+        where T : class
+    {
+        if (condition())
+        {
+            queryable = queryable.ToWhere(where);
         }
 
         return queryable;
@@ -49,14 +68,14 @@ public static class QueryableExtensions
     /// </summary>
     /// <typeparam name="T">Tipo de la lista.</typeparam>
     /// <param name="queryable">Instancia IQueryable.</param>
-    /// <param name="property">Nombre del campo por el que se requiere ordenar.</param>
+    /// <param name="properties">Nombre de los campos por el que se requiere ordenar separados por (.) punto, ej, "age.lastname.firstname".</param>
     /// <param name="ascending">Orden de la lista ascendente o descendente.</param>
     /// <param name="index">Desde que página empieza la lista.</param>
     /// <param name="size">La cantidad de páginas a listar.</param>
     /// <returns>La lista paginada.</returns>
     public static IQueryable<T> ToPaged<T>(
         this IQueryable<T> queryable,
-        string property,
+        string? properties = null,
         bool ascending = true,
         int index = 1,
         int size = 20)
@@ -66,9 +85,9 @@ public static class QueryableExtensions
             return queryable;
         }
 
-        if (!property.ToIsNullOrEmpty())
+        if (!properties.ToIsNullOrEmpty())
         {
-            queryable = queryable.ToOrder(property, ascending);
+            queryable = queryable.ToOrder(properties, ascending);
         }
 
         queryable.Skip((index - 1) * size).Take(size);
@@ -78,90 +97,90 @@ public static class QueryableExtensions
 
     private static IQueryable<T> ToOrder<T>(
         this IQueryable<T> queryable,
-        string property,
+        string properties,
         bool ascending)
     {
         queryable.ToThrowIfNullOrAny();
-        property.ToThrowIfNullOrEmpty();
+        properties.ToThrowIfNullOrEmpty();
 
-        var properties = property.Split('.');
+        var propertiesOrder = properties.Split('.');
 
         Type? propertyType = typeof(T);
 
-        propertyType = properties.Aggregate(propertyType, (Type? propertyTypeCurrent, string propertyName) =>
+        propertyType = propertiesOrder.Aggregate(propertyType, (Type? propertyTypeCurrent, string propertyName) =>
             propertyTypeCurrent?.GetProperty(propertyName)?.PropertyType);
 
         if (propertyType == typeof(sbyte))
         {
-            return queryable.ToOrder<T, sbyte>(properties, ascending);
+            return queryable.ToOrder<T, sbyte>(propertiesOrder, ascending);
         }
 
         if (propertyType == typeof(short))
         {
-            return queryable.ToOrder<T, short>(properties, ascending);
+            return queryable.ToOrder<T, short>(propertiesOrder, ascending);
         }
 
         if (propertyType == typeof(int))
         {
-            return queryable.ToOrder<T, int>(properties, ascending);
+            return queryable.ToOrder<T, int>(propertiesOrder, ascending);
         }
 
         if (propertyType == typeof(long))
         {
-            return queryable.ToOrder<T, long>(properties, ascending);
+            return queryable.ToOrder<T, long>(propertiesOrder, ascending);
         }
 
         if (propertyType == typeof(byte))
         {
-            return queryable.ToOrder<T, byte>(properties, ascending);
+            return queryable.ToOrder<T, byte>(propertiesOrder, ascending);
         }
 
         if (propertyType == typeof(ushort))
         {
-            return queryable.ToOrder<T, ushort>(properties, ascending);
+            return queryable.ToOrder<T, ushort>(propertiesOrder, ascending);
         }
 
         if (propertyType == typeof(uint))
         {
-            return queryable.ToOrder<T, uint>(properties, ascending);
+            return queryable.ToOrder<T, uint>(propertiesOrder, ascending);
         }
 
         if (propertyType == typeof(ulong))
         {
-            return queryable.ToOrder<T, ulong>(properties, ascending);
+            return queryable.ToOrder<T, ulong>(propertiesOrder, ascending);
         }
 
         if (propertyType == typeof(char))
         {
-            return queryable.ToOrder<T, char>(properties, ascending);
+            return queryable.ToOrder<T, char>(propertiesOrder, ascending);
         }
 
         if (propertyType == typeof(float))
         {
-            return queryable.ToOrder<T, float>(properties, ascending);
+            return queryable.ToOrder<T, float>(propertiesOrder, ascending);
         }
 
         if (propertyType == typeof(double))
         {
-            return queryable.ToOrder<T, double>(properties, ascending);
+            return queryable.ToOrder<T, double>(propertiesOrder, ascending);
         }
 
         if (propertyType == typeof(decimal))
         {
-            return queryable.ToOrder<T, decimal>(properties, ascending);
+            return queryable.ToOrder<T, decimal>(propertiesOrder, ascending);
         }
 
         if (propertyType == typeof(bool))
         {
-            return queryable.ToOrder<T, bool>(properties, ascending);
+            return queryable.ToOrder<T, bool>(propertiesOrder, ascending);
         }
 
         if (propertyType == typeof(string))
         {
-            return queryable.ToOrder<T, string>(properties, ascending);
+            return queryable.ToOrder<T, string>(propertiesOrder, ascending);
         }
 
-        return queryable.ToOrder<T, object>(properties, ascending);
+        return queryable.ToOrder<T, object>(propertiesOrder, ascending);
     }
 
     private static IQueryable<T> ToOrder<T, TKey>(

@@ -13,7 +13,7 @@ namespace Kitpymes.Core.Shared.Tests
             [System.ComponentModel.Category()]
             b, 
             [System.ComponentModel.Description("Pepe")]
-            c 
+            c
         }
 
         [TestMethod]

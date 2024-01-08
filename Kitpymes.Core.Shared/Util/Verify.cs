@@ -25,6 +25,22 @@ using System.Diagnostics.CodeAnalysis;
 public static class Verify
 {
     /// <summary>
+    /// Lanza una excepción de tipo SharedException.
+    /// </summary>
+    /// <param name="message">Mensaje a mostrar en la SharedException.</param>
+    /// <param name="condition">Condición a evaluar.</param>
+    [DoesNotReturn]
+    public static void ToThrowIf(string message, Func<bool> condition)
+#pragma warning disable CS8763 // Un método marcado como [DoesNotReturn] no debe devolver nada.
+    {
+        if (condition())
+        {
+            throw new SharedException(message);
+        }
+    }
+#pragma warning restore CS8763 // Un método marcado como [DoesNotReturn] no debe devolver nada.
+
+    /// <summary>
     /// Lanza una excepción de tipo TException.
     /// </summary>
     /// <typeparam name="TException">Tipo e excepción.</typeparam>

@@ -34,9 +34,7 @@ public static class HttpContextExtensions
     /// <param name="httpContext">Encapsula toda la información específica de HTTP sobre una solicitud HTTP individual.</param>
     /// <param name="ip">Valor de la ip a devolver.</param>
     /// <returns>string | null.</returns>
-#pragma warning disable CA1021 // Evitar parámetros out
     public static bool ToTryIPv6(this HttpContext httpContext, [MaybeNullWhen(false)] out string? ip)
-#pragma warning restore CA1021 // Evitar parámetros out
     {
         ip = httpContext?.ToIPv6();
 
@@ -47,7 +45,7 @@ public static class HttpContextExtensions
     /// Obtiene la IP de la solicitud HTTP.
     /// </summary>
     /// <param name="httpContext">Encapsula toda la información específica de HTTP sobre una solicitud HTTP individual.</param>
-    /// <returns>string | null | ApplicationException: si el parámetro httpContext es nulo.</returns>
+    /// <returns>string | null | SharedException: si el parámetro httpContext es nulo.</returns>
     public static string? ToIPv6(this HttpContext httpContext)
     => httpContext.ToThrowIfNullOrEmpty().Connection?.RemoteIpAddress?.MapToIPv6()?.ToString();
 
@@ -57,42 +55,39 @@ public static class HttpContextExtensions
     /// <param name="httpContext">Encapsula toda la información específica de HTTP sobre una solicitud HTTP individual.</param>
     /// <param name="optionalData">Datos opcionales.</param>
     /// <returns>Los detalles de una solicitud HTTP.</returns>
-    public static string ToDetails(this HttpContext httpContext, IDictionary<string, IEnumerable<string>>? optionalData = null)
+    public static object ToDetails(this HttpContext httpContext, object? optionalData = null)
     {
         var validHttpContext = httpContext.ToThrowIfNullOrEmpty();
 
-        var sb = new StringBuilder();
+        dynamic details = new System.Dynamic.ExpandoObject();
+
+        details.User = validHttpContext.User.ToUserName() ?? Environment.UserName ?? "Anonymous";
 
         if (validHttpContext.ToTryIPv6(out var ip))
         {
-            sb.Append(CultureInfo.CurrentCulture, $"IP: {ip} |");
+            details.IP = ip;
         }
-
-        sb.Append(CultureInfo.CurrentCulture, $" User: {validHttpContext.User.ToUserName() ?? Environment.UserName ?? "Anonymous"} |");
 
         if (!validHttpContext.Request.ToIsNullOrEmpty())
         {
             if (validHttpContext.Request.ToTryHeader("User-Agent", out var userAgents))
             {
-                sb.Append(CultureInfo.CurrentCulture, $" UserAgent: [{userAgents?.ToString(", ")}] |");
+                details.UserAgent = userAgents;
             }
 
             if (validHttpContext.Request.ToTryContentType(out var contentType))
             {
-                sb.Append(CultureInfo.CurrentCulture, $" ContentType: {contentType} |");
+                details.ContentType = contentType;
             }
 
-            sb.Append(CultureInfo.CurrentCulture, $" {validHttpContext.Request.Method}: {validHttpContext.Request.ToPath()} |");
+            details.Request = validHttpContext.Request.ToPath();
         }
 
-        if (optionalData?.ToIsNullOrAny() == false)
+        if (!optionalData.ToIsNullOrEmpty())
         {
-            foreach (var (key, values) in optionalData)
-            {
-                sb.Append(CultureInfo.CurrentCulture, $" {key}: [{values?.ToString(", ")}] |");
-            }
+            details.OptionalData = optionalData;
         }
 
-        return sb.ToString();
+        return details;
     }
 }

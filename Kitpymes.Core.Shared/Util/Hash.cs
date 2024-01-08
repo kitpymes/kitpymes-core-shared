@@ -34,7 +34,7 @@ public static class Hash
     /// </summary>
     /// <param name="length">Cantidad de caracteres.</param>
     /// <param name="validChars">Caracteres que se usaran para crear el texto.</param>
-    /// <returns>string | ArgumentException: si length es menor que 1 o validChars es nulo o vacio.</returns>
+    /// <returns>string | SharedException: si length es menor que 1 o validChars es nulo o vacio.</returns>
     public static string CreateRandom(int length = 6, string validChars = "ABCDEFGHJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz!¡@#$%€^&*?¿_-+")
     {
         length.ToThrowIfLess(1);
@@ -60,7 +60,7 @@ public static class Hash
     /// Cifra un texto.
     /// </summary>
     /// <param name="text">Texto a cifrar.</param>
-    /// <returns>string | ArgumentException: si texto es nulo o vacio.</returns>
+    /// <returns>string | SharedException: si texto es nulo o vacio.</returns>
     [return: NotNull]
     public static string CreateSHA256(string text)
     {
@@ -90,7 +90,7 @@ public static class Hash
     /// Cifra un texto.
     /// </summary>
     /// <param name="text">Texto a cifrar.</param>
-    /// <returns>string | ArgumentException: si texto es nulo o vacio.</returns>
+    /// <returns>string | SharedException: si texto es nulo o vacio.</returns>
     [return: NotNull]
     public static string CreateSHA512(string text)
     {

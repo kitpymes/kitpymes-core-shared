@@ -7,7 +7,6 @@
 
 namespace Kitpymes.Core.Shared.Extensions;
 
-using Kitpymes.Core.Shared.Extensions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -31,26 +30,27 @@ public static class DictionaryExtensions
     /// <param name="dictionary">Lista de diccionario.</param>
     /// <param name="key">Clave del diccionario.</param>
     /// <param name="value">Valor del diccionario.</param>
-    /// <returns>IDictionary{string, IList{string}} | ApplicationException: si dictionary es nula o no contiene elementos, o si key es nulo o vacio o si value es nulo o vacio.</returns>
-    public static IDictionary<string, IEnumerable<string>> AddOrUpdate(
-        this IDictionary<string, IEnumerable<string>>? dictionary,
+    /// <returns>IDictionary{string, IList{TValue}} | SharedException: si dictionary es nula o no contiene elementos, o si key es nulo o vacio o si value es nulo o vacio.</returns>
+    public static IDictionary<string, IEnumerable<TValue>> ToAddOrUpdate<TValue>(
+        this IDictionary<string, IEnumerable<TValue>>? dictionary,
         string key,
-        string value)
+        TValue value)
     {
         dictionary.ToThrowIfNullOrEmpty();
         key.ToThrowIfNullOrEmpty();
         value.ToThrowIfNullOrEmpty();
 
-        if (dictionary.ContainsKey(key))
+        if (dictionary.TryGetValue(key, out IEnumerable<TValue>? list))
         {
-            if (!dictionary[key].Contains(value))
+            if (!list.Contains(value))
             {
-                dictionary[key] = dictionary[key].Concat(new string[] { value });
+                dictionary.Remove(key);
+                dictionary.Add(key, new List<TValue> { value });
             }
         }
         else
         {
-            dictionary.Add(key, new List<string> { value });
+            dictionary.Add(key, new List<TValue> { value });
         }
 
         return dictionary;
@@ -62,8 +62,8 @@ public static class DictionaryExtensions
     /// <param name="dictionary">Lista de diccionario.</param>
     /// <param name="key">Clave del diccionario.</param>
     /// <param name="value">Valor del diccionario.</param>
-    /// <returns>bool | ApplicationException: si dictionary es nula o no contiene elementos, o si key es nulo o vacio o si value es nulo o vacio.</returns>
-    public static bool Contains(this IDictionary<string, IEnumerable<string>>? dictionary, string key, string value)
+    /// <returns>bool | SharedException: si dictionary es nula o no contiene elementos, o si key es nulo o vacio o si value es nulo o vacio.</returns>
+    public static bool ToContainsKeyValue(this IDictionary<string, IEnumerable<string>>? dictionary, string key, string value)
     {
         dictionary.ToThrowIfNullOrEmpty();
         key.ToThrowIfNullOrEmpty();
@@ -77,8 +77,8 @@ public static class DictionaryExtensions
     /// </summary>
     /// <param name="dictionary">Lista de diccionario.</param>
     /// <param name="key">Clave del diccionario.</param>
-    /// <returns>IList{string} | null: si la key no existe o no contiene valores | ApplicationException: si dictionary es nula o no contiene elementos, o si key es nulo o vacio.</returns>
-    public static IEnumerable<string>? GetValues(this IDictionary<string, IEnumerable<string>>? dictionary, string key)
+    /// <returns>IList{string} | null: si la key no existe o no contiene valores | SharedException: si dictionary es nula o no contiene elementos, o si key es nulo o vacio.</returns>
+    public static IEnumerable<string>? ToValues(this IDictionary<string, IEnumerable<string>>? dictionary, string key)
     {
         dictionary.ToThrowIfNullOrEmpty();
         key.ToThrowIfNullOrEmpty();

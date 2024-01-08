@@ -10,6 +10,7 @@ namespace Kitpymes.Core.Shared.Extensions;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Microsoft.AspNetCore.Http;
 
 /*
@@ -32,7 +33,7 @@ public static class HttpRequestExtensions
     /// <param name="httpRequest">Representa el lado entrante de una solicitud HTTP individual.</param>
     /// <param name="key">Clave del valor del header a obtener.</param>
     /// <param name="values">Valores de la clave del header.</param>
-    /// <returns>List{string} | null: si la key no existe | ApplicationException: si el parámetro httpRequest es nulo o si key es nulo.</returns>
+    /// <returns>List{string} | null: si la key no existe | SharedException: si el parámetro httpRequest es nulo o si key es nulo.</returns>
     public static bool ToTryHeader(this HttpRequest httpRequest, string key, [MaybeNullWhen(false)] out ReadOnlyCollection<string?>? values)
     {
         key.ToThrowIfNullOrEmpty();
@@ -49,7 +50,7 @@ public static class HttpRequestExtensions
     /// </summary>
     /// <param name="httpRequest">Representa el lado entrante de una solicitud HTTP individual.</param>
     /// <param name="key">Clave del valor del header a obtener.</param>
-    /// <returns>List{string} | null: si la key no existe | ApplicationException: si el parámetro httpRequest es nulo o si key es nulo o vacio.</returns>
+    /// <returns>List{string} | null: si la key no existe | SharedException: si el parámetro httpRequest es nulo o si key es nulo o vacio.</returns>
     public static ReadOnlyCollection<string?>? ToHeader(this HttpRequest httpRequest, string key)
     {
         key.ToThrowIfNullOrEmpty();
@@ -88,9 +89,21 @@ public static class HttpRequestExtensions
     /// Obtiene el hostname o subdomain de una entrada HTTP.
     /// </summary>
     /// <param name="httpRequest">Representa el lado entrante de una solicitud HTTP individual.</param>
+    /// <param name="ignores">Subdomain que se ignoran.</param>
     /// <returns>string | null.</returns>
-    public static string? ToSubdomain(this HttpRequest httpRequest)
-    => httpRequest?.Host.Host?.Split('.')[0].Trim();
+    public static string? ToSubdomain(this HttpRequest httpRequest, params string[] ignores)
+    {
+        var subdomain = httpRequest?.Host.Host?.Split('.')[0].Trim().ToLower();
+
+        subdomain.ToThrowIfNotSubdomain();
+
+        if (ignores.Contains(subdomain))
+        {
+            subdomain = string.Empty;
+        }
+
+        return subdomain;
+    }
 
     /// <summary>
     /// Obtiene el ContentType de una entrada HTTP.

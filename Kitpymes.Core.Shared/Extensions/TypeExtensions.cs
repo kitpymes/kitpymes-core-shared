@@ -9,6 +9,8 @@ namespace Kitpymes.Core.Shared.Extensions;
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 /*
@@ -55,4 +57,26 @@ public static class TypeExtensions
     /// <returns>El ensamblado.</returns>
     public static Assembly ToAssembly(this Type type)
     => type.GetTypeInfo().Assembly;
+
+    /// <summary>
+    /// Obtiene el valor de las constantes.
+    /// </summary>
+    /// <typeparam name="TResult">El tipo de resultado.</typeparam>
+    /// <param name="type">El tipo de clase que queremos obtener todas sus contantes.</param>
+    /// <param name="ignoreValues">Valores a ignorar.</param>
+    /// <returns>List{TResult}.</returns>
+    public static IEnumerable<TResult> ToAllPublicConstantValues<TResult>(this Type type, params TResult[] ignoreValues)
+    {
+        var query = type
+            .GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.FlattenHierarchy)
+            .Where(fi => fi.IsLiteral && !fi.IsInitOnly && fi.FieldType == typeof(TResult))
+            .Select(x => (TResult)x.GetRawConstantValue().ToThrowIfNullOrEmpty());
+
+        if (!ignoreValues.ToIsNullOrAny())
+        {
+            query = query.Where(value => !ignoreValues.Contains(value));
+        }
+
+        return query.ToList();
+    }
 }

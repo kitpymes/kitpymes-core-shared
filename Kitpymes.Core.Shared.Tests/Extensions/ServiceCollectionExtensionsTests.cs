@@ -1,5 +1,6 @@
 using Kitpymes.Core.Shared.Extensions;
 using Kitpymes.Core.Shared.Util;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,73 +13,152 @@ using System.Reflection;
 namespace Kitpymes.Core.Shared.Tests
 {
     [TestClass]
-	public class ConfigurationBuilderExtensionsTests
+	public class ServiceCollectionExtensionsTests
     {
         #region ToEnvironment
 
         [TestMethod]
-        public void ToEnvironment_ServiceCollection_Passing_Development_Enviroment_Returns_Development_Name()
+        public void ToHostEnvironment_Returns_IHostEnvironment_NotNull()
         {
-            var environmentNameExpected = "Development";
-            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = environmentNameExpected);
+            var fakeEnvironmentExpected = new FakeHostEnvironment { };
+            var services = new ServiceCollection().FakeAddHostEnvironment(x => { });
+
+            var result = services.ToHostEnvironment();
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void ToWebHostEnvironment_Returns_IWebHostEnvironment_NotNull()
+        {
+            var fakeEnvironmentExpected = new FakeWebHostEnvironment { };
+            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => { });
+
+            var result = services.ToWebHostEnvironment();
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void ToEnvironment_With_TEnviromentType_IHostEnvironment_Returns_IHostEnvironment_NotNull()
+        {
+            var fakeEnvironmentExpected = new FakeHostEnvironment { };
+            var services = new ServiceCollection().FakeAddHostEnvironment(x => { });
+
+            var result = services.ToEnvironment<IHostEnvironment>();
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void ToEnvironment_With_TEnviromentType_IWebHostEnvironment_Returns_IWebHostEnvironment_NotNull()
+        {
+            var fakeEnvironmentExpected = new FakeWebHostEnvironment { };
+            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => { });
 
             var result = services.ToEnvironment<IWebHostEnvironment>();
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(environmentNameExpected, result?.EnvironmentName);
-            Assert.IsTrue(result?.IsDevelopment());
         }
 
         [TestMethod]
-        public void ToEnvironment_ServiceCollection_Passing_Production_Enviroment_Returns_Production_Name()
+        public void ToRequiredEnvironment_With_TEnviromentType_IHostEnvironment_Returns_IHostEnvironment_NotNull()
         {
-            var environmentNameExpected = "Production";
-            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = environmentNameExpected);
+            var fakeEnvironmentExpected = new FakeHostEnvironment { };
+            var services = new ServiceCollection().FakeAddHostEnvironment(x => { });
 
-            var result = services.ToEnvironment<IWebHostEnvironment>();
+            var result = services.ToRequiredEnvironment<IHostEnvironment>();
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(environmentNameExpected, result?.EnvironmentName);
-            Assert.IsTrue(result?.IsProduction());
         }
 
         [TestMethod]
-        public void ToEnvironment_ServiceCollection_Passing_Staging_Enviroment_Returns_Staging_Name()
+        public void ToRequiredEnvironment_With_TEnviromentType_IWebHostEnvironment_Returns_IWebHostEnvironment_NotNull()
         {
-            string? environmentNameExpected = "Staging";
-            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = environmentNameExpected);
+            var fakeEnvironmentExpected = new FakeWebHostEnvironment { };
+            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => { });
 
-            var result = services.ToEnvironment<IWebHostEnvironment>();
+            var result = services.ToRequiredEnvironment<IWebHostEnvironment>();
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(environmentNameExpected, result?.EnvironmentName);
-            Assert.IsTrue(result?.IsStaging());
         }
 
         [TestMethod]
-        public void ToEnvironment_ServiceCollection_Passing_Custom_Enviroment_Returns_Custom_Name()
+        public void ToRequiredEnvironment_With_TEnviromentType_IHostEnvironment_Returns_SharedException()
         {
-            string? environmentNameExpected = Guid.NewGuid().ToString();
-            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = environmentNameExpected);
+            var fakeEnvironmentExpected = new FakeHostEnvironment { };
+            var services = new ServiceCollection();
 
-            var result = services.ToEnvironment<IWebHostEnvironment>();
-
-            Assert.IsNotNull(result);
-            Assert.AreEqual(environmentNameExpected, result?.EnvironmentName);
-            Assert.IsTrue(result?.IsEnvironment(environmentNameExpected));
+            Assert.ThrowsException<SharedException>(services.ToRequiredEnvironment<IHostEnvironment>);
         }
 
         [TestMethod]
-        public void ToEnvironment_ServiceProvider_Passing_Development_Enviroment_Returns_Development_Name()
+        public void ToRequiredEnvironment_With_TEnviromentType_IWebHostEnvironment_Returns_SharedException()
         {
-            var environmentNameExpected = "Development";
-            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = environmentNameExpected);
+            var fakeEnvironmentExpected = new FakeWebHostEnvironment { };
+            var services = new ServiceCollection();
 
-            var result = services.BuildServiceProvider().ToEnvironment<IWebHostEnvironment>();
+            Assert.ThrowsException<SharedException>(services.ToRequiredEnvironment<IWebHostEnvironment>);
+        }
 
-            Assert.IsNotNull(result);
-            Assert.AreEqual(environmentNameExpected, result?.EnvironmentName);
-            Assert.IsTrue(result?.IsDevelopment());
+        [TestMethod]
+        public void ToIsDevelopment_Passing_IHostEnvironment_With_Valid_EnviromentName_Returns_True()
+        {
+            var services = new ServiceCollection().FakeAddHostEnvironment(x => x.EnvironmentName = Util.Environment.Development.ToString());
+
+            var result = services.ToIsDevelopment();
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void ToIsDevelopment_Passing_IHostEnvironment_With_Invalid_EnviromentName_Returns_False()
+        {
+            var services = new ServiceCollection().FakeAddHostEnvironment(x => x.EnvironmentName = Guid.NewGuid().ToString());
+
+            var result = services.ToIsDevelopment();
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void ToIsDevelopment_Passing_IWebHostEnvironment_With_Valid_EnviromentName_Returns_True()
+        {
+            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = Util.Environment.Development.ToString());
+
+            var result = services.ToIsDevelopment();
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void ToIsDevelopment_Passing_IWebHostEnvironment_With_Invalid_EnviromentName_Returns_False()
+        {
+            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = Guid.NewGuid().ToString());
+
+            var result = services.ToIsDevelopment();
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void ToIsEnviroment_Passing_IWebHostEnvironment_With_Valid_EnviromentName_Returns_True()
+        {
+            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = Util.Environment.Development.ToString());
+
+            var result = services.ToIsDevelopment();
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void ToIsEnviroment_Passing_IWebHostEnvironment_With_Invalid_EnviromentName_Returns_False()
+        {
+            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = Guid.NewGuid().ToString());
+
+            var result = services.ToIsDevelopment();
+
+            Assert.IsFalse(result);
         }
 
         #endregion ToEnvironment

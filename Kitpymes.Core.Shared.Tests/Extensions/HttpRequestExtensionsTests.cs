@@ -12,38 +12,37 @@ namespace Kitpymes.Core.Shared.Tests
         [TestMethod]
         public void ToHeader_Passing_HttpRequest_Header_Many_Values_Returns_Values()
         {
-            var key = Guid.NewGuid().ToString();
-            var aKeyValueExpected = Guid.NewGuid().ToString();
-            var aKeyRepeatValueExpected = Guid.NewGuid().ToString();
-            var headers = new Dictionary<string, IEnumerable<string>>();
-            headers.AddOrUpdate(key, aKeyValueExpected).AddOrUpdate(key, aKeyRepeatValueExpected);
+            var keyExpected = Guid.NewGuid().ToString();
+            var value = Guid.NewGuid().ToString();
+            var valueExpected = Guid.NewGuid().ToString();
+
+            var headers = new Dictionary<string, IEnumerable<string>>()
+                .ToAddOrUpdate(keyExpected, value)
+                .ToAddOrUpdate(keyExpected, valueExpected);
 
             var fakeHttpRequest = FakeHttpRequest.Configure(x => x.AddHeader(headers));
 
-            var headerActual = fakeHttpRequest.ToHeader(key);
+            var headerActual = fakeHttpRequest.ToHeader(keyExpected);
 
-            if (headerActual != null)
-            {
-                Assert.IsTrue(headerActual.Contains(aKeyValueExpected));
-                Assert.IsTrue(headerActual.Contains(aKeyRepeatValueExpected));
-            }
+            Assert.IsTrue(headerActual?.Contains(valueExpected));
         }
 
         [TestMethod]
         public void ToTryGetHeader_Passing_HttpRequest_Header_Many_Values_Returns_Values()
         {
-            var key = Guid.NewGuid().ToString();
-            var aKeyValueExpected = Guid.NewGuid().ToString();
-            var aKeyRepeatValueExpected = Guid.NewGuid().ToString();
-            var headers = new Dictionary<string, IEnumerable<string>>();
-            headers.AddOrUpdate(key, aKeyValueExpected).AddOrUpdate(key, aKeyRepeatValueExpected);
+            var keyExpected = Guid.NewGuid().ToString();
+            var value = Guid.NewGuid().ToString();
+            var valueExpected = Guid.NewGuid().ToString();
+
+            var headers = new Dictionary<string, IEnumerable<string>>()
+                .ToAddOrUpdate(keyExpected, value)
+                .ToAddOrUpdate(keyExpected, valueExpected);
 
             var fakeHttpRequest = FakeHttpRequest.Configure(x => x.AddHeader(headers));
 
-            if (fakeHttpRequest.ToTryHeader(key, out var headerActual))
+            if (fakeHttpRequest.ToTryHeader(keyExpected, out var headerActual))
             {
-                Assert.IsTrue(headerActual != null && headerActual.Contains(aKeyValueExpected));
-                Assert.IsTrue(headerActual != null && headerActual.Contains(aKeyRepeatValueExpected));
+                Assert.IsTrue(headerActual?.Contains(valueExpected));
             }
         }
 

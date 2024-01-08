@@ -4,7 +4,6 @@
   <Import Project="$(SolutionDir)docs/props/Pack.Build.props" Condition="Exists('$(SolutionDir)docs/props/Pack.Build.props')" />
 
   <ItemGroup>
-    <!--<PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />-->
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0" />

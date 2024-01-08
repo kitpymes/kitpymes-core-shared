@@ -35,6 +35,53 @@ using Microsoft.AspNetCore.StaticFiles;
 /// </remarks>
 public static class StringExtensions
 {
+    #region ToGuid
+
+    /// <summary>
+    /// Parsea un valor de tipo string a un valor de tipo Guid valido.
+    /// </summary>
+    /// <param name="input">Valor string de tipo Guid.</param>
+    /// <returns>Guid | null.</returns>
+    public static Guid? ToGuid(this string? input)
+    {
+        var isValid = !string.IsNullOrWhiteSpace(input)
+            && Guid.TryParse(input, out var guid) && guid != Guid.Empty;
+
+        return isValid ? Guid.Parse(input!) : null;
+    }
+
+    /// <summary>
+    /// Parsea un string de tipo Guid valido a un tipo Guid.
+    /// </summary>
+    /// <param name="input">Valor string de tipo Guid.</param>
+    /// <param name="returnValue">Guid: cuando input es un Guid valido | null: cuando input es nulo o vacio o no es un Guid valido o es un Guid.Empty.</param>
+    /// <returns>true | false.</returns>
+    public static bool ToTryParseGuid(this string? input, out Guid? returnValue)
+    {
+        var isValid = !string.IsNullOrWhiteSpace(input)
+            && Guid.TryParse(input, out var guid) && guid != Guid.Empty;
+
+        returnValue = isValid ? Guid.Parse(input!) : null;
+
+        return isValid;
+    }
+
+    #endregion ToGuid
+
+    #region ToDefaultIfNullOrEmpty
+
+    /// <summary>
+    /// Si el valor es nulo toma el valor por defecto.
+    /// </summary>
+    /// <typeparam name="T">Tipo de valor.</typeparam>
+    /// <param name="input">Valor pasado por parametro.</param>
+    /// <param name="defaultValue">Valor por defecto si el valor input es nulo o vacio.</param>
+    /// <returns>input: cuando input no es nulo ni vacio. | defaultValue: cuando input es nulo o vacio. | SharedException: cuando input es nulo o vacio y defaultValue tambien es nulo o vacio.</returns>
+    public static T ToDefaultIfNullOrEmpty<T>(this T? input, T defaultValue)
+        => input.ToIsNullOrEmpty() ? defaultValue.ToThrowIfNullOrEmpty() : input;
+
+    #endregion
+
     #region ToRemove
 
     /// <summary>
@@ -104,6 +151,7 @@ public static class StringExtensions
             return input;
         }
 
+#pragma warning disable CA1861 // Evitar matrices constantes como argumentos
         var dictionary = new Dictionary<char, char[]>
         {
             { 'a', new[] { 'à', 'á', 'ä', 'â', 'ã' } },
@@ -122,6 +170,7 @@ public static class StringExtensions
             { 'n', new[] { 'ñ' } },
             { 'N', new[] { 'Ñ' } },
         };
+#pragma warning restore CA1861 // Evitar matrices constantes como argumentos
 
         var pattern = "[^0-9a-zA-Z ";
 

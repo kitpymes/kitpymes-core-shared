@@ -29,7 +29,7 @@ public static class StringBuilderExtensions
     /// </summary>
     /// <param name="stringBuilder">Lista de strings.</param>
     /// <param name="format">Formato.</param>
-    /// <returns>Agrega un nuevo valor | ArgumentException: stringBuilder es nulo.</returns>
+    /// <returns>Agrega un nuevo valor | SharedException: stringBuilder es nulo.</returns>
     public static StringBuilder ToAppend(this StringBuilder stringBuilder, string format)
     => stringBuilder.ToThrowIfNullOrEmpty().AppendFormat(CultureInfo.InvariantCulture, format.ToThrowIfNullOrEmpty());
 }

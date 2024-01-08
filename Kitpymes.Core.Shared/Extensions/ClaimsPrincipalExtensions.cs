@@ -115,7 +115,7 @@ public static class ClaimsPrincipalExtensions
     /// <typeparam name="TResult">El tipo de valor de la claim.</typeparam>
     /// <param name="claimsPrincipal">Una implementación System.Security.Principal.IPrincipal que admite múltiples identidades basadas en notificaciones.</param>
     /// <param name="claimType">El nombre del tipo de claim a buscar.</param>
-    /// <returns>TResult? | ArgumentException: si claimsPrincipal es nulo.</returns>
+    /// <returns>TResult? | SharedException: si claimsPrincipal es nulo.</returns>
     public static TResult? ToGet<TResult>(this ClaimsPrincipal claimsPrincipal, string claimType)
         where TResult : class
     {

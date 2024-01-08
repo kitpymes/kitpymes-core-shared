@@ -7,6 +7,8 @@
 
 namespace Kitpymes.Core.Shared.Extensions;
 
+using Kitpymes.Core.Shared.Util;
+using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -38,15 +40,15 @@ public static class EnumExtensions
     /// Obtiene la descripción del atributo DescriptionAttribute de una enumeración.
     /// </summary>
     /// <param name="name">Nombre de la enumeración.</param>
-    /// <returns>Descripción de la enumeración | ApplicationException: si el parámetro name es nulo.</returns>
-    public static string? ToDescription(this Enum name)
-    => name.ToAttribute<DescriptionAttribute>()?.Description ?? name?.ToString();
+    /// <returns>Descripción de la enumeración | SharedException: si el parámetro name es nulo.</returns>
+    public static string ToDescription(this Enum name)
+    => name.ToAttribute<DescriptionAttribute>()?.Description ?? name.ToString();
 
     /// <summary>
     /// Obtiene los valores del atributo DisplayAttribute de una enumeración.
     /// </summary>
     /// <param name="name">Nombre de la enumeración.</param>
-    /// <returns>El nombre y la descipción de la enumeración | ApplicationException: si el parámetro name es nulo.</returns>
+    /// <returns>El nombre y la descipción de la enumeración | SharedException: si el parámetro name es nulo.</returns>
     public static (string? name, string? description) ToDisplay(this Enum name)
     {
         var attribute = name.ToAttribute<DisplayAttribute>();
@@ -58,7 +60,7 @@ public static class EnumExtensions
     /// </summary>
     /// <typeparam name="TAttribute">Tipo de atributo a obtener.</typeparam>
     /// <param name="name">Nombre de la enumeración.</param>
-    /// <returns>TAttribute | null | ApplicationException: si el parámetro name es nulo.</returns>
+    /// <returns>TAttribute | null | SharedException: si el parámetro name es nulo.</returns>
     public static TAttribute? ToAttribute<TAttribute>(this Enum name)
         where TAttribute : Attribute
     {

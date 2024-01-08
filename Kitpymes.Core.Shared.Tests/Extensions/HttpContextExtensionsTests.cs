@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
 
 namespace Kitpymes.Core.Shared.Tests
 {
@@ -53,13 +55,12 @@ namespace Kitpymes.Core.Shared.Tests
             var schemeExpected = Guid.NewGuid().ToString();
             var hostExpected = Guid.NewGuid().ToString();
             var pathExpected = "/" + Guid.NewGuid().ToString();
-            var methodExpected = Guid.NewGuid().ToString();
             var authenticationType = Guid.NewGuid().ToString();
             var claimTypeExpected = Guid.NewGuid().ToString();
             var claimValueExpected = Guid.NewGuid().ToString();
 
             var headers = new Dictionary<string, IEnumerable<string>>();
-            headers.AddOrUpdate(headerKey, headerValueExpected);
+            headers.ToAddOrUpdate(headerKey, headerValueExpected);
 
             var httpContext = FakeHttpContext.Configure(x =>
             {
@@ -71,11 +72,10 @@ namespace Kitpymes.Core.Shared.Tests
                     Scheme = schemeExpected,
                     Host = new HostString(hostExpected),
                     Path = pathExpected,
-                    Method = methodExpected,
                 }.AddHeader(headers);
             });
 
-            var result = httpContext.ToDetails();
+            var result = httpContext.ToDetails().ToSerialize();
 
             if (result != null)
             {
@@ -84,7 +84,6 @@ namespace Kitpymes.Core.Shared.Tests
                 Assert.IsTrue(result.Contains(schemeExpected));
                 Assert.IsTrue(result.Contains(hostExpected));
                 Assert.IsTrue(result.Contains(pathExpected));
-                Assert.IsTrue(result.Contains(methodExpected));
                 Assert.IsTrue(result.Contains(headerValueExpected));
             }
         }
@@ -99,18 +98,17 @@ namespace Kitpymes.Core.Shared.Tests
             var schemeExpected = Guid.NewGuid().ToString();
             var hostExpected = Guid.NewGuid().ToString();
             var pathExpected = "/" + Guid.NewGuid().ToString();
-            var methodExpected = Guid.NewGuid().ToString();
             var authenticationType = Guid.NewGuid().ToString();
             var claimTypeExpected = Guid.NewGuid().ToString();
             var claimValueExpected = Guid.NewGuid().ToString();
 
-            var optionalData = new Dictionary<string, IEnumerable<string>>();
+            var optionalData = new Dictionary<string, IEnumerable<object>>();
             var keyOptionalData = Guid.NewGuid().ToString();
             var valueOptionalData = Guid.NewGuid().ToString();
-            optionalData.AddOrUpdate(keyOptionalData, valueOptionalData);
+            optionalData.ToAddOrUpdate(keyOptionalData, valueOptionalData);
 
             var headers = new Dictionary<string, IEnumerable<string>>();
-            headers.AddOrUpdate(headerKey, headerValueExpected);
+            headers.ToAddOrUpdate(headerKey, headerValueExpected);
 
             var httpContext = FakeHttpContext.Configure(x =>
             {
@@ -122,11 +120,10 @@ namespace Kitpymes.Core.Shared.Tests
                     Scheme = schemeExpected,
                     Host = new HostString(hostExpected),
                     Path = pathExpected,
-                    Method = methodExpected,
                 }.AddHeader(headers);
             });
 
-            var result = httpContext.ToDetails(optionalData);
+            var result = httpContext.ToDetails(optionalData).ToSerialize();
 
             if (result != null)
             {
@@ -135,7 +132,6 @@ namespace Kitpymes.Core.Shared.Tests
                 Assert.IsTrue(result.Contains(schemeExpected));
                 Assert.IsTrue(result.Contains(hostExpected));
                 Assert.IsTrue(result.Contains(pathExpected));
-                Assert.IsTrue(result.Contains(methodExpected));
                 Assert.IsTrue(result.Contains(headerValueExpected));
                 Assert.IsTrue(result.Contains(keyOptionalData));
                 Assert.IsTrue(result.Contains(valueOptionalData));

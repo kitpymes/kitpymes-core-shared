@@ -430,7 +430,7 @@ namespace Kitpymes.Core.Shared {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a La campo es nulo o no contiene valores.
+        ///   Busca una cadena traducida similar a El campo es nulo o no contiene valores.
         /// </summary>
         public static string MsgNullOrAny {
             get {
@@ -439,7 +439,7 @@ namespace Kitpymes.Core.Shared {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a La campo {0} es nulo o no contiene valores.
+        ///   Busca una cadena traducida similar a El campo {0} es nulo o no contiene valores.
         /// </summary>
         public static string MsgNullOrAnyWithFieldName {
             get {
@@ -448,7 +448,7 @@ namespace Kitpymes.Core.Shared {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a La campo es nulo o vacio.
+        ///   Busca una cadena traducida similar a El campo es nulo o vacio.
         /// </summary>
         public static string MsgNullOrEmpty {
             get {
@@ -457,7 +457,7 @@ namespace Kitpymes.Core.Shared {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a La campo {0} es nulo o vacio.
+        ///   Busca una cadena traducida similar a El campo {0} es nulo o vacio.
         /// </summary>
         public static string MsgNullOrEmptyWithFieldName {
             get {

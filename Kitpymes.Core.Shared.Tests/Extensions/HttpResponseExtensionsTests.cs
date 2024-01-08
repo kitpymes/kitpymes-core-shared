@@ -21,11 +21,13 @@ namespace Kitpymes.Core.Shared.Tests
         public async Task ToResultAsync_Passing_StatusCodeAnd_MessageAndContentTypeAndHeader_Values_Returns_Values(string url)
         {
             // Arrange
-            string key = Guid.NewGuid().ToString();
-            string value1Expected = Guid.NewGuid().ToString();
-            string value2Expected = Guid.NewGuid().ToString();
-            var headers = new Dictionary<string, IEnumerable<string>>();
-            headers.AddOrUpdate(key, value1Expected).AddOrUpdate(key, value2Expected);
+            var keyExpected = Guid.NewGuid().ToString();
+            var value = Guid.NewGuid().ToString();
+            var valueExpected = Guid.NewGuid().ToString();
+
+            var headers = new Dictionary<string, IEnumerable<string>>()
+                .ToAddOrUpdate(keyExpected, value)
+                .ToAddOrUpdate(keyExpected, valueExpected);
 
             var statusCodeExpected = HttpStatusCode.Unauthorized;
             string contentTypeExpected = Guid.NewGuid().ToString();
@@ -62,8 +64,7 @@ namespace Kitpymes.Core.Shared.Tests
             Assert.AreEqual(statusCodeExpected, httpResponse.StatusCode);
             StringAssert.Contains(messageExpected, httpResponseBody);
             StringAssert.Contains(contentTypeExpected, httpResponse.Content.Headers.GetValues("content-type").First());
-            StringAssert.Contains(value1Expected, httpResponse.Headers.GetValues(key).First(x => x == value1Expected));
-            StringAssert.Contains(value2Expected, httpResponse.Headers.GetValues(key).First(x => x == value2Expected));
+            StringAssert.Contains(valueExpected, httpResponse.Headers.GetValues(keyExpected).First(x => x == valueExpected));
         }
     }
 }

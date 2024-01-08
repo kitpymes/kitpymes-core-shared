@@ -32,7 +32,7 @@ public static class ExceptionExtensions
     /// Obtiene el mensaje de la excepción.
     /// </summary>
     /// <param name="exception">Excepción que se obtiene el mensaje.</param>
-    /// <returns>Mensaje de la excepción | ApplicationException: si el parámetro exception es nulo.</returns>
+    /// <returns>Mensaje de la excepción | SharedException: si el parámetro exception es nulo.</returns>
     public static string ToFullMessage(this Exception exception)
     {
         exception.ToThrowIfNullOrEmpty();

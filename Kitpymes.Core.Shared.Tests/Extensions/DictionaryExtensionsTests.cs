@@ -9,43 +9,39 @@ namespace Kitpymes.Core.Shared.Tests
     [TestClass]
     public class DictionaryExtensionsTests
     {
-        private IDictionary<string, IEnumerable<string>>? List { get; set; }
+        private static Dictionary<string, IEnumerable<TValue>> GetList<TValue>() => new ();
 
         [TestMethod]
-        public void AddOrUpdate_Passing_Valid_Collection_Returns_Collection()
+        public void AddOrUpdate_Add_Values_Returns_Collection_WithValues()
         {
-            var aKeyValueExpected = Guid.NewGuid().ToString();
-            var aKeyRepeatValueExpected = Guid.NewGuid().ToString();
+            var keyExpected = Guid.NewGuid().ToString();
+            var valueExpected = Guid.NewGuid().ToString();
 
-            List = new Dictionary<string, IEnumerable<string>>();
-            List
-                .AddOrUpdate("a", aKeyValueExpected)
-                .AddOrUpdate("e", Guid.NewGuid().ToString())
-                .AddOrUpdate("i", Guid.NewGuid().ToString())
-                .AddOrUpdate("o", Guid.NewGuid().ToString())
-                .AddOrUpdate("u", Guid.NewGuid().ToString())
-                .AddOrUpdate("a", aKeyRepeatValueExpected);
+            var list = GetList<string>().ToAddOrUpdate(keyExpected, valueExpected);
 
-            Assert.IsTrue(List.Contains("a", aKeyValueExpected));
-            Assert.IsTrue(List.Contains("a", aKeyRepeatValueExpected));
+            Assert.IsTrue(list.ContainsKey(keyExpected));
+            Assert.IsTrue(list.ToContainsKeyValue(keyExpected, valueExpected));
         }
 
         [TestMethod]
-        public void GetValues_Passing_Valid_Key_Returns_Values()
+        public void AddOrUpdate_Update_Values_Returns_Collection_WithUpdateValue()
         {
-            var aKeyValueExpected = Guid.NewGuid().ToString();
-            var aKeyRepeatValueExpected = Guid.NewGuid().ToString();
+            var keyExpected = Guid.NewGuid().ToString();
+            var value = Guid.NewGuid().ToString();
+            var list = GetList<string>().ToAddOrUpdate(keyExpected, value);
 
-            List = new Dictionary<string, IEnumerable<string>>();
-            List
-                .AddOrUpdate("a", aKeyValueExpected)
-                .AddOrUpdate("e", Guid.NewGuid().ToString())
-                .AddOrUpdate("i", Guid.NewGuid().ToString())
-                .AddOrUpdate("o", Guid.NewGuid().ToString())
-                .AddOrUpdate("u", Guid.NewGuid().ToString())
-                .AddOrUpdate("a", aKeyRepeatValueExpected);
+            var valueUpdate1 = Guid.NewGuid().ToString();
+            list.ToAddOrUpdate(keyExpected, valueUpdate1);
 
-            Assert.IsTrue(List.GetValues("a")?.Count() > 0);
+            var valueUpdate2 = Guid.NewGuid().ToString();
+            list.ToAddOrUpdate(keyExpected, valueUpdate2);
+
+            var valueExpected = Guid.NewGuid().ToString();
+            list.ToAddOrUpdate(keyExpected, valueExpected);
+
+            Assert.IsTrue(list.ContainsKey(keyExpected));
+            Assert.IsTrue(list.ToContainsKeyValue(keyExpected, valueExpected));
+            Assert.IsTrue(list.ToValues(keyExpected)?.Count() == 1);
         }
     }
 }

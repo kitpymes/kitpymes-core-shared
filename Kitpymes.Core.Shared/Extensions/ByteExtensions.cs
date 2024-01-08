@@ -33,7 +33,7 @@ public static class ByteExtensions
     /// <param name="bytes">Bytes a comprimir.</param>
     /// <returns>
     ///     byte[]: si se pudo comprimir |
-    ///     ArgumentException: si bytes es nulo.
+    ///     SharedException: si bytes es nulo.
     /// </returns>
     [return: NotNull]
     public static byte[] ToCompress(this byte[] bytes)
@@ -58,7 +58,7 @@ public static class ByteExtensions
     /// <param name="bytes">Bytes a descomprimir.</param>
     /// <returns>
     ///     byte[]: si se pudo descomprimir |
-    ///     ArgumentException: si bytes es nulo.
+    ///     SharedException: si bytes es nulo.
     /// </returns>
     [return: NotNull]
     public static byte[] ToDecompress(this byte[] bytes)
@@ -86,7 +86,7 @@ public static class ByteExtensions
     /// <returns>
     ///     TResult: si se pudo comprimir |
     ///     null: si no se pudo deserializar |
-    ///     ArgumentException: si bytes es nulo.
+    ///     SharedException: si bytes es nulo.
     /// </returns>
     public static TResult? ToDecompress<TResult>(this byte[] bytes)
     {
@@ -112,7 +112,7 @@ public static class ByteExtensions
     /// </summary>
     /// <typeparam name="TResult">Tipo de objeto.</typeparam>
     /// <param name="bytes">Bytes a convertir en objeto.</param>
-    /// <returns>TResult | ArgumentException: si bytes es nulo.</returns>
+    /// <returns>TResult | SharedException: si bytes es nulo.</returns>
     public static TResult? ToObject<TResult>(this byte[] bytes)
     {
         bytes.ToThrowIfNullOrEmpty();

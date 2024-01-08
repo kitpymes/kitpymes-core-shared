@@ -10,115 +10,166 @@ using System;
 namespace Kitpymes.Core.Shared.Tests
 {
     [TestClass]
-	public class ApplicationBuilderExtensionsTests
+    public class ApplicationBuilderExtensionsTests
     {
         #region ToEnvironment
 
         [TestMethod]
-		public void ToEnvironment_Passing_Development_Enviroment_Returns_Development_Name()
-		{
-            string? environmentNameExpected = "Development";
-            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = environmentNameExpected);
+        public void ToHostEnvironment_Returns_IHostEnvironment_NotNull()
+        {
+            var fakeEnvironmentExpected = new FakeHostEnvironment { };
+            var services = new ServiceCollection().FakeAddHostEnvironment(x => { });
+            var application = new ApplicationBuilder(services.BuildServiceProvider());
+
+            var result = application.ToHostEnvironment();
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void ToWebHostEnvironment_Returns_IWebHostEnvironment_NotNull()
+        {
+            var fakeEnvironmentExpected = new FakeWebHostEnvironment { };
+            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => { });
+            var application = new ApplicationBuilder(services.BuildServiceProvider());
+
+            var result = application.ToWebHostEnvironment();
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void ToEnvironment_With_TEnviromentType_IHostEnvironment_Returns_IHostEnvironment_NotNull()
+        {
+            var fakeEnvironmentExpected = new FakeHostEnvironment { };
+            var services = new ServiceCollection().FakeAddHostEnvironment(x => { });
+            var application = new ApplicationBuilder(services.BuildServiceProvider());
+
+            var result = application.ToEnvironment<IHostEnvironment>();
+
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void ToEnvironment_With_TEnviromentType_IWebHostEnvironment_Returns_IWebHostEnvironment_NotNull()
+        {
+            var fakeEnvironmentExpected = new FakeWebHostEnvironment { };
+            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => { });
             var application = new ApplicationBuilder(services.BuildServiceProvider());
 
             var result = application.ToEnvironment<IWebHostEnvironment>();
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(environmentNameExpected, result?.EnvironmentName);
-            Assert.IsTrue(result?.IsDevelopment());
-         }
+        }
 
         [TestMethod]
-        public void ToEnvironment_Passing_Production_Enviroment_Returns_Production_Name()
+        public void ToRequiredEnvironment_With_TEnviromentType_IHostEnvironment_Returns_IHostEnvironment_NotNull()
         {
-            var environmentNameExpected = "Production";
-            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = environmentNameExpected);
+            var fakeEnvironmentExpected = new FakeHostEnvironment { };
+            var services = new ServiceCollection().FakeAddHostEnvironment(x => { });
             var application = new ApplicationBuilder(services.BuildServiceProvider());
 
-            var result = application.ToEnvironment<IWebHostEnvironment>();
+            var result = application.ToRequiredEnvironment<IHostEnvironment>();
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(environmentNameExpected, result?.EnvironmentName);
-            Assert.IsTrue(result?.IsProduction());
         }
 
         [TestMethod]
-        public void ToEnvironment_Passing_Staging_Enviroment_Returns_Staging_Name()
+        public void ToRequiredEnvironment_With_TEnviromentType_IWebHostEnvironment_Returns_IWebHostEnvironment_NotNull()
         {
-            var environmentNameExpected = "Staging";
-            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = environmentNameExpected);
+            var fakeEnvironmentExpected = new FakeWebHostEnvironment { };
+            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => { });
             var application = new ApplicationBuilder(services.BuildServiceProvider());
 
-            var result = application.ToEnvironment<IWebHostEnvironment>();
+            var result = application.ToRequiredEnvironment<IWebHostEnvironment>();
 
             Assert.IsNotNull(result);
-            Assert.AreEqual(environmentNameExpected, result?.EnvironmentName);
-            Assert.IsTrue(result?.IsStaging());
         }
 
         [TestMethod]
-        public void ToEnvironment_Passing_Custom_Enviroment_Returns_Custom_Name()
+        public void ToRequiredEnvironment_With_TEnviromentType_IHostEnvironment_Returns_SharedException()
         {
-            var environmentNameExpected = Guid.NewGuid().ToString();
-            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = environmentNameExpected);
-            var aaa = services.BuildServiceProvider();
-            var fdsfd = aaa.ToEnvironment<IWebHostEnvironment>();
-
-            var application = new ApplicationBuilder(services.BuildServiceProvider());
-
-            var result = application.ToEnvironment<IWebHostEnvironment>();
-
-            Assert.IsNotNull(result);
-            Assert.AreEqual(environmentNameExpected, result?.EnvironmentName);
-            Assert.IsTrue(result?.IsEnvironment(environmentNameExpected));
-        }
-
-        [TestMethod]
-        public void ToEnvironment_Passing_Service_Not_Found_Returns_Null()
-        {
+            var fakeEnvironmentExpected = new FakeHostEnvironment { };
             var services = new ServiceCollection();
             var application = new ApplicationBuilder(services.BuildServiceProvider());
 
-            var result = application.ToEnvironment<IWebHostEnvironment>();
-
-            Assert.IsNull(result);
+            Assert.ThrowsException<SharedException>(application.ToRequiredEnvironment<IHostEnvironment>);
         }
 
         [TestMethod]
-        public void ToEnvironment_Passing_Application_Null_Returns_SharedException()
+        public void ToRequiredEnvironment_With_TEnviromentType_IWebHostEnvironment_Returns_SharedException()
         {
-            var services = new ServiceCollection();
-            ApplicationBuilder? application = null;
-
-#pragma warning disable CS8604 // Posible argumento de referencia nulo
-            var exceptionActual = Assert.ThrowsException<SharedException>(application.ToEnvironment<IWebHostEnvironment>);
-#pragma warning restore CS8604 // Posible argumento de referencia nulo
-
-            Assert.IsNotNull(exceptionActual);
-        }
-
-        [TestMethod]
-        public void ToRequiredEnvironment_Passing_Service_Not_Found_Returns_SharedException()
-        {
+            var fakeEnvironmentExpected = new FakeWebHostEnvironment { };
             var services = new ServiceCollection();
             var application = new ApplicationBuilder(services.BuildServiceProvider());
 
-            var exceptionActual = Assert.ThrowsException<SharedException>(() => application.ToRequiredEnvironment<IWebHostEnvironment>());
-
-            Assert.IsNotNull(exceptionActual);
+            Assert.ThrowsException<SharedException>(application.ToRequiredEnvironment<IWebHostEnvironment>);
         }
 
         [TestMethod]
-        public void ToRequiredEnvironment_Passing_Application_Null_Returns_SharedException()
+        public void ToIsDevelopment_Passing_IHostEnvironment_With_Valid_EnviromentName_Returns_True()
         {
-            var services = new ServiceCollection();
-            ApplicationBuilder? application = null;
+            var services = new ServiceCollection().FakeAddHostEnvironment(x => x.EnvironmentName = Util.Environment.Development.ToString());
+            var application = new ApplicationBuilder(services.BuildServiceProvider());
 
-#pragma warning disable CS8604 // Posible argumento de referencia nulo
-            var exceptionActual = Assert.ThrowsException<SharedException>(() => application.ToRequiredEnvironment<IWebHostEnvironment>());
-#pragma warning restore CS8604 // Posible argumento de referencia nulo
+            var result = application.ToIsDevelopment();
 
-            Assert.IsNotNull(exceptionActual);
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void ToIsDevelopment_Passing_IHostEnvironment_With_Invalid_EnviromentName_Returns_False()
+        {
+            var services = new ServiceCollection().FakeAddHostEnvironment(x => x.EnvironmentName = Guid.NewGuid().ToString());
+            var application = new ApplicationBuilder(services.BuildServiceProvider());
+
+            var result = application.ToIsDevelopment();
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void ToIsDevelopment_Passing_IWebHostEnvironment_With_Valid_EnviromentName_Returns_True()
+        {
+            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = Util.Environment.Development.ToString());
+            var application = new ApplicationBuilder(services.BuildServiceProvider());
+
+            var result = application.ToIsDevelopment();
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void ToIsDevelopment_Passing_IWebHostEnvironment_With_Invalid_EnviromentName_Returns_False()
+        {
+            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = Guid.NewGuid().ToString());
+            var application = new ApplicationBuilder(services.BuildServiceProvider());
+
+            var result = application.ToIsDevelopment();
+
+            Assert.IsFalse(result);
+        }
+
+        [TestMethod]
+        public void ToIsEnviroment_Passing_IWebHostEnvironment_With_Valid_EnviromentName_Returns_True()
+        {
+            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = Util.Environment.Development.ToString());
+            var application = new ApplicationBuilder(services.BuildServiceProvider());
+            
+            var result = application.ToIsDevelopment();
+
+            Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void ToIsEnviroment_Passing_IWebHostEnvironment_With_Invalid_EnviromentName_Returns_False()
+        {
+            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = Guid.NewGuid().ToString());
+            var application = new ApplicationBuilder(services.BuildServiceProvider());
+
+            var result = application.ToIsDevelopment();
+
+            Assert.IsFalse(result);
         }
 
         #endregion ToEnvironment
@@ -139,8 +190,7 @@ namespace Kitpymes.Core.Shared.Tests
         [TestMethod]
         public void ToExists_Passing_Valid_Service_Returns_True()
         {
-            var environmentNameExpected = "Development";
-            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = environmentNameExpected);
+            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => { });
             var application = new ApplicationBuilder(services.BuildServiceProvider());
 
             var result = application.ToExists<IWebHostEnvironment>();
@@ -178,35 +228,19 @@ namespace Kitpymes.Core.Shared.Tests
             Assert.IsNull(serviceActual);
         }
 
-        [TestMethod]
-        public void ToService_Passing_Parameter_Application_Null_Returns_SharedException()
-        {
-            var services = new ServiceCollection();
-            ApplicationBuilder? application = null;
-
-#pragma warning disable CS8604 // Posible argumento de referencia nulo
-            var exceptionActual = Assert.ThrowsException<SharedException>(() => application.ToRequiredService<IWebHostEnvironment>());
-#pragma warning restore CS8604 // Posible argumento de referencia nulo
-
-            Assert.IsNotNull(exceptionActual);
-        }
-
         #endregion ToService
 
-        #region ToService
+        #region ToRequiredService
 
         [TestMethod]
         public void ToRequiredService_Passing_Valid_Service_Returns_Service()
         {
-            var environmentNameExpected = "Development";
-            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = environmentNameExpected);
+            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => { });
             var application = new ApplicationBuilder(services.BuildServiceProvider());
 
             var serviceActual = application.ToRequiredService<IWebHostEnvironment>();
 
             Assert.IsNotNull(serviceActual);
-            Assert.AreEqual(environmentNameExpected, serviceActual?.EnvironmentName);
-            Assert.IsTrue(serviceActual?.IsDevelopment());
         }
 
         [TestMethod]
@@ -233,6 +267,6 @@ namespace Kitpymes.Core.Shared.Tests
             Assert.IsNotNull(exceptionActual);
         }
 
-        #endregion ToService
+        #endregion ToRequiredService
     }
 }

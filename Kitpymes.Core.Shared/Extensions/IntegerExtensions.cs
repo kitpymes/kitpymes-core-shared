@@ -9,6 +9,7 @@ namespace Kitpymes.Core.Shared.Extensions;
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 
 /*
     Clase de extensión IntegerExtensions
@@ -32,5 +33,16 @@ public static class IntegerExtensions
     /// <returns>El número convertido en string.</returns>
     [return: NotNull]
     public static string ToStringFormat(this int input, IFormatProvider? formatProvider = null)
-    => input.ToString(formatProvider);
+    => input.ToString(formatProvider ?? CultureInfo.CurrentCulture);
+
+    /// <summary>
+    /// Convierte un integer de tipo {TEnum} en un enum.
+    /// </summary>
+    /// <typeparam name="TEnum">Tipo de enum.</typeparam>
+    /// <param name="key">Id del enum.</param>
+    /// <param name="defaultValue">Valor por defecto que se le asigna si el valor no pertenece al tipo {TEnum}.</param>
+    /// <returns>Enum de tipo {TEnum}.</returns>
+    public static TEnum ToEnum<TEnum>(this int? key, TEnum defaultValue = default)
+        where TEnum : struct, Enum
+        => key.ToIsNullOrEmpty() || !Enum.IsDefined(typeof(TEnum), key) ? defaultValue : (TEnum)Enum.ToObject(typeof(TEnum), key);
 }

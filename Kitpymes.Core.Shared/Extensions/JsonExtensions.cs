@@ -8,7 +8,9 @@
 namespace Kitpymes.Core.Shared.Extensions;
 
 using System;
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Unicode;
 
 /*
   Clase de extensión JsonExtensions
@@ -32,7 +34,11 @@ public static class JsonExtensions
     /// <param name="action">Opciones de configuración.</param>
     /// <returns>string | null.</returns>
     public static string ToSerialize<T>(this T value, Action<JsonSerializerOptions>? action = null)
-    => JsonSerializer.Serialize(value.ToThrowIfNullOrEmpty(nameof(value)), typeof(T), action.ToConfigureOrDefault());
+    => JsonSerializer.Serialize(value.ToThrowIfNullOrEmpty(nameof(value)), typeof(T), action.ToConfigureOrDefault(new JsonSerializerOptions
+    {
+        Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+        WriteIndented = true,
+    }));
 
     /// <summary>
     /// Deserializa un objeto.
@@ -42,5 +48,9 @@ public static class JsonExtensions
     /// <param name="action">Opciones de configuración.</param>
     /// <returns>T | null.</returns>
     public static T? ToDeserialize<T>(this string value, Action<JsonSerializerOptions>? action = null)
-    => JsonSerializer.Deserialize<T>(value.ToThrowIfNullOrEmpty(nameof(value)), action.ToConfigureOrDefault());
+    => JsonSerializer.Deserialize<T>(value.ToThrowIfNullOrEmpty(nameof(value)), action.ToConfigureOrDefault(new JsonSerializerOptions
+    {
+        Encoder = JavaScriptEncoder.Create(UnicodeRanges.All),
+        WriteIndented = true,
+    }));
 }

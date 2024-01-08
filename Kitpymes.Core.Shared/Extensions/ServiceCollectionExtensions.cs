@@ -10,12 +10,15 @@ namespace Kitpymes.Core.Shared.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Kitpymes.Core.Shared.Util;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Scrutor;
+using Environment = Util.Environment;
 
 /*
   Clase de extensión ServiceCollectionExtensions
@@ -33,24 +36,203 @@ public static class ServiceCollectionExtensions
 {
     #region ToEnvironment
 
+    #region IServiceCollection
+
     /// <summary>
-    /// Obtiene los datos de ejecución del host o del web.
+    /// Obtiene los datos de ejecución del ambiente.
+    /// </summary>
+    /// <param name="services">Define un mecanismo para recuperar un objeto del proveedor de servicios.</param>
+    /// <returns>
+    ///     IHostEnvironment: si el servicio existe |
+    ///     nulo: si el servicio de tipo TService no existe |
+    ///     SharedException: si el parametro services es nulo.
+    /// </returns>
+    public static IHostEnvironment? ToHostEnvironment(this IServiceCollection services)
+    => services.ToEnvironment<IHostEnvironment>();
+
+    /// <summary>
+    /// Obtiene los datos de ejecución del ambiente.
+    /// </summary>
+    /// <param name="services">Define un mecanismo para recuperar un objeto del proveedor de servicios.</param>
+    /// <returns>
+    ///     IWebHostEnvironment: si el servicio existe |
+    ///     nulo: si el servicio de tipo TService no existe |
+    ///     SharedException: si el parametro services es nulo.
+    /// </returns>
+    public static IWebHostEnvironment? ToWebHostEnvironment(this IServiceCollection services)
+    => services.ToEnvironment<IWebHostEnvironment>();
+
+    /// <summary>
+    /// Obtiene los datos de ejecución del ambiente.
     /// </summary>
     /// <typeparam name="TEnviromentType">Tipo del servicio a buscar: IWebHostEnvironment | IHostEnvironment.</typeparam>
     /// <param name="services">Define un mecanismo para recuperar un objeto del proveedor de servicios.</param>
-    /// <returns>IWebHostEnvironment | IHostEnvironment | nulo.</returns>
+    /// <returns>
+    ///     TEnviromentType: si el servicio existe |
+    ///     nulo: si el servicio de tipo TService no existe |
+    ///     SharedException: si el parametro services es nulo.
+    /// </returns>
+    public static TEnviromentType? ToEnvironment<TEnviromentType>(this IServiceCollection services)
+        where TEnviromentType : IHostEnvironment
+    => services.ToService<TEnviromentType>();
+
+    /// <summary>
+    /// Obtiene los datos de ejecución del ambiente.
+    /// </summary>
+    /// <typeparam name="TEnviromentType">Tipo del servicio a buscar: IWebHostEnvironment | IHostEnvironment.</typeparam>
+    /// <param name="services">Define un mecanismo para recuperar un objeto del proveedor de servicios.</param>
+    /// <returns>
+    ///     TEnviromentType: si el servicio existe |
+    ///     nulo: si el servicio de tipo TService no existe |
+    ///     SharedException: si el parametro services es nulo |
+    ///     SharedException: si no encuentra el servicio.
+    /// </returns>
+    public static TEnviromentType? ToRequiredEnvironment<TEnviromentType>(this IServiceCollection services)
+        where TEnviromentType : IHostEnvironment
+    => services.ToRequiredService<TEnviromentType>();
+
+    /// <summary>
+    /// Obtiene un valor que indica si la aplicación se esta ejecutando en un ambiente de Development.
+    /// </summary>
+    /// <param name="services">Define un mecanismo para recuperar un objeto del proveedor de servicios.</param>
+    /// <returns>true | false.</returns>
+    public static bool ToIsDevelopment(this IServiceCollection services)
+    => services.ToIsEnviroment(Environment.Development);
+
+    /// <summary>
+    /// Obtiene un valor que indica si la aplicación se esta ejecutando en un ambiente de Testing.
+    /// </summary>
+    /// <param name="services">Define un mecanismo para recuperar un objeto del proveedor de servicios.</param>
+    /// <returns>true | false.</returns>
+    public static bool ToIsTesting(this IServiceCollection services)
+    => services.ToIsEnviroment(Environment.Testing);
+
+    /// <summary>
+    /// Obtiene un valor que indica si la aplicación se esta ejecutando en un ambiente de Staging.
+    /// </summary>
+    /// <param name="services">Define un mecanismo para recuperar un objeto del proveedor de servicios.</param>
+    /// <returns>true | false.</returns>
+    public static bool ToIsStaging(this IServiceCollection services)
+    => services.ToIsEnviroment(Environment.Staging);
+
+    /// <summary>
+    /// Obtiene un valor que indica si la aplicación se esta ejecutando en un ambiente de Production.
+    /// </summary>
+    /// <param name="services">Define un mecanismo para recuperar un objeto del proveedor de servicios.</param>
+    /// <returns>true | false.</returns>
+    public static bool ToIsProduction(this IServiceCollection services)
+    => services.ToIsEnviroment(Environment.Production);
+
+    /// <summary>
+    /// Obtiene un valor que indica si la aplicación se esta ejecutando en un ambiente de producción.
+    /// </summary>
+    /// <param name="services">Define un mecanismo para recuperar un objeto del proveedor de servicios.</param>
+    /// <param name="environment">Tipo de ambiente de ejecución.</param>
+    /// <returns>true | false.</returns>
+    public static bool ToIsEnviroment(this IServiceCollection services, Environment environment)
+    => services.ToHostEnvironment()?.EnvironmentName == environment.Name
+        || services.ToWebHostEnvironment()?.EnvironmentName == environment.Name;
+
+    #endregion IServiceCollection
+
+    #region IServiceProvider
+
+    /// <summary>
+    /// Obtiene los datos de ejecución del ambiente.
+    /// </summary>
+    /// <param name="services">Define un mecanismo para recuperar un objeto del proveedor de servicios.</param>
+    /// <returns>
+    ///     IHostEnvironment: si el servicio existe |
+    ///     nulo: si el servicio de tipo TService no existe |
+    ///     SharedException: si el parametro services es nulo.
+    /// </returns>
+    public static IHostEnvironment? ToHostEnvironment(this IServiceProvider services)
+    => services.ToEnvironment<IHostEnvironment>();
+
+    /// <summary>
+    /// Obtiene los datos de ejecución del ambiente.
+    /// </summary>
+    /// <param name="services">Define un mecanismo para recuperar un objeto del proveedor de servicios.</param>
+    /// <returns>
+    ///     IWebHostEnvironment: si el servicio existe |
+    ///     nulo: si el servicio de tipo TService no existe |
+    ///     SharedException: si el parametro services es nulo.
+    /// </returns>
+    public static IWebHostEnvironment? ToWebHostEnvironment(this IServiceProvider services)
+    => services.ToEnvironment<IWebHostEnvironment>();
+
+    /// <summary>
+    /// Obtiene los datos de ejecución del ambiente.
+    /// </summary>
+    /// <typeparam name="TEnviromentType">Tipo del servicio a buscar: IWebHostEnvironment | IHostEnvironment.</typeparam>
+    /// <param name="services">Define un mecanismo para recuperar un objeto del proveedor de servicios.</param>
+    /// <returns>
+    ///     TEnviromentType: si el servicio existe |
+    ///     nulo: si el servicio de tipo TService no existe |
+    ///     SharedException: si el parametro services es nulo.
+    /// </returns>
     public static TEnviromentType? ToEnvironment<TEnviromentType>(this IServiceProvider services)
         where TEnviromentType : IHostEnvironment
     => services.GetService<TEnviromentType>();
 
     /// <summary>
-    /// Obtiene los datos de ejecución del host o del web.
+    /// Obtiene los datos de ejecución del ambiente.
     /// </summary>
     /// <typeparam name="TEnviromentType">Tipo del servicio a buscar: IWebHostEnvironment | IHostEnvironment.</typeparam>
-    /// <param name="services">Define un mecanismo para recuperar un objeto de la coleccion de servicios.</param>
-    /// <returns>IWebHostEnvironment | IHostEnvironment | nulo.</returns>
-    public static TEnviromentType? ToEnvironment<TEnviromentType>(this IServiceCollection services)
-    => services.ToService<TEnviromentType>();
+    /// <param name="services">Define un mecanismo para recuperar un objeto del proveedor de servicios.</param>
+    /// <returns>
+    ///     TEnviromentType: si el servicio existe |
+    ///     nulo: si el servicio de tipo TService no existe |
+    ///     SharedException: si el parametro services es nulo |
+    ///     SharedException: si no encuentra el servicio.
+    /// </returns>
+    public static TEnviromentType? ToRequiredEnvironment<TEnviromentType>(this IServiceProvider services)
+        where TEnviromentType : IHostEnvironment
+    => services.ToEnvironment<TEnviromentType>().ToThrowIfNullOrEmpty(Messages.NotFound(typeof(TEnviromentType).Name));
+
+    /// <summary>
+    /// Obtiene un valor que indica si la aplicación se esta ejecutando en un ambiente de Development.
+    /// </summary>
+    /// <param name="services">Define un mecanismo para recuperar un objeto del proveedor de servicios.</param>
+    /// <returns>true | false.</returns>
+    public static bool ToIsDevelopment(this IServiceProvider services)
+    => services.ToIsEnviroment(Environment.Development);
+
+    /// <summary>
+    /// Obtiene un valor que indica si la aplicación se esta ejecutando en un ambiente de Testing.
+    /// </summary>
+    /// <param name="services">Define un mecanismo para recuperar un objeto del proveedor de servicios.</param>
+    /// <returns>true | false.</returns>
+    public static bool ToIsTesting(this IServiceProvider services)
+    => services.ToIsEnviroment(Environment.Testing);
+
+    /// <summary>
+    /// Obtiene un valor que indica si la aplicación se esta ejecutando en un ambiente de Staging.
+    /// </summary>
+    /// <param name="services">Define un mecanismo para recuperar un objeto del proveedor de servicios.</param>
+    /// <returns>true | false.</returns>
+    public static bool ToIsStaging(this IServiceProvider services)
+    => services.ToIsEnviroment(Environment.Staging);
+
+    /// <summary>
+    /// Obtiene un valor que indica si la aplicación se esta ejecutando en un ambiente de Production.
+    /// </summary>
+    /// <param name="services">Define un mecanismo para recuperar un objeto del proveedor de servicios.</param>
+    /// <returns>true | false.</returns>
+    public static bool ToIsProduction(this IServiceProvider services)
+    => services.ToIsEnviroment(Environment.Production);
+
+    /// <summary>
+    /// Obtiene un valor que indica si la aplicación se esta ejecutando en un ambiente de producción.
+    /// </summary>
+    /// <param name="services">Define un mecanismo para recuperar un objeto del proveedor de servicios.</param>
+    /// <param name="environment">Tipo de ambiente de ejecución.</param>
+    /// <returns>true | false.</returns>
+    public static bool ToIsEnviroment(this IServiceProvider services, Environment environment)
+    => services.ToHostEnvironment()?.EnvironmentName == environment.Name
+        || services.ToWebHostEnvironment()?.EnvironmentName == environment.Name;
+
+    #endregion IServiceProvider
 
     #endregion ToEnvironment
 
@@ -69,14 +251,57 @@ public static class ServiceCollectionExtensions
 
     #region ToService
 
+    #region IServiceCollection
+
     /// <summary>
     /// Obtiene el servicio del tipo solicitado.
     /// </summary>
     /// <typeparam name="TService">Tipo del servicio a buscar.</typeparam>
     /// <param name="services">Especifica el contrato para una colección de descriptores de servicio.</param>
-    /// <returns>TService | nulo.</returns>
+    /// <returns>
+    ///     TService: si encuentra el servicio |
+    ///     SharedException: si el parametro services es nulo |
+    ///     null: si no encuentra el servicio de tipo TService.
+    /// </returns>
     public static TService? ToService<TService>(this IServiceCollection services)
     => services.BuildServiceProvider().GetService<TService>();
+
+    /// <summary>
+    /// Obtiene el servicio del tipo solicitado.
+    /// </summary>
+    /// <param name="services">Especifica el contrato para una colección de descriptores de servicio.</param>
+    /// <param name="type">Tipo de servicio a obtener.</param>
+    /// <returns>
+    ///     object: si encuentra el servicio |
+    ///     SharedException: si el parametro services es nulo |
+    ///     null: si no encuentra el servicio de tipo TService.
+    /// </returns>
+    public static object? ToService(this IServiceCollection services, Type type)
+    => services.BuildServiceProvider().GetService(type);
+
+    /// <summary>
+    /// Obtiene el servicio del tipo solicitado.
+    /// </summary>
+    /// <typeparam name="TService">Tipo de servicio a buscar.</typeparam>
+    /// <param name="services">Especifica el contrato para una colección de descriptores de servicio.</param>
+    /// <returns>
+    ///     TService: si encuentra el servicio |
+    ///     SharedException: si el parametro services es nulo o si no encuentra el servicio.
+    /// </returns>
+    public static TService ToRequiredService<TService>(this IServiceCollection services)
+    => (TService)services.ToRequiredService(typeof(TService));
+
+    /// <summary>
+    /// Obtiene el servicio del tipo solicitado.
+    /// </summary>
+    /// <param name="services">Especifica el contrato para una colección de descriptores de servicio.</param>
+    /// <param name="type">Tipo de servicio a obtener.</param>
+    /// <returns>
+    ///     TService: si encuentra el servicio |
+    ///     SharedException: si el parametro services es nulo o si no encuentra el servicio.
+    /// </returns>
+    public static object ToRequiredService(this IServiceCollection services, Type type)
+    => services.ToService(type).ToThrowIfNullOrEmpty(Messages.NotFound(type.Name));
 
     /// <summary>
     /// Registra los servicios que la clase coincidan con la interfaz, utilizando el patrón (ClassName coincide con IClassName).
@@ -125,7 +350,7 @@ public static class ServiceCollectionExtensions
     /// <param name="services">Especifica el contrato para una colección de descriptores de servicio.</param>
     /// <param name="assemblies">Los assemblies se los servicios que queremos agregar a la colección.</param>
     /// <param name="lifetime">Especifica la vida útil de un servicio.</param>
-    /// <returns>IServiceCollection | ApplicationException: if assemblies is null or not contains elements.</returns>
+    /// <returns>IServiceCollection | SharedException: if assemblies is null or not contains elements.</returns>
     public static IServiceCollection ToServiceMatchingInterface(
         this IServiceCollection services,
         Assembly[] assemblies,
@@ -151,7 +376,7 @@ public static class ServiceCollectionExtensions
     /// <param name="services">Especifica el contrato para una colección de descriptores de servicio.</param>
     /// <param name="assemblies">Los assemblies se los servicios que queremos agregar a la colección.</param>
     /// <param name="lifetime">Especifica la vida útil de un servicio.</param>
-    /// <returns>IServiceCollection | ApplicationException: if assemblies is null or not contains elements.</returns>
+    /// <returns>IServiceCollection | SharedException: if assemblies is null or not contains elements.</returns>
     public static IServiceCollection ToServiceMatchingInterface<TInterface>(
         this IServiceCollection services,
         Assembly[] assemblies,
@@ -169,6 +394,62 @@ public static class ServiceCollectionExtensions
 
         return services;
     }
+
+    #endregion IServiceCollection
+
+    #region IServiceProvider
+
+    /// <summary>
+    /// Obtiene el servicio del tipo solicitado.
+    /// </summary>
+    /// <typeparam name="TService">Tipo del servicio a buscar.</typeparam>
+    /// <param name="services">Especifica el contrato para una colección de descriptores de servicio.</param>
+    /// <returns>
+    ///     TService: si encuentra el servicio |
+    ///     SharedException: si el parametro services es nulo |
+    ///     null: si no encuentra el servicio de tipo TService.
+    /// </returns>
+    public static TService? ToService<TService>(this IServiceProvider services)
+    => services.GetService<TService>();
+
+    /// <summary>
+    /// Obtiene el servicio del tipo solicitado.
+    /// </summary>
+    /// <param name="services">Especifica el contrato para una colección de descriptores de servicio.</param>
+    /// <param name="type">Tipo de servicio a obtener.</param>
+    /// <returns>
+    ///     object: si encuentra el servicio |
+    ///     SharedException: si el parametro services es nulo |
+    ///     null: si no encuentra el servicio de tipo TService.
+    /// </returns>
+    public static object? ToService(this IServiceProvider services, Type type)
+    => services.GetService(type);
+
+    /// <summary>
+    /// Obtiene el servicio del tipo solicitado.
+    /// </summary>
+    /// <typeparam name="TService">Tipo de servicio a buscar.</typeparam>
+    /// <param name="services">Especifica el contrato para una colección de descriptores de servicio.</param>
+    /// <returns>
+    ///     TService: si encuentra el servicio |
+    ///     SharedException: si el parametro services es nulo o si no encuentra el servicio.
+    /// </returns>
+    public static TService ToRequiredService<TService>(this IServiceProvider services)
+    => (TService)services.ToRequiredService(typeof(TService));
+
+    /// <summary>
+    /// Obtiene el servicio del tipo solicitado.
+    /// </summary>
+    /// <param name="services">Especifica el contrato para una colección de descriptores de servicio.</param>
+    /// <param name="type">Tipo de servicio a obtener.</param>
+    /// <returns>
+    ///     TService: si encuentra el servicio |
+    ///     SharedException: si el parametro services es nulo o si no encuentra el servicio.
+    /// </returns>
+    public static object ToRequiredService(this IServiceProvider services, Type type)
+    => services.ToService(type).ToThrowIfNullOrEmpty(Messages.NotFound(type.Name));
+
+    #endregion IServiceProvider
 
     #endregion ToService
 

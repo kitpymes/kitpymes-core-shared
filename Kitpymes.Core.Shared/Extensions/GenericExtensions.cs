@@ -7,9 +7,12 @@
 
 namespace Kitpymes.Core.Shared.Extensions;
 
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Xml.Serialization;
 
 /*
@@ -77,9 +80,7 @@ public static class GenericExtensions
 
                 return true;
             })?
-#pragma warning disable CS8714 // El tipo no se puede usar como parámetro de tipo en el método o tipo genérico. La nulabilidad del argumento de tipo no coincide con la restricción "notnull"
             .ToDictionary(
-#pragma warning restore CS8714 // El tipo no se puede usar como parámetro de tipo en el método o tipo genérico. La nulabilidad del argumento de tipo no coincide con la restricción "notnull"
                 property => property.Name.ToFirstLetterUpper(),
                 property => property.GetValue(input, null)?.ToString());
     }

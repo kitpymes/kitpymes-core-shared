@@ -9,9 +9,11 @@ namespace Kitpymes.Core.Shared.Extensions;
 
 using Kitpymes.Core.Shared.Util;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using Environment = Util.Environment;
 
 /*
     Clase de extensión ApplicationBuilderExtensions
@@ -27,6 +29,32 @@ using System;
 /// </remarks>
 public static class ApplicationBuilderExtensions
 {
+    #region ToEnvironment
+
+    /// <summary>
+    /// Obtiene los datos de ejecución del ambiente.
+    /// </summary>
+    /// <param name="application">Define un mecanismo para recuperar un objeto del proveedor de servicios de aplicaciones.</param>
+    /// <returns>
+    ///     IHostEnvironment: si el servicio existe |
+    ///     nulo: si el servicio de tipo TService no existe |
+    ///     SharedException: si el parametro application es nulo.
+    /// </returns>
+    public static IHostEnvironment? ToHostEnvironment(this IApplicationBuilder application)
+    => application.ToEnvironment<IHostEnvironment>();
+
+    /// <summary>
+    /// Obtiene los datos de ejecución del ambiente.
+    /// </summary>
+    /// <param name="application">Define un mecanismo para recuperar un objeto del proveedor de servicios de aplicaciones.</param>
+    /// <returns>
+    ///     IWebHostEnvironment: si el servicio existe |
+    ///     nulo: si el servicio de tipo TService no existe |
+    ///     SharedException: si el parametro application es nulo.
+    /// </returns>
+    public static IWebHostEnvironment? ToWebHostEnvironment(this IApplicationBuilder application)
+    => application.ToEnvironment<IWebHostEnvironment>();
+
     /// <summary>
     /// Obtiene los datos de ejecución del ambiente.
     /// </summary>
@@ -35,7 +63,7 @@ public static class ApplicationBuilderExtensions
     /// <returns>
     ///     TEnviromentType: si el servicio existe |
     ///     nulo: si el servicio de tipo TService no existe |
-    ///     ArgumentException: si el parametro application es nulo.
+    ///     SharedException: si el parametro application es nulo.
     /// </returns>
     public static TEnviromentType? ToEnvironment<TEnviromentType>(this IApplicationBuilder application)
         where TEnviromentType : IHostEnvironment
@@ -49,12 +77,56 @@ public static class ApplicationBuilderExtensions
     /// <returns>
     ///     TEnviromentType: si el servicio existe |
     ///     nulo: si el servicio de tipo TService no existe |
-    ///     ArgumentException: si el parametro application es nulo |
-    ///     ApplicationException: si no encuentra el servicio.
+    ///     SharedException: si el parametro application es nulo |
+    ///     SharedException: si no encuentra el servicio.
     /// </returns>
     public static TEnviromentType? ToRequiredEnvironment<TEnviromentType>(this IApplicationBuilder application)
         where TEnviromentType : IHostEnvironment
     => application.ToRequiredService<TEnviromentType>();
+
+    /// <summary>
+    /// Obtiene un valor que indica si la aplicación se esta ejecutando en un ambiente de Development.
+    /// </summary>
+    /// <param name="application">Extensión de la configurarción de la solicitud de una aplicación.</param>
+    /// <returns>true | false.</returns>
+    public static bool ToIsDevelopment(this IApplicationBuilder application)
+    => application.ToIsEnviroment(Environment.Development);
+
+    /// <summary>
+    /// Obtiene un valor que indica si la aplicación se esta ejecutando en un ambiente de Testing.
+    /// </summary>
+    /// <param name="application">Extensión de la configurarción de la solicitud de una aplicación.</param>
+    /// <returns>true | false.</returns>
+    public static bool ToIsTesting(this IApplicationBuilder application)
+    => application.ToIsEnviroment(Environment.Testing);
+
+    /// <summary>
+    /// Obtiene un valor que indica si la aplicación se esta ejecutando en un ambiente de Staging.
+    /// </summary>
+    /// <param name="application">Extensión de la configurarción de la solicitud de una aplicación.</param>
+    /// <returns>true | false.</returns>
+    public static bool ToIsStaging(this IApplicationBuilder application)
+    => application.ToIsEnviroment(Environment.Staging);
+
+    /// <summary>
+    /// Obtiene un valor que indica si la aplicación se esta ejecutando en un ambiente de Production.
+    /// </summary>
+    /// <param name="application">Extensión de la configurarción de la solicitud de una aplicación.</param>
+    /// <returns>true | false.</returns>
+    public static bool ToIsProduction(this IApplicationBuilder application)
+    => application.ToIsEnviroment(Environment.Production);
+
+    /// <summary>
+    /// Obtiene un valor que indica si la aplicación se esta ejecutando en un ambiente de producción.
+    /// </summary>
+    /// <param name="application">Extensión de la configurarción de la solicitud de una aplicación.</param>
+    /// <param name="environment">Tipo de ambiente de ejecución.</param>
+    /// <returns>true | false.</returns>
+    public static bool ToIsEnviroment(this IApplicationBuilder application, Environment environment)
+    => application.ToHostEnvironment()?.EnvironmentName == environment.Name ||
+        application.ToWebHostEnvironment()?.EnvironmentName == environment.Name;
+
+    #endregion ToEnvironment
 
     /// <summary>
     /// Verifica si existe un servicio.
@@ -64,7 +136,7 @@ public static class ApplicationBuilderExtensions
     /// <returns>
     ///     true: si el servicio de tipo TService existe |
     ///     false: si el servicio de tipo TService no existe |
-    ///     ArgumentException: si el parametro application es nulo.
+    ///     SharedException: si el parametro application es nulo.
     /// </returns>
     public static bool ToExists<TService>(this IApplicationBuilder application)
     => !application.ToService<TService>().ToIsNullOrEmpty();
@@ -76,11 +148,24 @@ public static class ApplicationBuilderExtensions
     /// <param name="application">Extensión de la configurarción de la solicitud de una aplicación.</param>
     /// <returns>
     ///     TService: si encuentra el servicio |
-    ///     ArgumentException: si el parametro application es nulo |
-    ///     ApplicationException: si no encuentra el servicio.
+    ///     SharedException: si el parametro application es nulo |
+    ///     SharedException: si no encuentra el servicio.
     /// </returns>
     public static TService ToRequiredService<TService>(this IApplicationBuilder application)
-    => application.ToService<TService>().ToThrowIfNullOrEmpty(Messages.NotFound(typeof(TService).Name));
+    => (TService)application.ToRequiredService(typeof(TService));
+
+    /// <summary>
+    /// Obtiene el servicio del tipo solicitado.
+    /// </summary>
+    /// <param name="application">Extensión de la configurarción de la solicitud de una aplicación.</param>
+    /// <param name="type">Tipo de servicio a obtener.</param>
+    /// <returns>
+    ///     TService: si encuentra el servicio |
+    ///     SharedException: si el parametro application es nulo |
+    ///     SharedException: si no encuentra el servicio.
+    /// </returns>
+    public static object ToRequiredService(this IApplicationBuilder application, Type type)
+    => application.ToService(type).ToThrowIfNullOrEmpty(Messages.NotFound(type.Name));
 
     /// <summary>
     /// Obtiene el servicio del tipo solicitado.
@@ -89,9 +174,22 @@ public static class ApplicationBuilderExtensions
     /// <param name="application">Extensión de la configurarción de la solicitud de una aplicación.</param>
     /// <returns>
     ///     TService: si encuentra el servicio |
-    ///     ArgumentException: si el parametro application es nulo |
+    ///     SharedException: si el parametro application es nulo |
     ///     null: si no encuentra el servicio de tipo TService.
     /// </returns>
     public static TService? ToService<TService>(this IApplicationBuilder application)
-    => application.ToThrowIfNullOrEmpty().ApplicationServices.GetService<TService>();
+    => (TService?)application.ToService(typeof(TService));
+
+    /// <summary>
+    /// Obtiene el servicio del tipo solicitado.
+    /// </summary>
+    /// <param name="application">Extensión de la configurarción de la solicitud de una aplicación.</param>
+    /// <param name="type">Tipo de servicio a obtener.</param>
+    /// <returns>
+    ///     TService: si encuentra el servicio |
+    ///     SharedException: si el parametro application es nulo |
+    ///     null: si no encuentra el servicio de tipo TService.
+    /// </returns>
+    public static object? ToService(this IApplicationBuilder application, Type type)
+    => application.ToThrowIfNullOrEmpty().ApplicationServices.GetService(type);
 }

@@ -36,7 +36,7 @@ public static class HttpResponseExtensions
     /// <param name="message">Mensaje de la respuesta.</param>
     /// <param name="contentType">Tipo de contenido de la respuesta.</param>
     /// <param name="headers">Cabezara de la respuesta.</param>
-    /// <returns>Respuesta de la petición HTTP | ApplicationException: si el parámetro httpResponse es nulo.</returns>
+    /// <returns>Respuesta de la petición HTTP | SharedException: si el parámetro httpResponse es nulo.</returns>
     public static async Task ToResultAsync(
         this HttpResponse httpResponse,
         HttpStatusCode status,

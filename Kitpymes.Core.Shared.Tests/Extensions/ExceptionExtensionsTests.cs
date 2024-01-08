@@ -1,4 +1,5 @@
 ﻿using Kitpymes.Core.Shared.Extensions;
+using Kitpymes.Core.Shared.Util;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
@@ -25,7 +26,7 @@ namespace Kitpymes.Core.Shared.Tests
         {
             var messageExpected = Guid.NewGuid().ToString();
             var messageInnerExceptionExpected = Guid.NewGuid().ToString();
-            FakeException = new Exception(messageExpected, new ApplicationException(messageInnerExceptionExpected));
+            FakeException = new Exception(messageExpected, new SharedException(messageInnerExceptionExpected));
 
             var stringActual = FakeException.ToFullMessage();
 
@@ -45,7 +46,7 @@ namespace Kitpymes.Core.Shared.Tests
             var messageInnerInnerExceptionExpected = Guid.NewGuid().ToString();
 
             FakeException = new Exception(messageExpected, 
-                new ApplicationException(messageInnerExceptionExpected, 
+                new SharedException(messageInnerExceptionExpected, 
                 new ArgumentOutOfRangeException(messageInnerInnerExceptionExpected)));
 
             FakeException.Data.Add("Id", Guid.NewGuid());

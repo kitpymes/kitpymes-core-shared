@@ -44,5 +44,12 @@ public static class IntegerExtensions
     /// <returns>Enum de tipo {TEnum}.</returns>
     public static TEnum ToEnum<TEnum>(this int? key, TEnum defaultValue = default)
         where TEnum : struct, Enum
-        => key.ToIsNullOrEmpty() || !Enum.IsDefined(typeof(TEnum), key) ? defaultValue : (TEnum)Enum.ToObject(typeof(TEnum), key);
+    {
+        if (key.ToIsNullOrEmpty() || !Enum.IsDefined(typeof(TEnum), key))
+        {
+            return defaultValue;
+        }
+
+        return (TEnum)Enum.ToObject(typeof(TEnum), key);
+    }
 }

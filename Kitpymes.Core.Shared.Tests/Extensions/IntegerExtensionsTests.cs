@@ -29,7 +29,7 @@ namespace Kitpymes.Core.Shared.Tests
 
             var enumExpected = FakeEnumeration.c;
 
-            var enumActual = keyEnum.ToEnum<FakeEnumeration>();
+            FakeEnumeration enumActual = keyEnum.ToEnum<FakeEnumeration>();
 
             Assert.AreEqual(enumExpected, enumActual);
         }

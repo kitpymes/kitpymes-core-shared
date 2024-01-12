@@ -298,7 +298,8 @@ public static class VerifyExtensions
     /// <param name="argument">El primer argumento a comparar.</param>
     /// <param name="argumentCompare">El segundo argumento a comparar.</param>
     /// <returns>true | false.</returns>
-    public static bool ToIsEqual([NotNullWhen(true)] this object? argument, object? argumentCompare) => Equals(argument, argumentCompare);
+    public static bool ToIsNotEqual([NotNullWhen(true)] this object? argument, object? argumentCompare)
+        => !Equals(argument, argumentCompare);
 
     /// <summary>
     /// Verifica si dos argumentos son iguales.
@@ -315,7 +316,7 @@ public static class VerifyExtensions
         TArgument argumentCompare,
         [CallerArgumentExpression(nameof(argument))] string? argumentName = null,
         [CallerArgumentExpression(nameof(argumentCompare))] string? argumentCompareName = null)
-    => argument.ToThrowIf(Messages.FieldEqual(argumentName, argumentCompareName), () => !argument.ToIsEqual(argumentCompare));
+    => argument.ToThrowIf(Messages.FieldEqual(argumentName, argumentCompareName), () => argument.ToIsNotEqual(argumentCompare));
 
     #endregion Equal
 

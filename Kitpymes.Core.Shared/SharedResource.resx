@@ -242,20 +242,20 @@
     <comment>El campo {0} tiene un formato inválido</comment>
   </data>
   <data name="MsgLess" xml:space="preserve">
-    <value>El campo debe ser menor a {0}</value>
-    <comment>El campo debe ser menor a {0}</comment>
+    <value>El campo es menor a {0}</value>
+    <comment>El campo es menor a {0}</comment>
   </data>
   <data name="MsgLessOrEqual" xml:space="preserve">
-    <value>El campo debe ser menor o igual a {0}</value>
-    <comment>El campo debe ser menor o igual a {0}</comment>
+    <value>El campo es menor o igual a {0}</value>
+    <comment>El campo es menor o igual a {0}</comment>
   </data>
   <data name="MsgLessOrEqualWithFieldName" xml:space="preserve">
-    <value>El campo {0} debe ser menor o igual que {1}</value>
-    <comment>El campo {0} debe ser menor o igual que {1}</comment>
+    <value>El campo {0} es menor o igual que {1}</value>
+    <comment>El campo {0} es menor o igual que {1}</comment>
   </data>
   <data name="MsgLessWithFieldName" xml:space="preserve">
-    <value>El campo {0} debe ser menor que {1}</value>
-    <comment>El campo {0} debe ser menor que {1}</comment>
+    <value>El campo {0} es menor que {1}</value>
+    <comment>El campo {0} es menor que {1}</comment>
   </data>
   <data name="MsgName" xml:space="preserve">
     <value>El nombre tiene un formato no válido</value>
@@ -302,16 +302,16 @@
     <comment>El campo es menor o igual que {0} o mayor o igual que {1}</comment>
   </data>
   <data name="MsgOutOrEqualRangeWithFieldName" xml:space="preserve">
-    <value>El campo {0} es menor o igual que {0} o mayor o igual que {1}</value>
-    <comment>El campo {0} es menor o igual que {0} o mayor o igual que {1}</comment>
+    <value>El campo {0} es menor o igual que {1} o mayor o igual que {2}</value>
+    <comment>El campo {0} es menor o igual que {1} o mayor o igual que {2}</comment>
   </data>
   <data name="MsgOutRange" xml:space="preserve">
     <value>El campo es menor que {0} o mayor que {1}</value>
     <comment>El campo es menor que {0} o mayor que {1}</comment>
   </data>
   <data name="MsgOutRangeWithFieldName" xml:space="preserve">
-    <value>El campo {0} es menor que {0} o mayor que {1}</value>
-    <comment>El campo {0} es menor que {0} o mayor que {1}</comment>
+    <value>El campo {0} es menor que {1} o mayor que {2}</value>
+    <comment>El campo {0} es menor que {1} o mayor que {2}</comment>
   </data>
   <data name="MsgPassword" xml:space="preserve">
     <value>La contraseña debe contener un mínimo de {0} caracteres</value>

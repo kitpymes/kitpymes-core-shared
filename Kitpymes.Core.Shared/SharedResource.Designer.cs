@@ -340,7 +340,7 @@ namespace Kitpymes.Core.Shared {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a El campo debe ser menor a {0}.
+        ///   Busca una cadena traducida similar a El campo es menor a {0}.
         /// </summary>
         public static string MsgLess {
             get {
@@ -349,7 +349,7 @@ namespace Kitpymes.Core.Shared {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a El campo debe ser menor o igual a {0}.
+        ///   Busca una cadena traducida similar a El campo es menor o igual a {0}.
         /// </summary>
         public static string MsgLessOrEqual {
             get {
@@ -358,7 +358,7 @@ namespace Kitpymes.Core.Shared {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a El campo {0} debe ser menor o igual que {1}.
+        ///   Busca una cadena traducida similar a El campo {0} es menor o igual que {1}.
         /// </summary>
         public static string MsgLessOrEqualWithFieldName {
             get {
@@ -367,7 +367,7 @@ namespace Kitpymes.Core.Shared {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a El campo {0} debe ser menor que {1}.
+        ///   Busca una cadena traducida similar a El campo {0} es menor que {1}.
         /// </summary>
         public static string MsgLessWithFieldName {
             get {
@@ -475,7 +475,7 @@ namespace Kitpymes.Core.Shared {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a El campo {0} es menor o igual que {0} o mayor o igual que {1}.
+        ///   Busca una cadena traducida similar a El campo {0} es menor o igual que {1} o mayor o igual que {2}.
         /// </summary>
         public static string MsgOutOrEqualRangeWithFieldName {
             get {
@@ -493,7 +493,7 @@ namespace Kitpymes.Core.Shared {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a El campo {0} es menor que {0} o mayor que {1}.
+        ///   Busca una cadena traducida similar a El campo {0} es menor que {1} o mayor que {2}.
         /// </summary>
         public static string MsgOutRangeWithFieldName {
             get {

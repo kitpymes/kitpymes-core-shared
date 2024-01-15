@@ -1,8 +1,9 @@
 ﻿using Kitpymes.Core.Shared.Extensions;
+using Kitpymes.Core.Shared.Tests.Fakes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Extensions
 {
     [TestClass]
     public class GenericExtensionsTests

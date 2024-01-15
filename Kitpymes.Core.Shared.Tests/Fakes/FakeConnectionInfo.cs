@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Security.Cryptography.X509Certificates;
 using System.Net;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Fakes
 {
     public class FakeConnectionInfo : ConnectionInfo
     {

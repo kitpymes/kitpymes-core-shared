@@ -1,8 +1,9 @@
 ﻿using Kitpymes.Core.Shared.Extensions;
+using Kitpymes.Core.Shared.Tests.Fakes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Extensions
 {
     [TestClass]
     public class JsonExtensionsTests
@@ -36,8 +37,8 @@ namespace Kitpymes.Core.Shared.Tests
 
             var userSerialize = userExpected.ToSerialize();
 
-            var userActual = userSerialize.ToDeserialize<FakeUser>(); 
-            
+            var userActual = userSerialize.ToDeserialize<FakeUser>();
+
             Assert.AreEqual(userExpected.Age, userActual?.Age);
             Assert.AreEqual(userExpected.Email, userActual?.Email);
             Assert.AreEqual(userExpected.Name, userActual?.Name);

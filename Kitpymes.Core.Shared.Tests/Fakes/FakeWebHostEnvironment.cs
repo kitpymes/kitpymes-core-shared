@@ -4,7 +4,7 @@ using Microsoft.Extensions.FileProviders;
 using Moq;
 using System;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Fakes
 {
     public class FakeWebHostEnvironment : IWebHostEnvironment
     {
@@ -13,11 +13,11 @@ namespace Kitpymes.Core.Shared.Tests
 #pragma warning disable CS8766 // La nulabilidad de los tipos de referencia del tipo de valor devuelto no coincide con el miembro implementado de forma implícita (posiblemente debido a los atributos de nulabilidad).
         public IFileProvider? ContentRootFileProvider { get; set; }
 #pragma warning restore CS8766 // La nulabilidad de los tipos de referencia del tipo de valor devuelto no coincide con el miembro implementado de forma implícita (posiblemente debido a los atributos de nulabilidad).
-        
+
         public string ContentRootPath { get; set; } = string.Empty;
-        
+
         public string EnvironmentName { get; set; } = string.Empty;
-        
+
         public string WebRootPath { get; set; } = string.Empty;
 
 #pragma warning disable CS8766 // La nulabilidad de los tipos de referencia del tipo de valor devuelto no coincide con el miembro implementado de forma implícita (posiblemente debido a los atributos de nulabilidad).

@@ -1,17 +1,17 @@
 ﻿using Kitpymes.Core.Shared.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Extensions
 {
     [TestClass]
     public class EnumExtensionsTests
     {
-        enum FakeEnumeration 
+        enum FakeEnumeration
         {
             [System.ComponentModel.DataAnnotations.Display(Name = "Pepe", Description = "Mi nombre es Pepe")]
             a,
             [System.ComponentModel.Category()]
-            b, 
+            b,
             [System.ComponentModel.Description("Pepe")]
             c
         }

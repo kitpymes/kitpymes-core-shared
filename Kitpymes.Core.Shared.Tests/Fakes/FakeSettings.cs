@@ -1,4 +1,4 @@
-﻿namespace Kitpymes.Core.Shared.Tests
+﻿namespace Kitpymes.Core.Shared.Tests.Fakes
 {
     public class FakeSettings
     {
@@ -15,11 +15,11 @@
 
     public class GoogleSettings : FacebookSettings
     {
-       
+
     }
 
     public class LinkedinSettings : FacebookSettings
     {
-        
+
     }
 }

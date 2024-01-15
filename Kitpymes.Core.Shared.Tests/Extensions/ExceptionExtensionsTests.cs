@@ -3,7 +3,7 @@ using Kitpymes.Core.Shared.Util;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Extensions
 {
     [TestClass]
     public class ExceptionExtensionsTests
@@ -45,8 +45,8 @@ namespace Kitpymes.Core.Shared.Tests
             var messageInnerExceptionExpected = Guid.NewGuid().ToString();
             var messageInnerInnerExceptionExpected = Guid.NewGuid().ToString();
 
-            FakeException = new Exception(messageExpected, 
-                new SharedException(messageInnerExceptionExpected, 
+            FakeException = new Exception(messageExpected,
+                new SharedException(messageInnerExceptionExpected,
                 new ArgumentOutOfRangeException(messageInnerInnerExceptionExpected)));
 
             FakeException.Data.Add("Id", Guid.NewGuid());

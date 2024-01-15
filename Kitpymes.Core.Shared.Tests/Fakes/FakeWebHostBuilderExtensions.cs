@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.TestHost;
 using System.Net.Http;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Fakes
 {
     public static class FakeWebHostBuilderExtensions
     {

@@ -6,7 +6,7 @@ using System;
 using Microsoft.AspNetCore.TestHost;
 using Kitpymes.Core.Shared.Extensions;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Fakes
 {
     public class FakeHost
     {
@@ -15,7 +15,7 @@ namespace Kitpymes.Core.Shared.Tests
         public string DirectoryPath { get; set; } = Directory.GetCurrentDirectory();
         public string? SolutionRelativeContentRoot { get; set; }
 
-        public static IWebHostBuilder Create<TStartup>(Action<FakeHost>? action = null)   
+        public static IWebHostBuilder Create<TStartup>(Action<FakeHost>? action = null)
             where TStartup : StartupBase
         {
             var options = action.ToConfigureOrDefault();

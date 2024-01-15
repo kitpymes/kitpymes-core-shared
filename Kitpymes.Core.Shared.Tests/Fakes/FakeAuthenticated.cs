@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Fakes
 {
     public static class FakeAuthenticated
     {
@@ -13,7 +13,7 @@ namespace Kitpymes.Core.Shared.Tests
             var application = new ApplicationBuilder(services.BuildServiceProvider());
 
             application.Use(async (context, next) =>
-            {   
+            {
                 await context.AuthenticateAsync(authenticationType).ConfigureAwait(false);
 
                 await next().ConfigureAwait(false);

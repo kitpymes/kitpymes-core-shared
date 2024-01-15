@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Globalization;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Extensions
 {
     [TestClass]
     public class IntegerExtensionsTests
@@ -20,7 +20,7 @@ namespace Kitpymes.Core.Shared.Tests
             var valueActual = input.ToStringFormat();
 
             Assert.AreEqual(input.ToString(CultureInfo.CurrentCulture), valueActual);
-        }       
+        }
 
         [TestMethod]
         public void ToEnum_Passing_Enumeration_Key_Returns_Enumeration()

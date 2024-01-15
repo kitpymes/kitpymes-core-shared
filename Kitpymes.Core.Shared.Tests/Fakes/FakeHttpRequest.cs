@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Kitpymes.Core.Shared.Extensions;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Fakes
 {
     public class FakeHttpRequest : HttpRequest
     {

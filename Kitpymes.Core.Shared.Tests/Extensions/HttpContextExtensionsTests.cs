@@ -1,4 +1,5 @@
 ﻿using Kitpymes.Core.Shared.Extensions;
+using Kitpymes.Core.Shared.Tests.Fakes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -6,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Extensions
 {
     [TestClass]
     public class HttpContextExtensionsTests

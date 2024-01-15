@@ -1,11 +1,12 @@
 ﻿using Kitpymes.Core.Shared.Extensions;
+using Kitpymes.Core.Shared.Tests.Fakes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Extensions
 {
     [TestClass]
     public class ClaimsPrincipalExtensionsTests

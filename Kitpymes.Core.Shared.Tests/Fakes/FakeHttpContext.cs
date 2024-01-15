@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Kitpymes.Core.Shared.Extensions;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Fakes
 {
     public class FakeHttpContext
     {
@@ -21,7 +21,7 @@ namespace Kitpymes.Core.Shared.Tests
             {
                 mock.Setup(m => m.User).Returns(options.User);
             }
-            
+
             mock.Setup(m => m.Request).Returns(options.Request);
             mock.Setup(m => m.Connection).Returns(options.Connection);
             mock.Setup(m => m.Response).Returns(options.Response);

@@ -1,4 +1,5 @@
 using Kitpymes.Core.Shared.Extensions;
+using Kitpymes.Core.Shared.Tests.Fakes;
 using Kitpymes.Core.Shared.Util;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,7 +8,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Extensions
 {
     [TestClass]
     public class ApplicationBuilderExtensionsTests
@@ -109,7 +110,7 @@ namespace Kitpymes.Core.Shared.Tests
         [TestMethod]
         public void ToIsDevelopment_Passing_IHostEnvironment_With_Valid_EnviromentName_Returns_True()
         {
-            var services = new ServiceCollection().FakeAddHostEnvironment(x => x.EnvironmentName = Util.Environment.Development.ToString());
+            var services = new ServiceCollection().FakeAddHostEnvironment(x => x.EnvironmentName = Shared.Util.Environment.Development.ToString());
             var application = new ApplicationBuilder(services.BuildServiceProvider());
 
             var result = application.ToIsDevelopment();
@@ -131,7 +132,7 @@ namespace Kitpymes.Core.Shared.Tests
         [TestMethod]
         public void ToIsDevelopment_Passing_IWebHostEnvironment_With_Valid_EnviromentName_Returns_True()
         {
-            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = Util.Environment.Development.ToString());
+            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = Shared.Util.Environment.Development.ToString());
             var application = new ApplicationBuilder(services.BuildServiceProvider());
 
             var result = application.ToIsDevelopment();
@@ -153,9 +154,9 @@ namespace Kitpymes.Core.Shared.Tests
         [TestMethod]
         public void ToIsEnviroment_Passing_IWebHostEnvironment_With_Valid_EnviromentName_Returns_True()
         {
-            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = Util.Environment.Development.ToString());
+            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = Shared.Util.Environment.Development.ToString());
             var application = new ApplicationBuilder(services.BuildServiceProvider());
-            
+
             var result = application.ToIsDevelopment();
 
             Assert.IsTrue(result);

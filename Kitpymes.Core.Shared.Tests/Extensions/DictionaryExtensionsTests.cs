@@ -4,12 +4,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Extensions
 {
     [TestClass]
     public class DictionaryExtensionsTests
     {
-        private static Dictionary<string, IEnumerable<TValue>> GetList<TValue>() => new ();
+        private static Dictionary<string, IEnumerable<TValue>> GetList<TValue>() => new();
 
         [TestMethod]
         public void AddOrUpdate_Add_Values_Returns_Collection_WithValues()

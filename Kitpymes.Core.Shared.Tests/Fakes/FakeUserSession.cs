@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Fakes
 {
-    public class FakeUserSession 
+    public class FakeUserSession
     {
         private const string _key = "66DEC5B5-D04B-4BA7-8AAF-46E99B5F4E9B";
         public static string Key => _key;

@@ -1,13 +1,14 @@
 using Kitpymes.Core.Shared.Extensions;
+using Kitpymes.Core.Shared.Tests.Fakes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Extensions
 {
     [TestClass]
-	public class AgileMapperExtensionsTests
+    public class AgileMapperExtensionsTests
     {
         private readonly string addPermission = Guid.NewGuid().ToString();
         private readonly string updatePermission = Guid.NewGuid().ToString();
@@ -31,8 +32,8 @@ namespace Kitpymes.Core.Shared.Tests
         #region ToMapClone
 
         [TestMethod]
-		public void ToMapClone_Passing_Source_Returns_New_Source_Object()
-		{
+        public void ToMapClone_Passing_Source_Returns_New_Source_Object()
+        {
             var result = Source.ToMapClone();
 
             Assert.AreEqual(Source.Id, result.Id);
@@ -45,7 +46,7 @@ namespace Kitpymes.Core.Shared.Tests
                 CollectionAssert.Contains(result.Permissions, updatePermission);
 
             }
-           
+
             CollectionAssert.AreEqual(Source.Permissions, result.Permissions);
         }
 
@@ -54,9 +55,9 @@ namespace Kitpymes.Core.Shared.Tests
         #region ToMapNew
 
         [TestMethod]
-		public void ToMapNew_Passing_TSource_And_TDestination_Returns_New_TDestination_Object()
-		{
-			var result = Source.ToMapNew<FakeUser, FakeUserDto>();
+        public void ToMapNew_Passing_TSource_And_TDestination_Returns_New_TDestination_Object()
+        {
+            var result = Source.ToMapNew<FakeUser, FakeUserDto>();
 
             Assert.AreEqual(Source.Name, result.Name);
             Assert.AreEqual(Source.Age, result.Age);
@@ -66,7 +67,7 @@ namespace Kitpymes.Core.Shared.Tests
                 CollectionAssert.Contains(result.Permissions, addPermission);
                 CollectionAssert.Contains(result.Permissions, updatePermission);
                 CollectionAssert.AreEqual(Source.Permissions, result.Permissions);
-            }            
+            }
         }
 
         [TestMethod]

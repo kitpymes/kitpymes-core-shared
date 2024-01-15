@@ -5,7 +5,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Kitpymes.Core.Shared.Extensions;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Fakes
 {
     public class FakeHttpResponse : HttpResponse
     {

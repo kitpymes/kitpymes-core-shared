@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Moq;
 using System;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Fakes
 {
     public class FakeHostEnvironment : IHostEnvironment
     {
@@ -39,7 +39,7 @@ namespace Kitpymes.Core.Shared.Tests
             if (!string.IsNullOrWhiteSpace(options.EnvironmentName))
             {
                 mock.Setup(m => m.EnvironmentName).Returns(options.EnvironmentName);
-            } 
+            }
 
             return mock.Object;
         }

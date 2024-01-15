@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Extensions
 {
     [TestClass]
     public class TimeSpanExtensionsTests
@@ -19,8 +19,8 @@ namespace Kitpymes.Core.Shared.Tests
 
             Assert.IsTrue
             (
-                valueActual.Contains(dateTime.Day.ToString() + "d") 
-                || valueActual.Contains(dateTime.Hour.ToString() + "h") 
+                valueActual.Contains(dateTime.Day.ToString() + "d")
+                || valueActual.Contains(dateTime.Hour.ToString() + "h")
                 || valueActual.Contains(dateTime.Minute.ToString() + "m")
                 || valueActual.Contains(dateTime.Second.ToString() + "s")
             );

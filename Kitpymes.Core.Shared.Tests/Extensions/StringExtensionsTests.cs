@@ -6,7 +6,7 @@ using System.Net.Mime;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Extensions
 {
     [TestClass]
     public class StringExtensionsTests
@@ -746,7 +746,7 @@ namespace Kitpymes.Core.Shared.Tests
             var value1 = "B";
             var value2 = "C";
             var valueExpected = $"{value0}-{value1}-{value2}";
-           
+
             var valueActual = valueFormat.ToFormat(value0, value1, value2);
 
             Assert.AreEqual(valueExpected, valueActual);

@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Fakes
 {
     public static class FakeServiceCollectionExtensions
     {
@@ -20,6 +20,6 @@ namespace Kitpymes.Core.Shared.Tests
             services.TryAddScoped(typeof(IWebHostEnvironment), X => FakeWebHostEnvironment.Configure(action));
 
             return services;
-        }       
+        }
     }
 }

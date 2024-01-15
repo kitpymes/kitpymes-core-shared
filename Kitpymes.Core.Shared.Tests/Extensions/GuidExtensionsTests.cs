@@ -2,10 +2,10 @@ using Kitpymes.Core.Shared.Extensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Extensions
 {
     [TestClass]
-	public class GuidExtensionsTests
+    public class GuidExtensionsTests
     {
         // Guid.CompareTo Method
         // Return A negative integer: This instance is less than value. 
@@ -13,15 +13,15 @@ namespace Kitpymes.Core.Shared.Tests
         // Return A positive integer: This instance is greater than value.
 
         [TestMethod]
-		public void ToSecuencial_Passing_Guids_Returns_GuidsSecuencials()
-		{
+        public void ToSecuencial_Passing_Guids_Returns_GuidsSecuencials()
+        {
             var guid = Guid.NewGuid();
 
             var guid1 = guid.ToSecuencial();
             var guid2 = guid.ToSecuencial();
 
             Assert.IsTrue(guid1.CompareTo(guid2) < 0);
-         }
+        }
     }
 }
 

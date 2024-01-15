@@ -1,17 +1,18 @@
 ﻿using Kitpymes.Core.Shared.Extensions;
+using Kitpymes.Core.Shared.Tests.Fakes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Extensions
 {
     [TestClass]
     public class QueryableExtensionsTests
     {
-        private readonly List<FakeUser> fakeListExpected = new List<FakeUser> 
-        { 
+        private readonly List<FakeUser> fakeListExpected = new List<FakeUser>
+        {
             new FakeUser
             {
                 Age = 55,

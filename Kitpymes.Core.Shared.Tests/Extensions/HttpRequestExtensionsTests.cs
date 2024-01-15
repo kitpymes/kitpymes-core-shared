@@ -1,10 +1,11 @@
 ﻿using Kitpymes.Core.Shared.Extensions;
+using Kitpymes.Core.Shared.Tests.Fakes;
 using Microsoft.AspNetCore.Http;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Extensions
 {
     [TestClass]
     public class HttpRequestExtensionsTests
@@ -55,7 +56,7 @@ namespace Kitpymes.Core.Shared.Tests
             var urlExpected = $"{scheme}://{host}{path}";
 
             var fakeHttpRequest = FakeHttpRequest.Configure(x =>
-            {   
+            {
                 x.Scheme = scheme;
                 x.Host = new HostString(host);
                 x.Path = path;

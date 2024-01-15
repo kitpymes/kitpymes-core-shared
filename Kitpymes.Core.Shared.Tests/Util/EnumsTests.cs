@@ -4,7 +4,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Util
 {
     [TestClass]
     public class EnumsTests
@@ -18,7 +18,7 @@ namespace Kitpymes.Core.Shared.Tests
         {
             var valueExpected = 3;
 
-            var valueActual = Util.Enums.ToCount<FakeEnum>();
+            var valueActual = Enums.ToCount<FakeEnum>();
 
             Assert.AreEqual(valueExpected, valueActual);
         }
@@ -30,7 +30,7 @@ namespace Kitpymes.Core.Shared.Tests
         [TestMethod]
         public void ToValues_Passing_ValidEnumType_Returns_ValuesListString()
         {
-            var result = Util.Enums.ToValues<FakeEnum>();
+            var result = Enums.ToValues<FakeEnum>();
 
             Assert.IsTrue(result.Contains(FakeEnum.A.ToString()));
             Assert.IsTrue(result.Contains(FakeEnum.B.ToString()));

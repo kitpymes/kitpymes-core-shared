@@ -1,11 +1,12 @@
 using Kitpymes.Core.Shared.Extensions;
+using Kitpymes.Core.Shared.Tests.Fakes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Extensions
 {
     [TestClass]
-	public class ActionExtensionsTests
+    public class ActionExtensionsTests
     {
         private readonly Guid expectedId = Guid.NewGuid();
         private readonly string expectedName = Guid.NewGuid().ToString();
@@ -17,9 +18,10 @@ namespace Kitpymes.Core.Shared.Tests
         private Action<FakeUser>? CustomAction { get; set; }
 
         [TestMethod]
-		public void ToConfigureOrDefault_Passing_ActionCustomValues_Returns_CustomValues()
-		{
-            CustomAction = x => {
+        public void ToConfigureOrDefault_Passing_ActionCustomValues_Returns_CustomValues()
+        {
+            CustomAction = x =>
+            {
                 x.Id = expectedId;
                 x.Name = expectedName;
                 x.Age = expectedAge;
@@ -28,7 +30,7 @@ namespace Kitpymes.Core.Shared.Tests
 
             var result = CustomAction.ToConfigureOrDefault();
 
-			Assert.IsNotNull(result);
+            Assert.IsNotNull(result);
             Assert.AreEqual(expectedId, result.Id);
             Assert.AreEqual(expectedName, result.Name);
             Assert.AreEqual(expectedAge, result.Age);
@@ -39,7 +41,8 @@ namespace Kitpymes.Core.Shared.Tests
         [TestMethod]
         public void ToConfigureOrDefault_Passing_DefaultValues_And_ActionCustomValues_Returns_DefaultValues_And_CustomValues()
         {
-            CustomAction = x => {               
+            CustomAction = x =>
+            {
                 x.Age = expectedAge;
                 x.Permissions = [expectedAddPermission, expectedUpdatePermission];
             };

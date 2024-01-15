@@ -1,4 +1,5 @@
 using Kitpymes.Core.Shared.Extensions;
+using Kitpymes.Core.Shared.Tests.Fakes;
 using Kitpymes.Core.Shared.Util;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,10 +11,10 @@ using System;
 using System.IO;
 using System.Reflection;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Extensions
 {
     [TestClass]
-	public class ServiceCollectionExtensionsTests
+    public class ServiceCollectionExtensionsTests
     {
         #region ToEnvironment
 
@@ -104,7 +105,7 @@ namespace Kitpymes.Core.Shared.Tests
         [TestMethod]
         public void ToIsDevelopment_Passing_IHostEnvironment_With_Valid_EnviromentName_Returns_True()
         {
-            var services = new ServiceCollection().FakeAddHostEnvironment(x => x.EnvironmentName = Util.Environment.Development.ToString());
+            var services = new ServiceCollection().FakeAddHostEnvironment(x => x.EnvironmentName = Shared.Util.Environment.Development.ToString());
 
             var result = services.ToIsDevelopment();
 
@@ -124,7 +125,7 @@ namespace Kitpymes.Core.Shared.Tests
         [TestMethod]
         public void ToIsDevelopment_Passing_IWebHostEnvironment_With_Valid_EnviromentName_Returns_True()
         {
-            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = Util.Environment.Development.ToString());
+            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = Shared.Util.Environment.Development.ToString());
 
             var result = services.ToIsDevelopment();
 
@@ -144,7 +145,7 @@ namespace Kitpymes.Core.Shared.Tests
         [TestMethod]
         public void ToIsEnviroment_Passing_IWebHostEnvironment_With_Valid_EnviromentName_Returns_True()
         {
-            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = Util.Environment.Development.ToString());
+            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = Shared.Util.Environment.Development.ToString());
 
             var result = services.ToIsDevelopment();
 
@@ -235,7 +236,7 @@ namespace Kitpymes.Core.Shared.Tests
         [TestMethod]
         public void ToServiceMatchingInterface_Passing_Valid_Assembly_And_Valid_Interface_Returns_Service()
         {
-            var assemblies = new Assembly[] { this.GetType().Assembly };
+            var assemblies = new Assembly[] { GetType().Assembly };
 
             var services = new ServiceCollection();
 
@@ -247,7 +248,7 @@ namespace Kitpymes.Core.Shared.Tests
         [TestMethod]
         public void ToServiceMatchingInterface_Passing_Valid_Assembly_Returns_Service()
         {
-            var assemblies = new Assembly[] { this.GetType().Assembly };
+            var assemblies = new Assembly[] { GetType().Assembly };
 
             var services = new ServiceCollection();
 
@@ -278,7 +279,7 @@ namespace Kitpymes.Core.Shared.Tests
         [TestMethod]
         public void ToServiceMatchingClass_Passing_Valid_Assembly_And_Valid_Class_Returns_Service()
         {
-            var assemblies = new Assembly[] { this.GetType().Assembly };
+            var assemblies = new Assembly[] { GetType().Assembly };
 
             var services = new ServiceCollection();
 
@@ -290,7 +291,7 @@ namespace Kitpymes.Core.Shared.Tests
         [TestMethod]
         public void ToServiceMatchingClass_Passing_Valid_Assembly_And_Valid_Class_Type_Returns_Service()
         {
-            var assemblies = new Assembly[] { this.GetType().Assembly };
+            var assemblies = new Assembly[] { GetType().Assembly };
 
             var services = new ServiceCollection();
 
@@ -387,7 +388,7 @@ namespace Kitpymes.Core.Shared.Tests
 
             var isEnabledFacebookActual = configurationActual.GetValue<bool>("FakeSettings:FacebookSettings:Enabled");
             var keyFacebookActual = configurationActual.GetValue<string>("FakeSettings:FacebookSettings:Key");
-            
+
             Assert.AreEqual(Convert.ToBoolean(expectedConfiguration[0].value), isEnabledFacebookActual);
             Assert.AreEqual(expectedConfiguration[1].value, keyFacebookActual);
         }

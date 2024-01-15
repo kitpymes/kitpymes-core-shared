@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Fakes
 {
     [Serializable]
     public class FakeUser

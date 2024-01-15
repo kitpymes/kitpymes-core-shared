@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 
-namespace Kitpymes.Core.Shared.Tests
+namespace Kitpymes.Core.Shared.Tests.Util
 {
     [TestClass]
     public class HashTests
@@ -15,7 +15,7 @@ namespace Kitpymes.Core.Shared.Tests
         [DataRow(20)]
         public void CreateRandom_WithDefaultAllowableCharacters_Passing_ValidArguments_Returns_String_Random_Value(int length)
         {
-            var hash = Util.Hash.CreateRandom(length);
+            var hash = Hash.CreateRandom(length);
 
             Assert.IsTrue(hash.Length == length);
         }
@@ -27,7 +27,7 @@ namespace Kitpymes.Core.Shared.Tests
         [DataRow(20, "qazwscefbthmiklp09876543")]
         public void CreateRandom_WithCustomAllowableCharacters_Passing_Valid_Arguments_Returns_String_Random_Value(int length, string allowableCharacters)
         {
-            var hash = Util.Hash.CreateRandom(length, allowableCharacters);
+            var hash = Hash.CreateRandom(length, allowableCharacters);
 
             Assert.IsTrue(hash.Length == length);
         }
@@ -42,7 +42,7 @@ namespace Kitpymes.Core.Shared.Tests
         [DataRow(" ")]
         public void CreateSHA256_Passing_Invalid_Arguments_Returns_SharedException(string text)
         {
-            Assert.ThrowsException<SharedException>(() => Util.Hash.CreateSHA256(text));
+            Assert.ThrowsException<SharedException>(() => Shared.Util.Hash.CreateSHA256(text));
         }
 
         [DataTestMethod]
@@ -51,9 +51,9 @@ namespace Kitpymes.Core.Shared.Tests
         [DataRow("sdlfkjldsfksdfñl·%$·&$/U&/)(&()?=)¿?^P*^PÑL,.,.lñ´ñ+98098'098098")]
         public void CreateAndVerifySHA256_Passing_Valid_Arguments_Returns_True(string text)
         {
-            var hash = Util.Hash.CreateSHA256(text);
+            var hash = Shared.Util.Hash.CreateSHA256(text);
 
-            var isValid = Util.Hash.VerifySHA256(text, hash);
+            var isValid = Shared.Util.Hash.VerifySHA256(text, hash);
 
             Assert.IsTrue(isValid);
         }
@@ -68,7 +68,7 @@ namespace Kitpymes.Core.Shared.Tests
         [DataRow(" ")]
         public void CreateSHA512_Passing_Invalid_Arguments_Returns_SharedException(string text)
         {
-            Assert.ThrowsException<SharedException>(() => Util.Hash.CreateSHA512(text));
+            Assert.ThrowsException<SharedException>(() => Hash.CreateSHA512(text));
         }
 
         [DataTestMethod]
@@ -77,9 +77,9 @@ namespace Kitpymes.Core.Shared.Tests
         [DataRow("sdlfkjldsfksdfñl·%$·&$/U&/)(&()?=)¿?^P*^PÑL,.,.lñ´ñ+98098'098098")]
         public void CreateAndVerifySHA512_Passing_Valid_Arguments_Returns_True(string text)
         {
-            var hash = Util.Hash.CreateSHA512(text);
+            var hash = Hash.CreateSHA512(text);
 
-            var isValid = Util.Hash.VerifySHA512(text, hash);
+            var isValid = Hash.VerifySHA512(text, hash);
 
             Assert.IsTrue(isValid);
         }

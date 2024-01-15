@@ -298,6 +298,32 @@ public static class VerifyExtensions
     /// <param name="argument">El primer argumento a comparar.</param>
     /// <param name="argumentCompare">El segundo argumento a comparar.</param>
     /// <returns>true | false.</returns>
+    public static bool ToIsEqual([NotNullWhen(true)] this object? argument, object? argumentCompare)
+        => Equals(argument, argumentCompare);
+
+    /// <summary>
+    /// Verifica si dos argumentos son iguales.
+    /// </summary>
+    /// <typeparam name="TArgument">Tipo del argumento a comparar.</typeparam>
+    /// <exception cref="SharedException">Si los argumentos no son iguales.</exception>
+    /// <param name="argument">El primer argumento a comparar.</param>
+    /// <param name="argumentCompare">El segundo argumento a comparar.</param>
+    /// <param name="argumentName">Nombre del primer argumento.</param>
+    /// <param name="argumentCompareName">Nombre del segundo argumento.</param>
+    /// <returns>argument | SharedException.</returns>
+    public static TArgument ToThrowIfEqual<TArgument>(
+        [NotNull] this TArgument? argument,
+        TArgument argumentCompare,
+        [CallerArgumentExpression(nameof(argument))] string? argumentName = null,
+        [CallerArgumentExpression(nameof(argumentCompare))] string? argumentCompareName = null)
+    => argument.ToThrowIf(Messages.FieldEqual(argumentName, argumentCompareName), () => argument.ToIsEqual(argumentCompare));
+
+    /// <summary>
+    /// Verifica si dos argumentos son iguales.
+    /// </summary>
+    /// <param name="argument">El primer argumento a comparar.</param>
+    /// <param name="argumentCompare">El segundo argumento a comparar.</param>
+    /// <returns>true | false.</returns>
     public static bool ToIsNotEqual([NotNullWhen(true)] this object? argument, object? argumentCompare)
         => !Equals(argument, argumentCompare);
 

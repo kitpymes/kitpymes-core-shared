@@ -112,6 +112,26 @@ public static class Messages
     }
 
     /// <summary>
+    /// Mensaje para comparar campos.
+    /// </summary>
+    /// <param name="fieldName">Nombre del campo.</param>
+    /// <param name="fieldNameCompare">Nombre del campo a comparar.</param>
+    /// <returns>"Los campos comparados no coinciden" | "El campo {0} no coincide" | "El campo {0} no coincide con el campo {1}".</returns>
+    public static string FieldNotEqual(string? fieldName = null, string? fieldNameCompare = null)
+    {
+        if (!fieldName.ToIsNullOrEmpty() && !fieldNameCompare.ToIsNullOrEmpty())
+        {
+            return SharedResource.MsgNotEqualWithFieldsName.ToFormat(fieldName, fieldNameCompare);
+        }
+        else if (!fieldName.ToIsNullOrEmpty())
+        {
+            return SharedResource.MsgNotEqualWithFieldName.ToFormat(fieldName);
+        }
+
+        return SharedResource.MsgNotEqual;
+    }
+
+    /// <summary>
     /// Mensaje para cuando el valor es mayor que el mínimo configurado y menor que el máximo configurado.
     /// </summary>
     /// <param name="min">Valor mínimo que puede tener.</param>

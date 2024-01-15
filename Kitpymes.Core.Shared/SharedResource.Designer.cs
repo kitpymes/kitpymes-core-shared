@@ -133,7 +133,7 @@ namespace Kitpymes.Core.Shared {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a Los campos comparados no coinciden.
+        ///   Busca una cadena traducida similar a Los campos comparados son iguales.
         /// </summary>
         public static string MsgEqual {
             get {
@@ -142,7 +142,7 @@ namespace Kitpymes.Core.Shared {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a El campo {0} no coincide.
+        ///   Busca una cadena traducida similar a El campo {0} es igual al campo comparado.
         /// </summary>
         public static string MsgEqualWithFieldName {
             get {
@@ -151,7 +151,7 @@ namespace Kitpymes.Core.Shared {
         }
         
         /// <summary>
-        ///   Busca una cadena traducida similar a El campo {0} no coincide con el campo {1}.
+        ///   Busca una cadena traducida similar a El campo {0} coincide con el campo {1}.
         /// </summary>
         public static string MsgEqualWithFieldsName {
             get {
@@ -408,6 +408,33 @@ namespace Kitpymes.Core.Shared {
         public static string MsgNameWithValueAndFieldName {
             get {
                 return ResourceManager.GetString("MsgNameWithValueAndFieldName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a Los campos comparados no coinciden.
+        /// </summary>
+        public static string MsgNotEqual {
+            get {
+                return ResourceManager.GetString("MsgNotEqual", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El campo {0} no es igual con el campo comparado.
+        /// </summary>
+        public static string MsgNotEqualWithFieldName {
+            get {
+                return ResourceManager.GetString("MsgNotEqualWithFieldName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca una cadena traducida similar a El campo {0} no coincide con el campo {1}.
+        /// </summary>
+        public static string MsgNotEqualWithFieldsName {
+            get {
+                return ResourceManager.GetString("MsgNotEqualWithFieldsName", resourceCulture);
             }
         }
         

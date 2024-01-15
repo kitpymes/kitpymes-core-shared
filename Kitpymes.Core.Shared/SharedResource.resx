@@ -150,16 +150,16 @@
     <comment>La dirección de correo electrónico {0} del campo {1} tiene un formato no válido.</comment>
   </data>
   <data name="MsgEqual" xml:space="preserve">
-    <value>Los campos comparados no coinciden</value>
-    <comment>Los campos comparados no coinciden</comment>
+    <value>Los campos comparados son iguales</value>
+    <comment>Los campos comparados son iguales</comment>
   </data>
   <data name="MsgEqualWithFieldName" xml:space="preserve">
-    <value>El campo {0} no coincide</value>
-    <comment>El campo {0} no coincide</comment>
+    <value>El campo {0} es igual al campo comparado</value>
+    <comment>El campo {0} es igual al campo comparado</comment>
   </data>
   <data name="MsgEqualWithFieldsName" xml:space="preserve">
-    <value>El campo {0} no coincide con el campo {1}</value>
-    <comment>El campo {0} no coincide con el campo {1}</comment>
+    <value>El campo {0} coincide con el campo {1}</value>
+    <comment>El campo {0} coincide con el campo {1}</comment>
   </data>
   <data name="MsgErrorsTitle" xml:space="preserve">
     <value>Se produjeron uno o más errores de validación.</value>
@@ -272,6 +272,18 @@
   <data name="MsgNameWithValueAndFieldName" xml:space="preserve">
     <value>El nombre {0} del campo {1} tiene un formato no válido.</value>
     <comment>El nombre {0} del campo {1} tiene un formato no válido.</comment>
+  </data>
+  <data name="MsgNotEqual" xml:space="preserve">
+    <value>Los campos comparados no coinciden</value>
+    <comment>Los campos comparados no coinciden</comment>
+  </data>
+  <data name="MsgNotEqualWithFieldName" xml:space="preserve">
+    <value>El campo {0} no es igual con el campo comparado</value>
+    <comment>El campo {0} no es igual con el campo comparado</comment>
+  </data>
+  <data name="MsgNotEqualWithFieldsName" xml:space="preserve">
+    <value>El campo {0} no coincide con el campo {1}</value>
+    <comment>El campo {0} no coincide con el campo {1}</comment>
   </data>
   <data name="MsgNotFound" xml:space="preserve">
     <value>El campo no fue encontrado</value>

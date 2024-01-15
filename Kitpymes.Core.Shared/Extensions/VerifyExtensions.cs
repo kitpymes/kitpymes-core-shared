@@ -342,7 +342,7 @@ public static class VerifyExtensions
         TArgument argumentCompare,
         [CallerArgumentExpression(nameof(argument))] string? argumentName = null,
         [CallerArgumentExpression(nameof(argumentCompare))] string? argumentCompareName = null)
-    => argument.ToThrowIf(Messages.FieldEqual(argumentName, argumentCompareName), () => argument.ToIsNotEqual(argumentCompare));
+    => argument.ToThrowIf(Messages.FieldNotEqual(argumentName, argumentCompareName), () => argument.ToIsNotEqual(argumentCompare));
 
     #endregion Equal
 

@@ -309,7 +309,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
         {
             string? directoryPath = string.Empty;
             var jsonFileName = "FakeAppSettings";
-            var expectedMessage = Messages.FieldDirectory(directoryPath, nameof(directoryPath));
+            var expectedMessage = Messages.Directory(directoryPath, nameof(directoryPath));
 
             var services = new ServiceCollection();
             var exceptionActual = Assert.ThrowsException<SharedException>
@@ -325,7 +325,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
         {
             string? directoryPath = Guid.NewGuid().ToString();
             var jsonFileName = "FakeAppSettings";
-            var expectedMessage = Messages.FieldDirectory(directoryPath, nameof(directoryPath));
+            var expectedMessage = Messages.Directory(directoryPath, nameof(directoryPath));
 
             var services = new ServiceCollection();
             var exceptionActual = Assert.ThrowsException<SharedException>
@@ -341,7 +341,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
         {
             var directoryPath = Directory.GetCurrentDirectory();
             var jsonFileName = Guid.NewGuid().ToString();
-            var expectedMessage = Messages.FieldFile($"{directoryPath}/{jsonFileName}.json", "filePath");
+            var expectedMessage = Messages.File($"{directoryPath}/{jsonFileName}.json", "filePath");
 
             var services = new ServiceCollection();
             var exceptionActual = Assert.ThrowsException<SharedException>

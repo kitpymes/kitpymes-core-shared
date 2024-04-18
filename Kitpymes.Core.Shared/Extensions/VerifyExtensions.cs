@@ -53,7 +53,7 @@ public static class VerifyExtensions
     /// <param name="message">Mensaje a mostrar.</param>
     /// <returns>argument | SharedException.</returns>
     public static TArgument ToThrowIfNullOrEmpty<TArgument>([NotNull] this TArgument? argument, [CallerArgumentExpression(nameof(argument))] string? argumentName = null, string? message = null)
-        => argument.ToThrowIf(message ?? Messages.FieldNullOrEmpty(argumentName), () => argument.ToIsNullOrEmpty());
+        => argument.ToThrowIf(message ?? Messages.NullOrEmpty(argumentName), () => argument.ToIsNullOrEmpty());
 
     #endregion NullOrEmpty
 
@@ -90,7 +90,7 @@ public static class VerifyExtensions
     /// <param name="argumentName">Nombre del argumento.</param>
     /// <returns>argument | SharedException.</returns>
     public static IEnumerable<TArgument> ToThrowIfNullOrAny<TArgument>([NotNull] this IEnumerable<TArgument>? argument, [CallerArgumentExpression(nameof(argument))] string? argumentName = null)
-        => argument.ToThrowIf(Messages.FieldNullOrAny(argumentName), () => argument.ToIsNullOrAny());
+        => argument.ToThrowIf(Messages.NullOrAny(argumentName), () => argument.ToIsNullOrAny());
 
     #endregion NullOrAny
 
@@ -176,7 +176,7 @@ public static class VerifyExtensions
     /// <param name="argumentName">Nombre del argumento.</param>
     /// <returns>argument | SharedException.</returns>
     public static TArgument ToThrowIfGreater<TArgument>([NotNull] this TArgument? argument, long min, [CallerArgumentExpression(nameof(argument))] string? argumentName = null)
-    => argument.ToThrowIf(Messages.FieldGreater(min, argumentName), () => argument.ToIsGreater(min));
+    => argument.ToThrowIf(Messages.Greater(min, argumentName), () => argument.ToIsGreater(min));
 
     /// <summary>
     /// Verifica si un número o cantidad de caracteres de un string o cantidad de valores de una colección es mayor o igual que el valor mínimo permitido.
@@ -188,7 +188,7 @@ public static class VerifyExtensions
     /// <param name="argumentName">Nombre del argumento.</param>
     /// <returns>argument | SharedException.</returns>
     public static TArgument ToThrowIfGreaterOrEqual<TArgument>([NotNull] this TArgument? argument, long min, [CallerArgumentExpression(nameof(argument))] string? argumentName = null)
-    => argument.ToThrowIf(Messages.FieldGreaterOrEqual(min, argumentName), () => argument.ToIsGreaterOrEqual(min));
+    => argument.ToThrowIf(Messages.GreaterOrEqual(min, argumentName), () => argument.ToIsGreaterOrEqual(min));
 
     #endregion Greater
 
@@ -274,7 +274,7 @@ public static class VerifyExtensions
     /// <param name="argumentName">Nombre del argumento.</param>
     /// <returns>argument | SharedException.</returns>
     public static TArgument ToThrowIfLess<TArgument>([NotNull] this TArgument? argument, long max, [CallerArgumentExpression(nameof(argument))] string? argumentName = null)
-    => argument.ToThrowIf(Messages.FieldLess(max, argumentName), () => argument.ToIsLess(max));
+    => argument.ToThrowIf(Messages.Less(max, argumentName), () => argument.ToIsLess(max));
 
     /// <summary>
     /// Verifica si un valor es menor o igual que el valor máximo permitido.
@@ -286,7 +286,7 @@ public static class VerifyExtensions
     /// <param name="argumentName">Nombre del argumento.</param>
     /// <returns>argument | SharedException.</returns>
     public static TArgument ToThrowIfLessOrEqual<TArgument>([NotNull] this TArgument? argument, long max, [CallerArgumentExpression(nameof(argument))] string? argumentName = null)
-    => argument.ToThrowIf(Messages.FieldLessOrEqual(max, argumentName), () => argument.ToIsLessOrEqual(max));
+    => argument.ToThrowIf(Messages.LessOrEqual(max, argumentName), () => argument.ToIsLessOrEqual(max));
 
     #endregion Less
 
@@ -316,7 +316,7 @@ public static class VerifyExtensions
         TArgument argumentCompare,
         [CallerArgumentExpression(nameof(argument))] string? argumentName = null,
         [CallerArgumentExpression(nameof(argumentCompare))] string? argumentCompareName = null)
-    => argument.ToThrowIf(Messages.FieldEqual(argumentName, argumentCompareName), () => argument.ToIsEqual(argumentCompare));
+    => argument.ToThrowIf(Messages.Equal(argumentName, argumentCompareName), () => argument.ToIsEqual(argumentCompare));
 
     /// <summary>
     /// Verifica si dos argumentos son iguales.
@@ -342,7 +342,7 @@ public static class VerifyExtensions
         TArgument argumentCompare,
         [CallerArgumentExpression(nameof(argument))] string? argumentName = null,
         [CallerArgumentExpression(nameof(argumentCompare))] string? argumentCompareName = null)
-    => argument.ToThrowIf(Messages.FieldNotEqual(argumentName, argumentCompareName), () => argument.ToIsNotEqual(argumentCompare));
+    => argument.ToThrowIf(Messages.NotEqual(argumentName, argumentCompareName), () => argument.ToIsNotEqual(argumentCompare));
 
     #endregion Equal
 
@@ -383,7 +383,7 @@ public static class VerifyExtensions
         long min,
         long max,
         [CallerArgumentExpression(nameof(argument))] string? argumentName = null)
-    => argument.ToThrowIf(Messages.FieldInsideRange(min, max, argumentName), () => argument.ToIsInsideRange(min, max));
+    => argument.ToThrowIf(Messages.InsideRange(min, max, argumentName), () => argument.ToIsInsideRange(min, max));
 
     /// <summary>
     /// Verifica si un número o cantidad de caracteres o cantidad de valores de una colección sean mayores o iguales que el mínimo permitido y sean menores o iguales que el máximo permitido.
@@ -400,7 +400,7 @@ public static class VerifyExtensions
         long min,
         long max,
         [CallerArgumentExpression(nameof(argument))] string? argumentName = null)
-    => argument.ToThrowIf(Messages.FieldInsideOrEqualRange(min, max, argumentName), () => argument.ToIsInsideOrEqualRange(min, max));
+    => argument.ToThrowIf(Messages.InsideOrEqualRange(min, max, argumentName), () => argument.ToIsInsideOrEqualRange(min, max));
 
     #endregion InsideRange
 
@@ -441,7 +441,7 @@ public static class VerifyExtensions
         long min,
         long max,
         [CallerArgumentExpression(nameof(argument))] string? argumentName = null)
-    => argument.ToThrowIf(Messages.FieldOutRange(min, max, argumentName), () => argument.ToIsOutRange(min, max));
+    => argument.ToThrowIf(Messages.OutRange(min, max, argumentName), () => argument.ToIsOutRange(min, max));
 
     /// <summary>
     /// Verifica si un número o cantidad de caracteres o cantidad de valores de una colección sean menores o iguales que el mínimo permitido y sean mayores o iguales que el máximo permitido.
@@ -458,7 +458,7 @@ public static class VerifyExtensions
         long min,
         long max,
         [CallerArgumentExpression(nameof(argument))] string? argumentName = null)
-    => argument.ToThrowIf(Messages.FieldOutOrEqualRange(min, max, argumentName), () => argument.ToIsOutOrEqualRange(min, max));
+    => argument.ToThrowIf(Messages.OutOrEqualRange(min, max, argumentName), () => argument.ToIsOutOrEqualRange(min, max));
 
     #endregion OutRange
 
@@ -482,7 +482,7 @@ public static class VerifyExtensions
     /// <param name="argumentName">Nombre del argumento.</param>
     /// <returns>argument | SharedException.</returns>
     public static string ToThrowIfRegexNotMatch([NotNull] this string? argument, string regex, [CallerArgumentExpression(nameof(argument))] string? argumentName = null)
-    => argument.ToThrowIf(Messages.FieldInvalidFormat(argumentName), () => !argument.ToIsRegexMatch(regex));
+    => argument.ToThrowIf(Messages.InvalidFormat(argumentName), () => !argument.ToIsRegexMatch(regex));
 
     #endregion RegexMatch
 
@@ -503,7 +503,7 @@ public static class VerifyExtensions
     /// <param name="argumentName">Nombre del argumento.</param>
     /// <returns>argument | SharedException.</returns>
     public static string? ToThrowIfDirectoryNotExists([NotNull] this string? argument, [CallerArgumentExpression(nameof(argument))] string? argumentName = null)
-    => argument.ToThrowIf(Messages.FieldDirectory(argument, argumentName), () => !argument.ToIsDirectory());
+    => argument.ToThrowIf(Messages.Directory(argument, argumentName), () => !argument.ToIsDirectory());
 
     #endregion Directory
 
@@ -525,7 +525,7 @@ public static class VerifyExtensions
     /// <param name="message">Mensaje a mostrar.</param>
     /// <returns>argument | SharedException.</returns>
     public static string ToThrowIfFileNotExists([NotNull] this string? argument, [CallerArgumentExpression(nameof(argument))] string? argumentName = null, string? message = null)
-    => argument.ToThrowIf(message ?? Messages.FieldFile(argument, argumentName), () => !argument.ToIsFile());
+    => argument.ToThrowIf(message ?? Messages.File(argument, argumentName), () => !argument.ToIsFile());
 
     #endregion File
 
@@ -547,7 +547,7 @@ public static class VerifyExtensions
     /// <param name="argumentName">Nombre del argumento.</param>
     /// <returns>argument | SharedException.</returns>
     public static string ToThrowIfNotFileExtension([NotNull] this string? argument, [CallerArgumentExpression(nameof(argument))] string? argumentName = null)
-    => argument.ToThrowIf(Messages.FieldFileExtension(argument, argumentName), () => !argument.ToIsFileExtension());
+    => argument.ToThrowIf(Messages.FileExtension(argument, argumentName), () => !argument.ToIsFileExtension());
 
     #endregion FileExtension
 
@@ -568,7 +568,7 @@ public static class VerifyExtensions
     /// <param name="argumentName">Nombre del argumento.</param>
     /// <returns>argument | SharedException.</returns>
     public static string ToThrowIfNotName([NotNull] this string? argument, [CallerArgumentExpression(nameof(argument))] string? argumentName = null)
-    => argument.ToThrowIf(Messages.FieldInvalidFormat(argumentName), () => !argument.ToIsName());
+    => argument.ToThrowIf(Messages.InvalidFormat(argumentName), () => !argument.ToIsName());
 
     #endregion Name
 
@@ -589,7 +589,7 @@ public static class VerifyExtensions
     /// <param name="argumentName">Nombre del argumento.</param>
     /// <returns>argument | SharedException.</returns>
     public static string ToThrowIfNotEmail([NotNull] this string? argument, [CallerArgumentExpression(nameof(argument))] string? argumentName = null)
-    => argument.ToThrowIf(Messages.FieldInvalidFormat(argumentName), () => !argument.ToIsEmail());
+    => argument.ToThrowIf(Messages.InvalidFormat(argumentName), () => !argument.ToIsEmail());
 
     #endregion Email
 
@@ -610,7 +610,7 @@ public static class VerifyExtensions
     /// <param name="argumentName">Nombre del argumento.</param>
     /// <returns>argument | SharedException.</returns>
     public static string ToThrowIfNotSubdomain([NotNull] this string? argument, [CallerArgumentExpression(nameof(argument))] string? argumentName = null)
-    => argument.ToThrowIf(Messages.FieldInvalidFormat(argumentName), () => !argument.ToIsSubdomain());
+    => argument.ToThrowIf(Messages.InvalidFormat(argumentName), () => !argument.ToIsSubdomain());
 
     #endregion Subdomain
 
@@ -631,7 +631,7 @@ public static class VerifyExtensions
     /// <param name="argumentName">Nombre del argumento.</param>
     /// <returns>argument | SharedException.</returns>
     public static string ToThrowIfNotDomain([NotNull] this string? argument, [CallerArgumentExpression(nameof(argument))] string? argumentName = null)
-    => argument.ToThrowIf(Messages.FieldInvalidFormat(argumentName), () => !argument.ToIsSubdomain());
+    => argument.ToThrowIf(Messages.InvalidFormat(argumentName), () => !argument.ToIsSubdomain());
 
     #endregion Domain
 
@@ -652,7 +652,7 @@ public static class VerifyExtensions
     /// <param name="argumentName">Nombre del argumento.</param>
     /// <returns>argument | SharedException.</returns>
     public static string ToThrowIfNotHostname([NotNull] this string? argument, [CallerArgumentExpression(nameof(argument))] string? argumentName = null)
-    => argument.ToThrowIf(Messages.FieldInvalidFormat(argumentName), () => !argument.ToIsSubdomain());
+    => argument.ToThrowIf(Messages.InvalidFormat(argumentName), () => !argument.ToIsSubdomain());
 
     #endregion Hostname
 
@@ -674,7 +674,7 @@ public static class VerifyExtensions
     /// <param name="argumentName">Nombre del argumento.</param>
     /// <returns>argument | SharedException.</returns>
     public static string ToThrowIfNotContainsDigit([NotNull] this string? argument, [CallerArgumentExpression(nameof(argument))] string? argumentName = null)
-    => argument.ToThrowIf(Messages.FieldInvalidFormat(argumentName), () => !argument.ToIsContainsDigit());
+    => argument.ToThrowIf(Messages.InvalidFormat(argumentName), () => !argument.ToIsContainsDigit());
 
     #endregion Digit
 
@@ -715,7 +715,7 @@ public static class VerifyExtensions
     /// <param name="argumentName">Nombre del argumento.</param>
     /// <returns>argument | SharedException.</returns>
     public static string ToThrowIfNotContainsUniqueChars([NotNull] this string? argument, [CallerArgumentExpression(nameof(argument))] string? argumentName = null)
-    => argument.ToThrowIf(Messages.FieldInvalidFormat(argumentName), () => !argument.ToIsContainsUniqueChars());
+    => argument.ToThrowIf(Messages.InvalidFormat(argumentName), () => !argument.ToIsContainsUniqueChars());
 
     #endregion UniqueChars
 
@@ -737,7 +737,7 @@ public static class VerifyExtensions
     /// <param name="argumentName">Nombre del argumento.</param>
     /// <returns>argument | SharedException.</returns>
     public static string ToThrowIfNotContainsEspecialChars([NotNull] this string? argument, [CallerArgumentExpression(nameof(argument))] string? argumentName = null)
-    => argument.ToThrowIf(Messages.FieldInvalidFormat(argumentName), () => !argument.ToIsContainsEspecialChars());
+    => argument.ToThrowIf(Messages.InvalidFormat(argumentName), () => !argument.ToIsContainsEspecialChars());
 
     #endregion EspecialChars
 
@@ -759,7 +759,7 @@ public static class VerifyExtensions
     /// <param name="argumentName">Nombre del argumento.</param>
     /// <returns>argument | SharedException.</returns>
     public static string ToThrowIfNotLowercase([NotNull] this string? argument, [CallerArgumentExpression(nameof(argument))] string? argumentName = null)
-    => argument.ToThrowIf(Messages.FieldInvalidFormat(argumentName), () => !argument.ToIsLowercase());
+    => argument.ToThrowIf(Messages.InvalidFormat(argumentName), () => !argument.ToIsLowercase());
 
     #endregion Lowercase
 
@@ -781,7 +781,7 @@ public static class VerifyExtensions
     /// <param name="argumentName">Nombre del argumento.</param>
     /// <returns>argument | SharedException.</returns>
     public static string ToThrowIfNotUppercase([NotNull] this string? argument, [CallerArgumentExpression(nameof(argument))] string? argumentName = null)
-    => argument.ToThrowIf(Messages.FieldInvalidFormat(argumentName), () => !argument.ToIsUppercase());
+    => argument.ToThrowIf(Messages.InvalidFormat(argumentName), () => !argument.ToIsUppercase());
 
     #endregion Uppercase
 

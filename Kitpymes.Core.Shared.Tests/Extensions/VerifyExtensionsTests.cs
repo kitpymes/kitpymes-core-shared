@@ -27,7 +27,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
         {
             string? parameter = null;
             var paramName = nameof(parameter);
-            var valueExpected = Messages.FieldNullOrEmpty(paramName);
+            var valueExpected = Messages.NullOrEmpty(paramName);
 
             var result = Assert.ThrowsException<SharedException>(() => parameter.ToThrowIfNullOrEmpty(paramName));
 
@@ -54,7 +54,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
         {
             string[] parameter = [];
             var paramName = nameof(parameter);
-            var valueExpected = Messages.FieldNullOrAny(paramName);
+            var valueExpected = Messages.NullOrAny(paramName);
 
             var result = Assert.ThrowsException<SharedException>(() => parameter.ToThrowIfNullOrAny(paramName));
 
@@ -78,7 +78,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             var max = 5;
 
             var paramName = nameof(value);
-            var valueExpected = Messages.FieldOutRange(min, max, paramName);
+            var valueExpected = Messages.OutRange(min, max, paramName);
 
             var result = Assert.ThrowsException<SharedException>(() => value.ToThrowIfOutRange(min, max, paramName));
 
@@ -95,7 +95,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             var max = 5;
 
             var paramName = nameof(value);
-            var valueExpected = Messages.FieldInsideRange(min, max, paramName);
+            var valueExpected = Messages.InsideRange(min, max, paramName);
 
             var result = Assert.ThrowsException<SharedException>(() => value.ToThrowIfInsideRange(min, max, paramName));
 
@@ -114,7 +114,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             var max = 5;
 
             var paramName = nameof(value);
-            var valueExpected = Messages.FieldInsideOrEqualRange(min, max, paramName);
+            var valueExpected = Messages.InsideOrEqualRange(min, max, paramName);
 
             var result = Assert.ThrowsException<SharedException>(() => value.ToThrowIfInsideOrEqualRange(min, max));
 
@@ -130,7 +130,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
         {
             string? parameter = Guid.NewGuid().ToString();
             var paramName = Guid.NewGuid().ToString();
-            var valueExpected = Messages.FieldDirectory(parameter, paramName);
+            var valueExpected = Messages.Directory(parameter, paramName);
 
             var result = Assert.ThrowsException<SharedException>(() => parameter.ToThrowIfDirectoryNotExists(paramName));
 
@@ -146,7 +146,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
         {
             string? parameter = Guid.NewGuid().ToString();
             var paramName = nameof(parameter);
-            var valueExpected = Messages.FieldFile(parameter, paramName);
+            var valueExpected = Messages.File(parameter, paramName);
 
             var result = Assert.ThrowsException<SharedException>(() => parameter.ToThrowIfFileNotExists(paramName));
 
@@ -162,7 +162,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
         {
             string? parameter = Guid.NewGuid().ToString();
             var paramName = nameof(parameter);
-            var valueExpected = Messages.FieldFileExtension(parameter, paramName);
+            var valueExpected = Messages.FileExtension(parameter, paramName);
 
             var result = Assert.ThrowsException<SharedException>(() => parameter.ToThrowIfNotFileExtension(paramName));
 
@@ -198,7 +198,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
         {
             string? parameter = Guid.NewGuid().ToString();
             var paramName = nameof(parameter);
-            var valueExpected = Messages.FieldInvalidFormat(paramName);
+            var valueExpected = Messages.InvalidFormat(paramName);
 
             var result = Assert.ThrowsException<SharedException>(() => value.ToThrowIfNotSubdomain(paramName));
 
@@ -214,7 +214,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
         {
             string? parameter = Guid.NewGuid().ToString();
             var paramName = nameof(parameter);
-            var valueExpected = Messages.FieldInvalidFormat(paramName);
+            var valueExpected = Messages.InvalidFormat(paramName);
 
             var result = Assert.ThrowsException<SharedException>(() => parameter.ToThrowIfNotName(paramName));
 

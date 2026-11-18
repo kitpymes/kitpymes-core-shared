@@ -1,4 +1,4 @@
-// -----------------------------------------------------------------------
+ï»¿// -----------------------------------------------------------------------
 // <copyright file="ByteExtensions.cs" company="Kitpymes">
 // Copyright (c) Kitpymes. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project docs folder for full license information.
@@ -14,12 +14,12 @@ using System.Xml;
 using System.Xml.Serialization;
 
 /*
-    Clase de extensión ByteExtensions
+    Clase de extensiÃ³n ByteExtensions
     Contiene las extensiones del tipo byte
 */
 
 /// <summary>
-/// Clase de extensión <c>ByteExtensions</c>.
+/// Clase de extensiÃ³n <c>ByteExtensions</c>.
 /// Contiene las extensiones del tipo byte.
 /// </summary>
 /// <remarks>

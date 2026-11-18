@@ -1,4 +1,4 @@
-// -----------------------------------------------------------------------
+ï»¿// -----------------------------------------------------------------------
 // <copyright file="EnumerableExtensions.cs" company="Kitpymes">
 // Copyright (c) Kitpymes. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project docs folder for full license information.
@@ -13,43 +13,43 @@ using System.Linq;
 using System.Reflection;
 
 /*
-    Clase de extensión EnumerableExtensions
+    Clase de extensiÃ³n EnumerableExtensions
     Contiene las extensiones de la interface IEnumerable
 */
 
 /// <summary>
-/// Clase de extensión <c>EnumerableExtensions</c>.
+/// Clase de extensiÃ³n <c>EnumerableExtensions</c>.
 /// Contiene las extensiones de la interface IEnumerable.
 /// </summary>
 /// <remarks>
-/// <para>En esta clase se pueden agregar todas las extensiones para la colección IEnumerable.</para>
+/// <para>En esta clase se pueden agregar todas las extensiones para la colecciÃ³n IEnumerable.</para>
 /// </remarks>
 public static class EnumerableExtensions
 {
     /// <summary>
-    /// Convierte una colección en un string con un separador.
+    /// Convierte una colecciÃ³n en un string con un separador.
     /// </summary>
-    /// <typeparam name="T">Tipo de colección.</typeparam>
-    /// <param name="enumerable">Colección.</param>
+    /// <typeparam name="T">Tipo de colecciÃ³n.</typeparam>
+    /// <param name="enumerable">ColecciÃ³n.</param>
     /// <param name="separator">Separador.</param>
     /// <returns>string: concatenado con el separador.</returns>
     public static string ToString<T>(this IEnumerable<T> enumerable, string separator)
     => string.Join(separator, enumerable.ToArray());
 
     /// <summary>
-    /// Convierte una colección nula en una instancia de la colección.
+    /// Convierte una colecciÃ³n nula en una instancia de la colecciÃ³n.
     /// </summary>
-    /// <typeparam name="T">Tipo de colección.</typeparam>
-    /// <param name="enumerable">Colección.</param>
+    /// <typeparam name="T">Tipo de colecciÃ³n.</typeparam>
+    /// <param name="enumerable">ColecciÃ³n.</param>
     /// <returns>IEnumerable{T} | Empty.</returns>
     public static IEnumerable<T> ToEmptyIfNull<T>(this IEnumerable<T>? enumerable)
     => enumerable ?? Enumerable.Empty<T>();
 
     /// <summary>
-    /// Convierte una colección que sea de solo lectura.
+    /// Convierte una colecciÃ³n que sea de solo lectura.
     /// </summary>
-    /// <typeparam name="T">Tipo de colección.</typeparam>
-    /// <param name="enumerable">Colección.</param>
+    /// <typeparam name="T">Tipo de colecciÃ³n.</typeparam>
+    /// <param name="enumerable">ColecciÃ³n.</param>
     /// <returns>ReadOnlyCollection{T}.</returns>
     public static ReadOnlyCollection<T> ToReadOnly<T>(this IEnumerable<T> enumerable)
     => enumerable is not ReadOnlyCollection<T> collection

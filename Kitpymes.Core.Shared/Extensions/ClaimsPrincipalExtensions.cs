@@ -1,4 +1,4 @@
-// -----------------------------------------------------------------------
+ï»¿// -----------------------------------------------------------------------
 // <copyright file="ClaimsPrincipalExtensions.cs" company="Kitpymes">
 // Copyright (c) Kitpymes. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project docs folder for full license information.
@@ -12,12 +12,12 @@ using System.Linq;
 using System.Security.Claims;
 
 /*
-    Clase de extensión ClaimsPrincipalExtensions
+    Clase de extensiÃ³n ClaimsPrincipalExtensions
     Contiene las extensiones de la clase ClaimsPrincipal
 */
 
 /// <summary>
-/// Clase de extensión <c>ClaimsPrincipalExtensions</c>.
+/// Clase de extensiÃ³n <c>ClaimsPrincipalExtensions</c>.
 /// Contiene las extensiones de la clase ClaimsPrincipal.
 /// </summary>
 /// <remarks>
@@ -28,7 +28,7 @@ public static class ClaimsPrincipalExtensions
     /// <summary>
     /// Verifica si el usuario esta autenticado en el sistema.
     /// </summary>
-    /// <param name="claimsPrincipal">Una implementación System.Security.Principal.IPrincipal que admite múltiples identidades basadas en notificaciones.</param>
+    /// <param name="claimsPrincipal">Una implementaciÃ³n System.Security.Principal.IPrincipal que admite mÃºltiples identidades basadas en notificaciones.</param>
     /// <returns>
     ///     true: si esta autenticado |
     ///     false: si claimsPrincipal es nulo o no esta autenticado.
@@ -37,11 +37,11 @@ public static class ClaimsPrincipalExtensions
     => claimsPrincipal?.Identity?.IsAuthenticated == true;
 
     /// <summary>
-    /// Obtiene el tipo de autenticación.
+    /// Obtiene el tipo de autenticaciÃ³n.
     /// </summary>
-    /// <param name="claimsPrincipal">Una implementación System.Security.Principal.IPrincipal que admite múltiples identidades basadas en notificaciones.</param>
+    /// <param name="claimsPrincipal">Una implementaciÃ³n System.Security.Principal.IPrincipal que admite mÃºltiples identidades basadas en notificaciones.</param>
     /// <returns>
-    ///     string?: el tipo de autenticación o empty/null.
+    ///     string?: el tipo de autenticaciÃ³n o empty/null.
     /// </returns>
     public static string? ToAuthenticationType(this ClaimsPrincipal claimsPrincipal)
     => claimsPrincipal?.Identity?.AuthenticationType;
@@ -49,7 +49,7 @@ public static class ClaimsPrincipalExtensions
     /// <summary>
     /// Obtiene el nombre del usuario autenticado.
     /// </summary>
-    /// <param name="claimsPrincipal">Una implementación System.Security.Principal.IPrincipal que admite múltiples identidades basadas en notificaciones.</param>
+    /// <param name="claimsPrincipal">Una implementaciÃ³n System.Security.Principal.IPrincipal que admite mÃºltiples identidades basadas en notificaciones.</param>
     /// <returns>
     ///     string?: user name o empty/null.
     /// </returns>
@@ -59,7 +59,7 @@ public static class ClaimsPrincipalExtensions
     /// <summary>
     /// Busca a ver si existe el nombre del tipo de claim.
     /// </summary>
-    /// <param name="claimsPrincipal">Una implementación System.Security.Principal.IPrincipal que admite múltiples identidades basadas en notificaciones.</param>
+    /// <param name="claimsPrincipal">Una implementaciÃ³n System.Security.Principal.IPrincipal que admite mÃºltiples identidades basadas en notificaciones.</param>
     /// <param name="claimType">El nombre del tipo de claim a buscar.</param>
     /// <returns>
     ///     true: si existe el tipo de claim |
@@ -71,8 +71,8 @@ public static class ClaimsPrincipalExtensions
     /// <summary>
     /// Agrega una lista de claims.
     /// </summary>
-    /// <param name="claimsPrincipal">Una implementación System.Security.Principal.IPrincipal que admite múltiples identidades basadas en notificaciones.</param>
-    /// <param name="authenticationType">Tipo de autenticación.</param>
+    /// <param name="claimsPrincipal">Una implementaciÃ³n System.Security.Principal.IPrincipal que admite mÃºltiples identidades basadas en notificaciones.</param>
+    /// <param name="authenticationType">Tipo de autenticaciÃ³n.</param>
     /// <param name="claims">La lista de claims.</param>
     public static void ToAddIdentity(this ClaimsPrincipal claimsPrincipal, string? authenticationType, IEnumerable<Claim>? claims)
     {
@@ -87,8 +87,8 @@ public static class ClaimsPrincipalExtensions
     /// Agrega una lista de claims.
     /// </summary>
     /// <typeparam name="T">El tipo de valor de la claim.</typeparam>
-    /// <param name="claimsPrincipal">Una implementación System.Security.Principal.IPrincipal que admite múltiples identidades basadas en notificaciones.</param>
-    /// <param name="authenticationType">Tipo de autenticación.</param>
+    /// <param name="claimsPrincipal">Una implementaciÃ³n System.Security.Principal.IPrincipal que admite mÃºltiples identidades basadas en notificaciones.</param>
+    /// <param name="authenticationType">Tipo de autenticaciÃ³n.</param>
     /// <param name="claims">La lista de claims.</param>
     public static void ToAddIdentity<T>(this ClaimsPrincipal claimsPrincipal, string? authenticationType, params (string type, T value)[] claims)
     {
@@ -113,7 +113,7 @@ public static class ClaimsPrincipalExtensions
     /// Obtiene una claim.
     /// </summary>
     /// <typeparam name="TResult">El tipo de valor de la claim.</typeparam>
-    /// <param name="claimsPrincipal">Una implementación System.Security.Principal.IPrincipal que admite múltiples identidades basadas en notificaciones.</param>
+    /// <param name="claimsPrincipal">Una implementaciÃ³n System.Security.Principal.IPrincipal que admite mÃºltiples identidades basadas en notificaciones.</param>
     /// <param name="claimType">El nombre del tipo de claim a buscar.</param>
     /// <returns>TResult? | SharedException: si claimsPrincipal es nulo.</returns>
     public static TResult? ToGet<TResult>(this ClaimsPrincipal claimsPrincipal, string claimType)
@@ -137,7 +137,7 @@ public static class ClaimsPrincipalExtensions
     /// Obtiene una claim.
     /// </summary>
     /// <typeparam name="TResult">El tipo de valor de la claim.</typeparam>
-    /// <param name="claimsPrincipal">Una implementación System.Security.Principal.IPrincipal que admite múltiples identidades basadas en notificaciones.</param>
+    /// <param name="claimsPrincipal">Una implementaciÃ³n System.Security.Principal.IPrincipal que admite mÃºltiples identidades basadas en notificaciones.</param>
     /// <param name="claimType">El nombre del tipo de claim a buscar.</param>
     /// <returns>TResult? | ArgumentNullException: si claimsPrincipal es nulo.</returns>
     public static TResult? ToGetValue<TResult>(this ClaimsPrincipal claimsPrincipal, string claimType)
@@ -161,7 +161,7 @@ public static class ClaimsPrincipalExtensions
     /// Obtiene una lista de claims.
     /// </summary>
     /// <typeparam name="TResult">El tipo de valor de la claim.</typeparam>
-    /// <param name="claimsPrincipal">Una implementación System.Security.Principal.IPrincipal que admite múltiples identidades basadas en notificaciones.</param>
+    /// <param name="claimsPrincipal">Una implementaciÃ³n System.Security.Principal.IPrincipal que admite mÃºltiples identidades basadas en notificaciones.</param>
     /// <param name="claimType">El nombre del tipo de claim a buscar.</param>
     /// <returns>IEnumerable{TResult} | null.</returns>
     public static IEnumerable<TResult?>? ToGetAll<TResult>(this ClaimsPrincipal claimsPrincipal, string claimType)

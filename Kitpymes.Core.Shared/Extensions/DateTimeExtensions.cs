@@ -1,4 +1,4 @@
-// -----------------------------------------------------------------------
+ï»¿// -----------------------------------------------------------------------
 // <copyright file="DateTimeExtensions.cs" company="Kitpymes">
 // Copyright (c) Kitpymes. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project docs folder for full license information.
@@ -10,12 +10,12 @@ namespace Kitpymes.Core.Shared.Extensions;
 using System;
 
 /*
-    Clase de extensión DateTimeExtensions
+    Clase de extensiÃ³n DateTimeExtensions
     Contiene las extensiones de la clase DateTime
 */
 
 /// <summary>
-/// Clase de extensión <c>DateTimeExtensions</c>.
+/// Clase de extensiÃ³n <c>DateTimeExtensions</c>.
 /// Contiene las extensiones de la clase DateTime.
 /// </summary>
 /// <remarks>
@@ -50,7 +50,7 @@ public static class DateTimeExtensions
     }
 
     /// <summary>
-    /// Verifica si la fecha es el último día del mes.
+    /// Verifica si la fecha es el Ãºltimo dÃ­a del mes.
     /// </summary>
     /// <param name="input">Fecha a verificar.</param>
     /// <returns>true | false.</returns>
@@ -58,7 +58,7 @@ public static class DateTimeExtensions
     => input == new DateTime(input.Year, input.Month, 1).AddMonths(1).AddDays(-1);
 
     /// <summary>
-    /// Obtiene el último día del mes.
+    /// Obtiene el Ãºltimo dÃ­a del mes.
     /// </summary>
     /// <param name="input">Fecha a verificar.</param>
     /// <returns>DateTime.</returns>
@@ -66,7 +66,7 @@ public static class DateTimeExtensions
     => new DateTime(input.Year, input.Month, 1).AddMonths(1).AddDays(-1);
 
     /// <summary>
-    /// Obtiene el primer día de la semana.
+    /// Obtiene el primer dÃ­a de la semana.
     /// </summary>
     /// <param name="input">Fecha a verificar.</param>
     /// <returns>DateTime.</returns>
@@ -82,7 +82,7 @@ public static class DateTimeExtensions
     }
 
     /// <summary>
-    /// Obtiene la fecha del día de mañana.
+    /// Obtiene la fecha del dÃ­a de maÃ±ana.
     /// </summary>
     /// <param name="input">Fecha a verificar.</param>
     /// <returns>DateTime.</returns>
@@ -90,7 +90,7 @@ public static class DateTimeExtensions
     => input.AddDays(-1);
 
     /// <summary>
-    /// Obtiene la fecha del día de ayer.
+    /// Obtiene la fecha del dÃ­a de ayer.
     /// </summary>
     /// <param name="input">Fecha a verificar.</param>
     /// <returns>DateTimer.</returns>

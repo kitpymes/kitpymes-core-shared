@@ -1,4 +1,4 @@
-// -----------------------------------------------------------------------
+ï»¿// -----------------------------------------------------------------------
 // <copyright file="ExceptionExtensions.cs" company="Kitpymes">
 // Copyright (c) Kitpymes. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project docs folder for full license information.
@@ -15,12 +15,12 @@ using System.Reflection;
 using System.Text;
 
 /*
-    Clase de extensión ExceptionExtensions
+    Clase de extensiÃ³n ExceptionExtensions
     Contiene las extensiones de las Excepciones
 */
 
 /// <summary>
-/// Clase de extensión <c>EnumExtensions</c>.
+/// Clase de extensiÃ³n <c>EnumExtensions</c>.
 /// Contiene las extensiones de los Enum.
 /// </summary>
 /// <remarks>
@@ -29,10 +29,10 @@ using System.Text;
 public static class ExceptionExtensions
 {
     /// <summary>
-    /// Obtiene el mensaje de la excepción.
+    /// Obtiene el mensaje de la excepciÃ³n.
     /// </summary>
-    /// <param name="exception">Excepción que se obtiene el mensaje.</param>
-    /// <returns>Mensaje de la excepción | SharedException: si el parámetro exception es nulo.</returns>
+    /// <param name="exception">ExcepciÃ³n que se obtiene el mensaje.</param>
+    /// <returns>Mensaje de la excepciÃ³n | SharedException: si el parÃ¡metro exception es nulo.</returns>
     public static string ToFullMessage(this Exception exception)
     {
         exception.ToThrowIfNullOrEmpty();
@@ -43,11 +43,11 @@ public static class ExceptionExtensions
     }
 
     /// <summary>
-    /// Obtiene un mensaje completo de la excepción.
+    /// Obtiene un mensaje completo de la excepciÃ³n.
     /// </summary>
-    /// <param name="exception">Excepción que se obtiene el mensaje.</param>
+    /// <param name="exception">ExcepciÃ³n que se obtiene el mensaje.</param>
     /// <param name="options">Opsiones del mensaje.</param>
-    /// <returns>Mensaje completo de la excepción.</returns>
+    /// <returns>Mensaje completo de la excepciÃ³n.</returns>
     public static string ToFullMessageDetail(this Exception exception, Action<ExceptionOptions>? options = null)
     {
         exception.ToThrowIfNullOrEmpty();
@@ -162,12 +162,12 @@ public static class ExceptionExtensions
 }
 
 /// <summary>
-/// Configuración de las excepciones.
+/// ConfiguraciÃ³n de las excepciones.
 /// </summary>
 public class ExceptionOptions
 {
     /// <summary>
-    /// Configuración por defecto.
+    /// ConfiguraciÃ³n por defecto.
     /// </summary>
     public static readonly ExceptionOptions Default = new ()
     {
@@ -177,7 +177,7 @@ public class ExceptionOptions
     };
 
     /// <summary>
-    /// Obtiene o establece el número de veces que se aplica la sangría especificada por la propiedad IndentSize. El valor predeterminado es 1.
+    /// Obtiene o establece el nÃºmero de veces que se aplica la sangrÃ­a especificada por la propiedad IndentSize. El valor predeterminado es 1.
     /// </summary>
     public int IndentLevel { get; set; }
 
@@ -189,7 +189,7 @@ public class ExceptionOptions
     internal string Indent => new (' ', IndentLevel * IndentSize);
 
     /// <summary>
-    /// Obtiene o establece el número de espacios en una sangría. El valor predeterminado es cuatro.
+    /// Obtiene o establece el nÃºmero de espacios en una sangrÃ­a. El valor predeterminado es cuatro.
     /// </summary>
     internal int IndentSize { get; set; }
 }

@@ -1,4 +1,4 @@
-// -----------------------------------------------------------------------
+ï»¿// -----------------------------------------------------------------------
 // <copyright file="GenericExtensions.cs" company="Kitpymes">
 // Copyright (c) Kitpymes. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project docs folder for full license information.
@@ -16,12 +16,12 @@ using System.Reflection;
 using System.Xml.Serialization;
 
 /*
-    Clase de extensión GenericExtensions
+    Clase de extensiÃ³n GenericExtensions
     Contiene las extensiones de los Generic
 */
 
 /// <summary>
-/// Clase de extensión <c>GenericExtensions</c>.
+/// Clase de extensiÃ³n <c>GenericExtensions</c>.
 /// Contiene las extensiones de los Generic.
 /// </summary>
 /// <remarks>

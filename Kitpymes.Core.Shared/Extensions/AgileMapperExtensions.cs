@@ -1,4 +1,4 @@
-// -----------------------------------------------------------------------
+ï»¿// -----------------------------------------------------------------------
 // <copyright file="AgileMapperExtensions.cs" company="Kitpymes">
 // Copyright (c) Kitpymes. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project docs folder for full license information.
@@ -16,12 +16,12 @@ using AgileObjects.AgileMapper.Api.Configuration.Projection;
 using AgileObjects.AgileMapper.Extensions;
 
 /*
-    Clase de extensión AgileMapperExtensions
+    Clase de extensiÃ³n AgileMapperExtensions
     Contiene las extensiones del mapeador de objetos AgileMapper
 */
 
 /// <summary>
-/// Clase de extensión <c>AgileMapperExtensions</c>.
+/// Clase de extensiÃ³n <c>AgileMapperExtensions</c>.
 /// Contiene las extensiones del mapeador de objetos AgileMapper.
 /// </summary>
 /// <remarks>

@@ -1,4 +1,4 @@
-// -----------------------------------------------------------------------
+ï»¿// -----------------------------------------------------------------------
 // <copyright file="TypeExtensions.cs" company="Kitpymes">
 // Copyright (c) Kitpymes. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project docs folder for full license information.
@@ -14,12 +14,12 @@ using System.Linq;
 using System.Reflection;
 
 /*
-  Clase de extensión TypeExtensions
+  Clase de extensiÃ³n TypeExtensions
   Contiene las extensiones de la clase Type
 */
 
 /// <summary>
-/// Clase de extensión <c>TypeExtensions</c>.
+/// Clase de extensiÃ³n <c>TypeExtensions</c>.
 /// Contiene las extensiones de la clase Type.
 /// </summary>
 /// <remarks>

@@ -1,4 +1,4 @@
-// -----------------------------------------------------------------------
+ï»¿// -----------------------------------------------------------------------
 // <copyright file="TimeSpanExtensions.cs" company="Kitpymes">
 // Copyright (c) Kitpymes. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project docs folder for full license information.
@@ -10,12 +10,12 @@ namespace Kitpymes.Core.Shared.Extensions;
 using System;
 
 /*
-  Clase de extensión TimeSpanExtensions
+  Clase de extensiÃ³n TimeSpanExtensions
   Contiene las extensiones de la clase TimeSpan
 */
 
 /// <summary>
-/// Clase de extensión <c>TimeSpanExtensions</c>.
+/// Clase de extensiÃ³n <c>TimeSpanExtensions</c>.
 /// Contiene las extensiones de la clase TimeSpan.
 /// </summary>
 /// <remarks>

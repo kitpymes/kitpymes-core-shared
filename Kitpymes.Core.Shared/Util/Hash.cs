@@ -74,7 +74,11 @@ public static class Hash
     /// </summary>
     /// <param name="text">Texto a verificar.</param>
     /// <param name="hash">Texto cifrado.</param>
-    /// <returns>ture | false.</returns>
+    /// <returns>true | false.</returns>
+    /// <remarks>
+    /// No sirve para guardar contraseñas: SHA-256 y SHA-512 son rápidos y aquí no llevan sal.
+    /// Para contraseñas, usar PBKDF2, bcrypt o Argon2 (por ejemplo, el servicio de contraseñas de Kitpymes.Core.Security).
+    /// </remarks>
     public static bool VerifySHA256(string text, string hash)
     {
         using var algorithm = SHA256.Create();
@@ -104,7 +108,11 @@ public static class Hash
     /// </summary>
     /// <param name="text">Texto a verificar.</param>
     /// <param name="hash">Texto cifrado.</param>
-    /// <returns>ture | false.</returns>
+    /// <returns>true | false.</returns>
+    /// <remarks>
+    /// No sirve para guardar contraseñas: SHA-256 y SHA-512 son rápidos y aquí no llevan sal.
+    /// Para contraseñas, usar PBKDF2, bcrypt o Argon2 (por ejemplo, el servicio de contraseñas de Kitpymes.Core.Security).
+    /// </remarks>
     public static bool VerifySHA512(string text, string hash)
     {
         using var algorithm = SHA512.Create();
@@ -137,7 +145,9 @@ public static class Hash
 
         var result = Create(algorithm, text);
 
-        return !string.IsNullOrWhiteSpace(result) && result == hash;
+        // Comparación en tiempo constante: con "==" el tiempo de respuesta revela cuántos caracteres coinciden.
+        return !string.IsNullOrWhiteSpace(result)
+            && CryptographicOperations.FixedTimeEquals(Encoding.UTF8.GetBytes(result), Encoding.UTF8.GetBytes(hash));
     }
 
     #endregion Private

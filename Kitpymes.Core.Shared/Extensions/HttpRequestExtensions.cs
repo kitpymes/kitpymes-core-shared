@@ -93,7 +93,7 @@ public static class HttpRequestExtensions
     /// <returns>string | null.</returns>
     public static string? ToSubdomain(this HttpRequest httpRequest, params string[] ignores)
     {
-        var subdomain = httpRequest?.Host.Host?.Split('.')[0].Trim().ToLower();
+        var subdomain = httpRequest?.Host.Host?.Split('.')[0].Trim().ToLowerInvariant();
 
         subdomain.ToThrowIfNotSubdomain();
 

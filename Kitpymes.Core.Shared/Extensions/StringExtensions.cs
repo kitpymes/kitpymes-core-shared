@@ -176,9 +176,19 @@ public static class StringExtensions
 
         if (ignoreSpecialChars?.Length > 0)
         {
+            // Los caracteres a ignorar van dentro de una clase [...]: hay que escapar los que ahí tienen significado.
+            // Sin escapar, "@", "-", "." se leía como un rango de "@" a "." y lanzaba una excepción.
             foreach (string c in ignoreSpecialChars)
             {
-                pattern += c;
+                foreach (char ch in c)
+                {
+                    if (ch is '\\' or ']' or '[' or '^' or '-')
+                    {
+                        pattern += '\\';
+                    }
+
+                    pattern += ch;
+                }
             }
         }
 
@@ -186,7 +196,7 @@ public static class StringExtensions
 
         input = dictionary.Keys.Aggregate(input, (x, y) => dictionary[y].Aggregate(x, (z, c) => z.Replace(c, y)));
 
-        return new Regex(pattern).Replace(input, string.Empty);
+        return new Regex(pattern, RegexOptions.None, Util.RegexSettings.Timeout).Replace(input, string.Empty);
     }
 
     #endregion ToReplace
@@ -297,7 +307,7 @@ public static class StringExtensions
     /// <returns>El email con las máscara aplicada.</returns>
     public static string? ToEmailMask(this string? input, string pattern, char replace)
         => string.IsNullOrWhiteSpace(input) || string.IsNullOrWhiteSpace(pattern) || replace == default ? input
-        : Regex.Replace(input, pattern, m => new string(replace, m.Length));
+        : Regex.Replace(input, pattern, m => new string(replace, m.Length), RegexOptions.None, Util.RegexSettings.Timeout);
 
     #endregion ToEmailMask
 

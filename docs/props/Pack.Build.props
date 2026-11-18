@@ -17,6 +17,7 @@
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <PackageLicenseType>file</PackageLicenseType>
         <PackageIcon>logo.png</PackageIcon>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageProjectUrl>https://github.com/kitpymes/kitpymes-core-shared</PackageProjectUrl>
         <PackageReleaseNotes>https://github.com/kitpymes/kitpymes-core-shared/blob/master/docs/RELEASE_NOTES.txt</PackageReleaseNotes>
         <RepositoryUrl>https://github.com/kitpymes/kitpymes-core-shared</RepositoryUrl>
@@ -27,6 +28,7 @@
       <ItemGroup>
         <None Include="$(SolutionDir)docs\LICENSE.txt" Pack="true" PackagePath="." />
         <None Include="$(SolutionDir)docs\images\logo.png" Pack="true" PackagePath="." />
+        <None Include="$(SolutionDir)docs\README_NUGET.md" Pack="true" PackagePath="README.md" />
       </ItemGroup>
   
     </When>

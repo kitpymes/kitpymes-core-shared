@@ -479,63 +479,78 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
 
         #region ToZip
 
+        // Carpeta del proyecto de tests: el ejecutable corre en bin/<config>/<tfm>, tres niveles por debajo.
+        private static string ProjectDirectoryPath => Directory.GetParent(Environment.CurrentDirectory)!.Parent!.Parent!.FullName;
+
 #if DEBUG
 
         [TestMethod]
         public void ToZipCreate_Passing_ValidFiles_Returns_ZipFiles()
         {
-            var proyectDirectoryPath = Directory.GetParent(Environment.CurrentDirectory)?.Parent?.Parent?.FullName;
-            var sourceDirectoryPath = proyectDirectoryPath + "\\Fakes";
+            var sourceDirectoryPath = Path.Combine(ProjectDirectoryPath, "Fakes");
 
-            var fileZipPath = sourceDirectoryPath + ".zip";
-            var destinationDirectoryPath = proyectDirectoryPath;
+            // Cada test escribe en su propia carpeta temporal: así no chocan entre ellos ni dejan restos en el proyecto.
+            var destinationDirectoryPath = Guid.NewGuid().ToString().ToDirectoryTemporary();
+            var fileZipPath = Path.Combine(destinationDirectoryPath, "Fakes.zip");
 
-            sourceDirectoryPath.ToZipCreate(destinationDirectoryPath);
+            try
+            {
+                sourceDirectoryPath.ToZipCreate(destinationDirectoryPath);
 
-            Assert.IsTrue(File.Exists(fileZipPath));
-
-            File.Delete(fileZipPath);
+                Assert.IsTrue(File.Exists(fileZipPath));
+            }
+            finally
+            {
+                destinationDirectoryPath.ToDirectoryDeleteFiles(true, true);
+            }
         }
 
         [TestMethod]
         public void ToZipCreate_Passing_ValidFilesWithCutomZipName_Returns_ZipFiles()
         {
-            var proyectDirectoryPath = Directory.GetParent(Environment.CurrentDirectory)?.Parent?.Parent?.FullName;
-            var sourceDirectoryPath = proyectDirectoryPath + "\\Fakes";
+            var sourceDirectoryPath = Path.Combine(ProjectDirectoryPath, "Fakes");
 
             var customZipName = Guid.NewGuid().ToString();
-            var fileZipPath = proyectDirectoryPath + $"\\{customZipName}.zip";
-            var destinationDirectoryPath = proyectDirectoryPath;
+            var destinationDirectoryPath = Guid.NewGuid().ToString().ToDirectoryTemporary();
+            var fileZipPath = Path.Combine(destinationDirectoryPath, $"{customZipName}.zip");
 
-            sourceDirectoryPath.ToZipCreate(destinationDirectoryPath, customZipName);
+            try
+            {
+                sourceDirectoryPath.ToZipCreate(destinationDirectoryPath, customZipName);
 
-            Assert.IsTrue(File.Exists(fileZipPath));
-
-            File.Delete(fileZipPath);
+                Assert.IsTrue(File.Exists(fileZipPath));
+            }
+            finally
+            {
+                destinationDirectoryPath.ToDirectoryDeleteFiles(true, true);
+            }
         }
 
         [TestMethod]
         public void ToZipExtract_Passing_ValidArchive_Returns_Files()
         {
-            var proyectDirectoryPath = Directory.GetParent(Environment.CurrentDirectory)?.Parent?.Parent?.FullName;
-            var folderNameToZip = "\\Fakes";
-            var sourceDirectoryPath = proyectDirectoryPath + folderNameToZip;
+            var sourceDirectoryPath = Path.Combine(ProjectDirectoryPath, "Fakes");
 
-            var zipNamePath = sourceDirectoryPath + ".zip";
-            var destinationDirectoryPath = proyectDirectoryPath;
-            var destinationDirectoryPathToExtractFiles = "FakeFolderZip".ToDirectoryTemporary();
+            var destinationDirectoryPath = Guid.NewGuid().ToString().ToDirectoryTemporary();
+            var zipNamePath = Path.Combine(destinationDirectoryPath, "Fakes.zip");
+            var destinationDirectoryPathToExtractFiles = Guid.NewGuid().ToString().ToDirectoryTemporary();
             int fileCountExpected = Directory.GetFiles(sourceDirectoryPath, "*.*").Length;
 
-            sourceDirectoryPath.ToZipCreate(destinationDirectoryPath);
+            try
+            {
+                sourceDirectoryPath.ToZipCreate(destinationDirectoryPath);
 
-            zipNamePath.ToZipExtract(destinationDirectoryPathToExtractFiles);
+                zipNamePath.ToZipExtract(destinationDirectoryPathToExtractFiles);
 
-            int fileCountActual = Directory.GetFiles(destinationDirectoryPathToExtractFiles, "*.*").Length;
+                int fileCountActual = Directory.GetFiles(destinationDirectoryPathToExtractFiles, "*.*").Length;
 
-            Assert.AreEqual(fileCountExpected, fileCountActual);
-
-            File.Delete(zipNamePath);
-            destinationDirectoryPathToExtractFiles.ToDirectoryDeleteFiles(true);
+                Assert.AreEqual(fileCountExpected, fileCountActual);
+            }
+            finally
+            {
+                destinationDirectoryPath.ToDirectoryDeleteFiles(true, true);
+                destinationDirectoryPathToExtractFiles.ToDirectoryDeleteFiles(true, true);
+            }
         }
 
 #endif
@@ -585,9 +600,9 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             var destinationDirectoryPath = folderName.ToDirectoryTemporary();
             var fileName = Guid.NewGuid().ToString();
             var fileContent = Guid.NewGuid().ToString();
-            File.WriteAllText(destinationDirectoryPath + $"\\{fileName}.txt", fileContent);
+            File.WriteAllText(Path.Combine(destinationDirectoryPath, $"{fileName}.txt"), fileContent);
 
-            var valueExpected = $"{destinationDirectoryPath}\\{fileName}.txt";
+            var valueExpected = Path.Combine(destinationDirectoryPath, $"{fileName}.txt");
 
             var valueActual = destinationDirectoryPath.ToDirectoryFindFilePath(fileName);
 
@@ -601,12 +616,12 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
         {
             var folderName = Guid.NewGuid().ToString();
             var destinationDirectoryPath = folderName.ToDirectoryTemporary();
-            var subDirectoryPath = Directory.CreateDirectory(destinationDirectoryPath + "\\SubDirectory");
+            var subDirectoryPath = Directory.CreateDirectory(Path.Combine(destinationDirectoryPath, "SubDirectory"));
             var fileName = Guid.NewGuid().ToString();
             var fileContent = Guid.NewGuid().ToString();
-            File.WriteAllText(subDirectoryPath + $"\\{fileName}.txt", fileContent);
+            File.WriteAllText(Path.Combine(subDirectoryPath.FullName, $"{fileName}.txt"), fileContent);
 
-            var valueExpected = $"{subDirectoryPath}\\{fileName}.txt";
+            var valueExpected = Path.Combine(subDirectoryPath.FullName, $"{fileName}.txt");
 
             var valueActual = destinationDirectoryPath.ToDirectoryFindFilePath(fileName);
 
@@ -630,9 +645,9 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             var destinationDirectoryPath = folderName.ToDirectoryTemporary();
             var fileName = Guid.NewGuid().ToString();
             var fileContent = Guid.NewGuid().ToString();
-            File.WriteAllText(destinationDirectoryPath + $"\\{fileName}.txt", fileContent);
+            File.WriteAllText(Path.Combine(destinationDirectoryPath, $"{fileName}.txt"), fileContent);
 
-            var valueExpected = $"{destinationDirectoryPath}\\{fileName}.txt";
+            var valueExpected = Path.Combine(destinationDirectoryPath, $"{fileName}.txt");
 
             var valueActual = destinationDirectoryPath.ToDirectoryFileInfo(fileName);
 
@@ -654,7 +669,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             var destinationDirectoryPath = folderName.ToDirectoryTemporary();
             var fileName = Guid.NewGuid().ToString();
             var fileContent = Guid.NewGuid().ToString();
-            File.WriteAllText(destinationDirectoryPath + $"\\{fileName}.txt", fileContent);
+            File.WriteAllText(Path.Combine(destinationDirectoryPath, $"{fileName}.txt"), fileContent);
 
             destinationDirectoryPath.ToDirectoryDeleteFiles(true, true);
 
@@ -680,7 +695,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
 
             await destinationDirectoryPath.ToDirectorySaveFileAsync(fileName, bytes);
 
-            var valueActual = File.Exists(destinationDirectoryPath + $"\\{fileName}");
+            var valueActual = File.Exists(Path.Combine(destinationDirectoryPath, fileName));
 
             Assert.IsTrue(valueActual);
 
@@ -700,9 +715,9 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             var destinationDirectoryPath = folderName.ToDirectoryTemporary();
             var fileName = Guid.NewGuid().ToString();
             var fileContent = Guid.NewGuid().ToString();
-            File.WriteAllText(destinationDirectoryPath + $"\\{fileName}.txt", fileContent);
+            File.WriteAllText(Path.Combine(destinationDirectoryPath, $"{fileName}.txt"), fileContent);
 
-            var valueExpected = $"{destinationDirectoryPath}\\{fileName}.txt";
+            var valueExpected = Path.Combine(destinationDirectoryPath, $"{fileName}.txt");
 
             var result = await destinationDirectoryPath.ToDirectoryReadFileAsync(fileName);
 

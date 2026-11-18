@@ -70,9 +70,10 @@ public static class QueryableExtensions
     /// <param name="queryable">Instancia IQueryable.</param>
     /// <param name="properties">Nombre de los campos por el que se requiere ordenar separados por (.) punto, ej, "age.lastname.firstname".</param>
     /// <param name="ascending">Orden de la lista ascendente o descendente.</param>
-    /// <param name="index">Desde que página empieza la lista.</param>
-    /// <param name="size">La cantidad de páginas a listar.</param>
-    /// <returns>La lista paginada.</returns>
+    /// <param name="index">Número de página, empezando en 1.</param>
+    /// <param name="size">Cantidad de elementos por página.</param>
+    /// <returns>La página pedida: como máximo <paramref name="size"/> elementos.</returns>
+    /// <exception cref="Util.SharedException">Si <paramref name="index"/> o <paramref name="size"/> son menores que 1.</exception>
     public static IQueryable<T> ToPaged<T>(
         this IQueryable<T> queryable,
         string? properties = null,
@@ -80,19 +81,22 @@ public static class QueryableExtensions
         int index = 1,
         int size = 20)
     {
-        if (queryable.ToIsNullOrAny())
+        // Sólo se comprueba null: preguntar si tiene elementos lanzaría una consulta extra contra la base de datos.
+        if (queryable is null)
         {
-            return queryable;
+            return queryable!;
         }
+
+        index.ToThrowIfLess(1);
+        size.ToThrowIfLess(1);
 
         if (!properties.ToIsNullOrEmpty())
         {
             queryable = queryable.ToOrder(properties, ascending);
         }
 
-        queryable.Skip((index - 1) * size).Take(size);
-
-        return queryable;
+        // Skip y Take no modifican la consulta: devuelven una nueva, que hay que guardar.
+        return queryable.Skip((index - 1) * size).Take(size);
     }
 
     private static IQueryable<T> ToOrder<T>(

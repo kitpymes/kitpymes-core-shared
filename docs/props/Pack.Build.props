@@ -5,7 +5,7 @@
   <Choose>
     <When Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
       <PropertyGroup>
-        <Version>1.2.6</Version>
+        <Version>2.0.0</Version>
         <ApplicationIcon>$(SolutionDir)docs\images\logo.ico</ApplicationIcon>
         <PackageId>$(AssemblyName)</PackageId>
         <Authors>Kitpymes, Sebastian R Ferrari</Authors>
@@ -17,12 +17,11 @@
         <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <PackageLicenseType>file</PackageLicenseType>
         <PackageIcon>logo.png</PackageIcon>
-        <PackageProjectUrl>https://kitpymes.github.io/template-netcore-shared/</PackageProjectUrl>
-        <PackageReleaseNotes>https://github.com/kitpymes/template-netcore-shared/tree/master/docs/RELEASE_NOTES.txt</PackageReleaseNotes>
-        <RepositoryUrl>https://github.com/kitpymes/template-netcore-shared</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/kitpymes/kitpymes-core-shared</PackageProjectUrl>
+        <PackageReleaseNotes>https://github.com/kitpymes/kitpymes-core-shared/blob/master/docs/RELEASE_NOTES.txt</PackageReleaseNotes>
+        <RepositoryUrl>https://github.com/kitpymes/kitpymes-core-shared</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <PackageTags>Extensions, Extensiones, Utilities, Util, Utilidades, Shared, Common</PackageTags>
-        <PackageOutputPath>$(SolutionDir)docs\packages\$(Version)</PackageOutputPath>
       </PropertyGroup>
     
       <ItemGroup>
@@ -52,10 +51,7 @@
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
       </PropertyGroup>
 
-      <ItemGroup>
-        <!-- Required if your repository is on Github -->
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
-      </ItemGroup>
+      <!-- Source Link viene incluido en el SDK desde .NET 8: ya no hace falta el paquete Microsoft.SourceLink.GitHub. -->
     </When>
   </Choose>
 

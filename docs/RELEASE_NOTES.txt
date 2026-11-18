@@ -1,20 +1,30 @@
+# v.2.0.0
+- Se migra a .NET 10 (antes .NET 8). Cambio incompatible: requiere .NET 10 o superior.
+- Se corrige ToZipCreate fuera de Windows: sin nombre propio, el zip se intentaba crear en una ruta inexistente.
+- Incluye los cambios de 2024, que no se llegaron a publicar:
+  - Migraci贸n a C# 12.
+  - Nueva extensi贸n para convertir un int en un valor de un Enum.
+  - Nueva validaci贸n para comprobar si dos objetos son iguales y mejoras en la validaci贸n de Equal.
+  - Actualizaci贸n de mensajes.
+- El c贸digo pasa a github.com/kitpymes/kitpymes-core-shared y el paquete se publica desde GitHub Actions.
+
 # v.1.2.6
-- Se agregan los siguientes m閠odos de verificaci髇 en la clase "VerifyExtensions":
-  - IsRangeOrEqual: para verificar si un n鷐ero se encuentra dentro de un rango.
-  - IsGreaterOrEqual: para verificar si un n鷐ero es mayor o igual a un rango.
-  - ThrowIfGreaterOrEqual: para lanzar una excepci髇 cuando se verifica que un n鷐ero es mayor o igual a un rango.
-  - IsLessOrEqual: para verificar si un n鷐ero es menor o igual a un rango.
-  - ThrowIfLessOrEqual: para lanzar una excepci髇 cuando se verifica que un n鷐ero es menor o igual a un rango.
-  - ThrowIfOutRange: para lanzar una excepci髇 cuando se verifica que un n鷐ero se encuentra fuera de un rango.
-  - ThrowIfInsideRange: para lanzar una excepci髇 cuando se verifica que un n鷐ero se encuentra dentro de un rango.
-  - ThrowIfInsideRangeOrEqual: para lanzar una excepci髇 cuando se verifica que un n鷐ero se encuentra dentro de un rango incluido los n鷐eros min y max.
+- Se agregan los siguientes m茅todos de verificaci贸n en la clase "VerifyExtensions":
+  - IsRangeOrEqual: para verificar si un n煤mero se encuentra dentro de un rango.
+  - IsGreaterOrEqual: para verificar si un n煤mero es mayor o igual a un rango.
+  - ThrowIfGreaterOrEqual: para lanzar una excepci贸n cuando se verifica que un n煤mero es mayor o igual a un rango.
+  - IsLessOrEqual: para verificar si un n煤mero es menor o igual a un rango.
+  - ThrowIfLessOrEqual: para lanzar una excepci贸n cuando se verifica que un n煤mero es menor o igual a un rango.
+  - ThrowIfOutRange: para lanzar una excepci贸n cuando se verifica que un n煤mero se encuentra fuera de un rango.
+  - ThrowIfInsideRange: para lanzar una excepci贸n cuando se verifica que un n煤mero se encuentra dentro de un rango.
+  - ThrowIfInsideRangeOrEqual: para lanzar una excepci贸n cuando se verifica que un n煤mero se encuentra dentro de un rango incluido los n煤meros min y max.
 
 # v.1.2.5
-- Se actualizan librer韆s.
-- Se arregla un bug en el m閠odo "IsContainsUniqueChars" de la clase "VerifyExtensions".
+- Se actualizan librer铆as.
+- Se arregla un bug en el m茅todo "IsContainsUniqueChars" de la clase "VerifyExtensions".
 
 # v.1.2.4
-- Se actualizan librer韆s.
+- Se actualizan librer铆as.
 - Se migra a net7.
 - Se agrega la extensions "GuidExtensions" para crear Guid secuenciales.
 - Se agrega la extensions "VerifyExtensions" para las validaciones.
@@ -26,10 +36,10 @@
 - Se actualizan las extensions "ToSettings" de la clase "ServiceCollectionExtensions".
 
 # v.1.2.2
-- Se actualizan librer韆s.
+- Se actualizan librer铆as.
 
 # v.1.2.1
-- Se migra de la versi髇 netcoreapp3 a net5 y se actualizan librer韆s.
+- Se migra de la versi贸n netcoreapp3 a net5 y se actualizan librer铆as.
 
 # v.1.2.0
 - Se realizan mejoras en "Result" y en varias extensiones.
@@ -83,13 +93,13 @@
 - Se agregan utilidades de cifrado.
 
 # v.1.0.3
-- Actualizaci髇 de dependencias.
+- Actualizaci贸n de dependencias.
 
 # v.1.0.2
 - Se agregan utilidades para validaciones.
 
 # v.1.0.1
-- Se cambia la versi髇 de netcoreapp3.1 por netcoreapp3.0.
+- Se cambia la versi贸n de netcoreapp3.1 por netcoreapp3.0.
 
 # v.1.0.0
-- Se genera la primera versi髇 del paquete del proyecto de herramientas comunes, como extensiones y utlidades.
+- Se genera la primera versi贸n del paquete del proyecto de herramientas comunes, como extensiones y utlidades.

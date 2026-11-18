@@ -84,8 +84,9 @@
     </When>
     <When Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
       <PropertyGroup>
-        <DebugSymbols>false</DebugSymbols>
-        <DebugType>none</DebugType>
+        <!-- Símbolos portables en Release: sin PDB, el paquete de símbolos sale vacío y Source Link no sirve. -->
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>portable</DebugType>
         <Optimize>true</Optimize>
         <DefineConstants>TRACE</DefineConstants>
       </PropertyGroup>

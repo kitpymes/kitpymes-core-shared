@@ -1,12 +1,43 @@
 # v.2.0.0
-- Se migra a .NET 10 (antes .NET 8). Cambio incompatible: requiere .NET 10 o superior.
+Versión mayor: rompe a quien venga de la 1.x. Abajo, qué cambia y cómo migrar.
+
+- Requiere .NET 10 o superior (la 1.2.6 era .NET 7).
 - Se corrige ToZipCreate fuera de Windows: sin nombre propio, el zip se intentaba crear en una ruta inexistente.
-- Incluye los cambios de 2024, que no se llegaron a publicar:
-  - Migración a C# 12.
-  - Nueva extensión para convertir un int en un valor de un Enum.
-  - Nueva validación para comprobar si dos objetos son iguales y mejoras en la validación de Equal.
-  - Actualización de mensajes.
+- Nuevas funcionalidades de 2024: extensión para convertir un int en un valor de un Enum, validación de igualdad entre objetos y mejoras en la validación de Equal.
+- Migración a C# 12.
 - El código pasa a github.com/kitpymes/kitpymes-core-shared y el paquete se publica desde GitHub Actions.
+
+## Cambios incompatibles y cómo migrar desde 1.x
+
+1. Espacio de nombres de las extensiones
+   - Antes: using Kitpymes.Core.Shared;
+   - Ahora: using Kitpymes.Core.Shared.Extensions;
+
+2. Los métodos de extensión llevan el prefijo "To"
+   - IsEmail -> ToIsEmail, IsNullOrEmpty -> ToIsNullOrEmpty, ThrowIfNullOrEmpty -> ToThrowIfNullOrEmpty, ThrowIfNotEmail -> ToThrowIfNotEmail, y así con el resto (44 métodos).
+
+3. Métodos con otro nombre
+   - IsMatch -> ToIsRegexMatch
+   - ThrowIfNotMatch -> ToThrowIfRegexNotMatch
+   - IsRange -> ToIsInsideRange
+   - IsRangeOrEqual -> ToIsInsideOrEqualRange
+   - ThrowIfInsideRangeOrEqual -> ToThrowIfInsideOrEqualRange
+   - Diccionarios: Contains -> ToContainsKeyValue, GetValues -> ToValues, AddOrUpdate -> ToAddOrUpdate
+
+4. Mensajes de validación (clase Messages)
+   - FieldNullOrEmpty -> NullOrEmpty
+   - FieldInvalidFormat -> InvalidFormat
+   - FieldNullOrAny -> NullOrAny
+   - NotEquals -> NotEqual
+   - La clase de recursos pasa de Resources a SharedResource.
+
+5. Resultados de API: salen de Shared
+   - Result, IResult, ErrorOptions y ErrorSettings, con sus métodos Ok, BadRequest y Error, pasan al paquete Kitpymes.Core.Results como ApiResult.
+   - Unauthorized, InternalServerError y AlreadyExists ya no tienen método propio: se construyen con ApiResult.Error(...).
+
+6. Idioma por defecto de los mensajes: español
+   - Antes el idioma por defecto era el inglés, con traducción al español.
+   - Ahora es el español, con traducción al inglés. Una aplicación cuya cultura no sea inglés verá los mensajes en español.
 
 # v.1.2.6
 - Se agregan los siguientes métodos de verificación en la clase "VerifyExtensions":

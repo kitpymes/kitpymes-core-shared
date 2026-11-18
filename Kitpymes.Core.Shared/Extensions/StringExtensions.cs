@@ -378,9 +378,13 @@ public static class StringExtensions
     {
         sourceDirectoryPath.ToThrowIfNullOrEmpty();
 
-        customZipName = customZipName.ToIsNullOrEmpty() ? sourceDirectoryPath.Split("\\").Last() : customZipName;
+        // El nombre por defecto es el de la carpeta de origen. Path.GetFileName entiende el separador de cada sistema
+        // operativo; partir la ruta por "\\" sólo funcionaba en Windows.
+        customZipName = customZipName.ToIsNullOrEmpty()
+            ? Path.GetFileName(sourceDirectoryPath.TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar))
+            : customZipName;
 
-        ZipFile.CreateFromDirectory(sourceDirectoryPath, $"{destinationDirectoryPath}/{customZipName}.zip", compressionLevel, false);
+        ZipFile.CreateFromDirectory(sourceDirectoryPath, Path.Combine(destinationDirectoryPath ?? string.Empty, $"{customZipName}.zip"), compressionLevel, false);
 
         if (removeSourceDirectoryPath)
         {

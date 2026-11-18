@@ -3,7 +3,7 @@
 <Project>
   <PropertyGroup>
     <IsTestsProject>$(MSBuildProjectName.Contains('Tests'))</IsTestsProject>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <!--
       Si no agregamos <LangVersion>, por defecto:

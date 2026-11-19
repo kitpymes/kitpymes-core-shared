@@ -72,7 +72,7 @@ public static class TypeExtensions
             .Where(fi => fi.IsLiteral && !fi.IsInitOnly && fi.FieldType == typeof(TResult))
             .Select(x => (TResult)x.GetRawConstantValue().ToThrowIfNullOrEmpty());
 
-        if (!ignoreValues.ToIsNullOrAny())
+        if (!ignoreValues.ToIsNullOrEmptyCollection())
         {
             query = query.Where(value => !ignoreValues.Contains(value));
         }

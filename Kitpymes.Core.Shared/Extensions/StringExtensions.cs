@@ -92,7 +92,7 @@ public static class StringExtensions
     /// <returns>La cadena con los caracteres removidos.</returns>
     public static string? ToRemove(this string? input, params string[] removes)
     {
-        if (!input.ToIsNullOrEmpty() && removes?.ToIsNullOrAny() == false)
+        if (!input.ToIsNullOrEmpty() && removes?.ToIsNullOrEmptyCollection() == false)
         {
             foreach (var remove in removes)
             {
@@ -539,7 +539,7 @@ public static class StringExtensions
     {
         directoryPath.ToThrowIfNullOrEmpty();
         fileName.ToThrowIfNullOrEmpty();
-        bytes.ToThrowIfNullOrAny();
+        bytes.ToThrowIfNullOrEmptyCollection();
 
         if (ifNoExistDirectoryCreate && directoryPath.ToIsDirectory())
         {

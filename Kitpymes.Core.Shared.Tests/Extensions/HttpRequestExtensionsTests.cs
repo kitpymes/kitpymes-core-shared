@@ -94,5 +94,27 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
 
             Assert.AreEqual(valueExpected, valueActual);
         }
+    
+        [TestMethod]
+        public void ToSubdomain_Passing_Uppercase_Host_In_Turkish_Culture_Returns_Ascii_Lowercase()
+        {
+            // En turco, "I".ToLower() da "ı" (sin punto): el subdominio dejaría de ser ASCII.
+            var cultureOriginal = System.Globalization.CultureInfo.CurrentCulture;
+            System.Globalization.CultureInfo.CurrentCulture = new System.Globalization.CultureInfo("tr-TR");
+
+            try
+            {
+                var fakeHttpRequest = FakeHttpRequest.Configure(x =>
+                {
+                    x.Host = new HostString("IMAGES.example.com");
+                });
+
+                Assert.AreEqual("images", fakeHttpRequest.ToSubdomain());
+            }
+            finally
+            {
+                System.Globalization.CultureInfo.CurrentCulture = cultureOriginal;
+            }
+        }
     }
 }

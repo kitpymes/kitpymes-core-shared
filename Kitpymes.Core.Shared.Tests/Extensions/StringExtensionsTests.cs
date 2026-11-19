@@ -64,6 +64,8 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
         [DataRow("*¨^_:-?¿;", "")]
         [DataRow(" * ¨ ^ _ : - ? ¿ ; ", "          ")]
         [DataRow("*¨^_:-?¿;", "?¿", "?¿")]
+        [DataRow("user@mail-x.com!", "user@mail-x.com", "@", "-", ".")]
+        [DataRow("a-b]c#d^e\\f", "a-b]cd^e\\f", "-", "]", "^", "\\")]
         public void ToReplaceSpecialChars_Passing_ValidValue_Returns_ReplacedValueWithoutIgnoreSpecialChars(string value, string valueExpected, params string[] ignoreSpecialChars)
         {
             var valueActual = value.ToReplaceSpecialChars(ignoreSpecialChars);

@@ -470,8 +470,9 @@ public static class VerifyExtensions
     /// <param name="argument">Argumento a verificar.</param>
     /// <param name="regex">Expresión regular.</param>
     /// <returns>true | false.</returns>
+    /// <exception cref="RegexMatchTimeoutException">Si la evaluación supera el tiempo máximo (1 segundo).</exception>
     public static bool ToIsRegexMatch([NotNullWhen(true)] this string? argument, string regex)
-    => !argument.ToIsNullOrEmpty() && Regex.IsMatch(argument, regex, RegexOptions.CultureInvariant);
+    => !argument.ToIsNullOrEmpty() && Regex.IsMatch(argument, regex, RegexOptions.CultureInvariant, Util.RegexSettings.Timeout);
 
     /// <summary>
     /// Verifica si un argumento coincide con la expresión regular.

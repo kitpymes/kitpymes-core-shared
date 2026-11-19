@@ -248,5 +248,14 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
         }
 
         #endregion ContainsUniqueChars
+    
+        [TestMethod]
+        public void ToIsRegexMatch_Passing_Catastrophic_Pattern_Throws_Timeout_Instead_Of_Hanging()
+        {
+            // Patrón con retroceso exponencial: sin tiempo límite, este texto deja el proceso colgado.
+            var text = new string('a', 40) + "!";
+
+            Assert.ThrowsException<System.Text.RegularExpressions.RegexMatchTimeoutException>(() => text.ToIsRegexMatch("^(a|aa)+$"));
+        }
     }
 }

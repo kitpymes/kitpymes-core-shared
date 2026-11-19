@@ -1,3 +1,12 @@
+# v.2.0.1
+Versión de corrección: no cambia la API pública.
+
+- El paquete incluye el README (en la 2.0.0 NuGet lo mostraba vacío).
+- Corregidas las tildes rotas en la documentación del IntelliSense.
+- Hash.Verify compara en tiempo constante.
+- ToPaged pagina de verdad: aplica Skip y Take aunque no se ordene, y valida que índice y tamaño sean al menos 1.
+- Las expresiones regulares tienen un tiempo máximo de 1 segundo, ToReplaceSpecialChars escapa bien los caracteres a ignorar y ToSubdomain no depende de la cultura del equipo.
+
 # v.2.0.0
 Versión mayor: rompe a quien venga de la 1.x. Abajo, qué cambia y cómo migrar.
 

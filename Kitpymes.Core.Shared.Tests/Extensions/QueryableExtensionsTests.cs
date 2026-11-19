@@ -107,6 +107,42 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             Assert.IsTrue(fakeListActual.First().Name == "h");
         }
 
+        [TestMethod]
+        public void ToPaged_Passing_Size_Returns_Only_That_Many_Items()
+        {
+            var fakeListActual = fakeListExpected.AsQueryable().ToPaged("Age", true, index: 1, size: 2).ToList();
+
+            Assert.AreEqual(2, fakeListActual.Count);
+            Assert.AreEqual(18, fakeListActual[0].Age);
+            Assert.AreEqual(40, fakeListActual[1].Age);
+        }
+
+        [TestMethod]
+        public void ToPaged_Passing_Second_Page_Returns_Next_Items()
+        {
+            var fakeListActual = fakeListExpected.AsQueryable().ToPaged("Age", true, index: 2, size: 2).ToList();
+
+            Assert.AreEqual(1, fakeListActual.Count);
+            Assert.AreEqual(55, fakeListActual[0].Age);
+        }
+
+        [TestMethod]
+        public void ToPaged_Passing_Page_Beyond_The_End_Returns_Empty()
+        {
+            var fakeListActual = fakeListExpected.AsQueryable().ToPaged("Age", true, index: 3, size: 2).ToList();
+
+            Assert.AreEqual(0, fakeListActual.Count);
+        }
+
+        [DataTestMethod]
+        [DataRow(0, 20)]
+        [DataRow(1, 0)]
+        [DataRow(-1, 20)]
+        public void ToPaged_Passing_Invalid_Index_Or_Size_Throws(int index, int size)
+        {
+            Assert.ThrowsException<Kitpymes.Core.Shared.Util.SharedException>(() => fakeListExpected.AsQueryable().ToPaged("Age", true, index, size).ToList());
+        }
+
         #endregion ToPaged
     }
 }

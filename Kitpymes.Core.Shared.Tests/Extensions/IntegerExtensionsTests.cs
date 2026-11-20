@@ -9,7 +9,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
     {
         enum FakeEnumeration { a, b, c = 234 }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(0)]
         [DataRow(1)]
         [DataRow(-1)]

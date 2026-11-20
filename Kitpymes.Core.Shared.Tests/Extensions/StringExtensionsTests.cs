@@ -13,7 +13,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
     {
         #region ToRemove
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(" *", " ", "*")]
         [DataRow("* ", " ", "*")]
         [DataRow(" * ", " ", "*")]
@@ -38,7 +38,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
 
         #region ToReplace
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("aeiou", "*", 0, 1, "*eiou")]
         [DataRow("aeiou", "*", 0, 2, "**iou")]
         [DataRow("aeiou", "*", 0, 3, "***ou")]
@@ -58,7 +58,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             Assert.AreEqual(valueExpected, valueActual);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("àáäâãøçħ", "aaaaaoch")]
         [DataRow(" àáäâ ãøçħ ", " aaaa aoch ")]
         [DataRow("*¨^_:-?¿;", "")]
@@ -77,7 +77,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
 
         #region ToNormalize
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(" ", "")]
         [DataRow("àáäâãøçħ", "aaaaaoch")]
         [DataRow(" àáäâ ãøçħ ", "aaaa aoch")]
@@ -178,7 +178,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
 
         #region ToFirstLetter
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("aeiou", "Aeiou")]
         [DataRow("aEIOU", "AEIOU")]
         [DataRow("aeioU", "AeioU")]
@@ -191,7 +191,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             Assert.AreEqual(valueExpected, valueActual);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("aeiou", "aeiou")]
         [DataRow("aEIOU", "aEIOU")]
         [DataRow("aeioU", "aeioU")]
@@ -208,7 +208,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
 
         #region ToEmailMask
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("qaz@gmail.com", "q*z@gmail.com")]
         [DataRow("qazwsx@gmail.com", "q****x@gmail.com")]
         [DataRow("qazwsxedc@gmail.com", "q*******c@gmail.com")]
@@ -222,7 +222,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             Assert.AreEqual(valueExpected, valueActual);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("qaz@gmail.com", "q*z@g***l.com")]
         [DataRow("qazwsx@gmail.com", "q****x@g***l.com")]
         [DataRow("qazwsxedc@gmail.com", "q*******c@g***l.com")]
@@ -236,7 +236,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             Assert.AreEqual(valueExpected, valueActual);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("qaz@gmail.com", "q*z@g***l.c*m")]
         [DataRow("qazwsx@gmail.com", "q****x@g***l.c*m")]
         [DataRow("qazwsxedc@gmail.com", "q*******c@g***l.c*m")]
@@ -250,7 +250,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             Assert.AreEqual(valueExpected, valueActual);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("qaz@gmail.com", "q-z@g----.com")]
         [DataRow("qazwsx@gmail.com", "q----x@g----.com")]
         [DataRow("qazwsxedc@gmail.com", "q-------c@g----.com")]
@@ -271,7 +271,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
 
         #region ToUri
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("http://foo.com/blah_blah")]
         [DataRow("http://foo.com/blah_blah/")]
         [DataRow("http://foo.com/blah_blah/p=5")]
@@ -327,13 +327,12 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             Assert.AreEqual(valueExpected, result?.OriginalString);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("http://?")]
         [DataRow("http://")]
         [DataRow("http://.")]
         [DataRow("http://..")]
         [DataRow("http://../")]
-        [DataRow("http://?")]
         [DataRow("http://??")]
         [DataRow("http://??/")]
         [DataRow("http://#")]
@@ -348,13 +347,12 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             Assert.AreEqual(valueExpected, valueActual);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("http://?")]
         [DataRow("http://")]
         [DataRow("http://.")]
         [DataRow("http://..")]
         [DataRow("http://../")]
-        [DataRow("http://?")]
         [DataRow("http://??")]
         [DataRow("http://??/")]
         [DataRow("http://#")]
@@ -375,7 +373,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
 
         #region ToHashAlgorithmName
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("MD5")]
         public void ToHashAlgorithmName_Passing_ValidValueString_Returns_HashAlgorithmName(string value)
         {
@@ -386,7 +384,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             Assert.AreEqual(valueExpected, valueActual);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("md5")]
         public void ToHashAlgorithmName_Passing_InvalidValueLowerCaseString_Returns_Null(string value)
         {
@@ -397,7 +395,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             Assert.AreEqual(valueExpected, valueActual);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("md5")]
         public void ToHashAlgorithmName_Passing_InvalidValueLowerCaseStringWithDefaultValue_Returns_DefaultValue(string value)
         {
@@ -408,7 +406,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             Assert.AreEqual(valueExpected, valueActual);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("hhhhhh")]
         public void ToHashAlgorithmName_Passing_InvalidValueString_Returns_Null(string value)
         {
@@ -419,7 +417,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             Assert.AreEqual(valueExpected, valueActual);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("hhhhhh")]
         public void ToHashAlgorithmName_Passing_InvalidValueStringWithDefaultValue_Returns_DefaultValue(string value)
         {
@@ -434,7 +432,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
 
         #region ToInt
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("1234567890")]
         public void ToInt_Passing_ValidValueString_Returns_Int(string value)
         {
@@ -445,7 +443,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             Assert.AreEqual(valueExpected, valueActual);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("1.3333")]
         [DataRow("1,3333")]
         [DataRow("1.333,39")]
@@ -460,7 +458,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             Assert.AreEqual(valueExpected, valueActual);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("1.3333")]
         [DataRow("1,3333")]
         [DataRow("1.333,39")]
@@ -561,7 +559,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
 
         #region ToContentType
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("xxxx.pdf", MediaTypeNames.Application.Pdf)]
         [DataRow("xxxx.json", MediaTypeNames.Application.Json)]
         [DataRow("xxxx.gif", MediaTypeNames.Image.Gif)]
@@ -575,16 +573,16 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             Assert.AreEqual(valueExpected, valueActual);
         }
 
-        [DataRow("xxxx.x", MediaTypeNames.Text.Plain, MediaTypeNames.Application.Pdf)]
-        [DataRow("xxxx.x", MediaTypeNames.Text.Plain, MediaTypeNames.Application.Pdf)]
-        [DataRow("xxxx.x", MediaTypeNames.Text.Plain, MediaTypeNames.Application.Pdf)]
-        [DataRow("xxxx.x", MediaTypeNames.Text.Plain, MediaTypeNames.Application.Pdf)]
-        [DataRow("xxxx.x", MediaTypeNames.Text.Plain, MediaTypeNames.Application.Pdf)]
-        public void ToContentType_Passing_InvalidValueString_Returns_DefaultContentType(string value, string valueExpected, string defaultValue)
+        // Este test no tenía [TestMethod] y nunca se ejecutaba; además esperaba Text.Plain cuando el valor por defecto era Pdf.
+        [TestMethod]
+        [DataRow("xxxx.zz9", MediaTypeNames.Application.Pdf)]
+        [DataRow("xxxx", MediaTypeNames.Text.Plain)]
+        [DataRow("xxxx.extensionquenoexiste", MediaTypeNames.Application.Octet)]
+        public void ToContentType_Passing_InvalidValueString_Returns_DefaultContentType(string value, string defaultValue)
         {
             var valueActual = value.ToContentType(defaultValue);
 
-            Assert.AreEqual(valueExpected, valueActual);
+            Assert.AreEqual(defaultValue, valueActual);
         }
 
         #endregion ToContentType

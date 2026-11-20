@@ -9,7 +9,7 @@ namespace Kitpymes.Core.Shared.Tests.Util
     {
         #region CreateRandom
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(5)]
         [DataRow(10)]
         [DataRow(20)]
@@ -20,7 +20,7 @@ namespace Kitpymes.Core.Shared.Tests.Util
             Assert.IsTrue(hash.Length == length);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(8, "ae")]
         [DataRow(5, "aeiou123456")]
         [DataRow(10, "7890ABFLFLFFL")]
@@ -36,16 +36,16 @@ namespace Kitpymes.Core.Shared.Tests.Util
 
         #region SHA256
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(null)]
         [DataRow("")]
         [DataRow(" ")]
         public void CreateSHA256_Passing_Invalid_Arguments_Returns_SharedException(string text)
         {
-            Assert.ThrowsException<SharedException>(() => Shared.Util.Hash.CreateSHA256(text));
+            Assert.ThrowsExactly<SharedException>(() => Shared.Util.Hash.CreateSHA256(text));
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("Password")]
         [DataRow(nameof(HashTests))]
         [DataRow("sdlfkjldsfksdfñl·%$·&$/U&/)(&()?=)¿?^P*^PÑL,.,.lñ´ñ+98098'098098")]
@@ -62,16 +62,16 @@ namespace Kitpymes.Core.Shared.Tests.Util
 
         #region SHA512
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(null)]
         [DataRow("")]
         [DataRow(" ")]
         public void CreateSHA512_Passing_Invalid_Arguments_Returns_SharedException(string text)
         {
-            Assert.ThrowsException<SharedException>(() => Hash.CreateSHA512(text));
+            Assert.ThrowsExactly<SharedException>(() => Hash.CreateSHA512(text));
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("Password")]
         [DataRow(nameof(HashTests))]
         [DataRow("sdlfkjldsfksdfñl·%$·&$/U&/)(&()?=)¿?^P*^PÑL,.,.lñ´ñ+98098'098098")]

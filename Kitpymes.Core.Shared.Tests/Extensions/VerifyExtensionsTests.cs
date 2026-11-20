@@ -31,7 +31,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             var paramName = nameof(parameter);
             var valueExpected = Messages.NullOrEmpty(paramName);
 
-            var result = Assert.ThrowsException<SharedException>(() => parameter.ToThrowIfNullOrEmpty(paramName));
+            var result = Assert.ThrowsExactly<SharedException>(() => parameter.ToThrowIfNullOrEmpty(paramName));
 
             Assert.AreEqual(valueExpected, result.Message);
         }
@@ -40,7 +40,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
 
         #region NullOrEmptyCollection
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(null)]
         [DataRow(new string[0])]
         [DataRow("")]
@@ -83,7 +83,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             var paramName = nameof(parameter);
             var valueExpected = Messages.NullOrAny(paramName);
 
-            var result = Assert.ThrowsException<SharedException>(() => parameter.ToThrowIfNullOrEmptyCollection(paramName));
+            var result = Assert.ThrowsExactly<SharedException>(() => parameter.ToThrowIfNullOrEmptyCollection(paramName));
 
             Assert.AreEqual(valueExpected, result.Message);
         }
@@ -96,7 +96,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
 
             Assert.IsTrue(parameter.ToIsNullOrAny());
             Assert.IsFalse(new[] { "a" }.ToIsNullOrAny());
-            Assert.ThrowsException<SharedException>(() => parameter.ToThrowIfNullOrAny());
+            Assert.ThrowsExactly<SharedException>(() => parameter.ToThrowIfNullOrAny());
         }
 #pragma warning restore KPY0001
 
@@ -104,7 +104,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
 
         #region Range
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(-2)]
         [DataRow(-1)]
         [DataRow(0)]
@@ -119,12 +119,12 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             var paramName = nameof(value);
             var valueExpected = Messages.OutRange(min, max, paramName);
 
-            var result = Assert.ThrowsException<SharedException>(() => value.ToThrowIfOutRange(min, max, paramName));
+            var result = Assert.ThrowsExactly<SharedException>(() => value.ToThrowIfOutRange(min, max, paramName));
 
             Assert.AreEqual(valueExpected, result.Message);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(2)]
         [DataRow(3)]
         [DataRow(4)]
@@ -136,12 +136,12 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             var paramName = nameof(value);
             var valueExpected = Messages.InsideRange(min, max, paramName);
 
-            var result = Assert.ThrowsException<SharedException>(() => value.ToThrowIfInsideRange(min, max, paramName));
+            var result = Assert.ThrowsExactly<SharedException>(() => value.ToThrowIfInsideRange(min, max, paramName));
 
             Assert.AreEqual(valueExpected, result.Message);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(1)]
         [DataRow(2)]
         [DataRow(3)]
@@ -155,7 +155,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             var paramName = nameof(value);
             var valueExpected = Messages.InsideOrEqualRange(min, max, paramName);
 
-            var result = Assert.ThrowsException<SharedException>(() => value.ToThrowIfInsideOrEqualRange(min, max));
+            var result = Assert.ThrowsExactly<SharedException>(() => value.ToThrowIfInsideOrEqualRange(min, max));
 
             Assert.AreEqual(valueExpected, result.Message);
         }
@@ -171,7 +171,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             var paramName = Guid.NewGuid().ToString();
             var valueExpected = Messages.Directory(parameter, paramName);
 
-            var result = Assert.ThrowsException<SharedException>(() => parameter.ToThrowIfDirectoryNotExists(paramName));
+            var result = Assert.ThrowsExactly<SharedException>(() => parameter.ToThrowIfDirectoryNotExists(paramName));
 
             Assert.AreEqual(valueExpected, result.Message);
         }
@@ -187,7 +187,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             var paramName = nameof(parameter);
             var valueExpected = Messages.File(parameter, paramName);
 
-            var result = Assert.ThrowsException<SharedException>(() => parameter.ToThrowIfFileNotExists(paramName));
+            var result = Assert.ThrowsExactly<SharedException>(() => parameter.ToThrowIfFileNotExists(paramName));
 
             Assert.AreEqual(valueExpected, result.Message);
         }
@@ -203,7 +203,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             var paramName = nameof(parameter);
             var valueExpected = Messages.FileExtension(parameter, paramName);
 
-            var result = Assert.ThrowsException<SharedException>(() => parameter.ToThrowIfNotFileExtension(paramName));
+            var result = Assert.ThrowsExactly<SharedException>(() => parameter.ToThrowIfNotFileExtension(paramName));
 
             Assert.AreEqual(valueExpected, result.Message);
         }
@@ -212,7 +212,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
 
         #region Email
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("dasdasd@dsasd.._ff")]
         [DataRow("34fsds@@sdd.f")]
         [DataRow("")]
@@ -220,14 +220,14 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
         [DataRow("34?fsds@sdd.yy")]
         public void ThrowIfNotEmail_Passing_InvalidValue_Returns_SharedExceptionWithMessage(string? value)
         {
-            Assert.ThrowsException<SharedException>(() => value.ToThrowIfNotEmail(nameof(value)));
+            Assert.ThrowsExactly<SharedException>(() => value.ToThrowIfNotEmail(nameof(value)));
         }
 
         #endregion Email
 
         #region Subdomain
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("dasdasd@dsasd.._ff")]
         [DataRow("34fsds@@sdd.f")]
         [DataRow("")]
@@ -239,7 +239,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             var paramName = nameof(parameter);
             var valueExpected = Messages.InvalidFormat(paramName);
 
-            var result = Assert.ThrowsException<SharedException>(() => value.ToThrowIfNotSubdomain(paramName));
+            var result = Assert.ThrowsExactly<SharedException>(() => value.ToThrowIfNotSubdomain(paramName));
 
             Assert.AreEqual(valueExpected, result.Message);
         }
@@ -255,7 +255,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             var paramName = nameof(parameter);
             var valueExpected = Messages.InvalidFormat(paramName);
 
-            var result = Assert.ThrowsException<SharedException>(() => parameter.ToThrowIfNotName(paramName));
+            var result = Assert.ThrowsExactly<SharedException>(() => parameter.ToThrowIfNotName(paramName));
 
             Assert.AreEqual(valueExpected, result.Message);
         }
@@ -294,7 +294,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             // Patrón con retroceso exponencial: sin tiempo límite, este texto deja el proceso colgado.
             var text = new string('a', 40) + "!";
 
-            Assert.ThrowsException<System.Text.RegularExpressions.RegexMatchTimeoutException>(() => text.ToIsRegexMatch("^(a|aa)+$"));
+            Assert.ThrowsExactly<System.Text.RegularExpressions.RegexMatchTimeoutException>(() => text.ToIsRegexMatch("^(a|aa)+$"));
         }
     }
 }

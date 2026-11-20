@@ -134,13 +134,13 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             Assert.AreEqual(0, fakeListActual.Count);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(0, 20)]
         [DataRow(1, 0)]
         [DataRow(-1, 20)]
         public void ToPaged_Passing_Invalid_Index_Or_Size_Throws(int index, int size)
         {
-            Assert.ThrowsException<Kitpymes.Core.Shared.Util.SharedException>(() => fakeListExpected.AsQueryable().ToPaged("Age", true, index, size).ToList());
+            Assert.ThrowsExactly<Kitpymes.Core.Shared.Util.SharedException>(() => fakeListExpected.AsQueryable().ToPaged("Age", true, index, size).ToList());
         }
 
         [TestMethod]

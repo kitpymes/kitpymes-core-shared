@@ -94,7 +94,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             var services = new ServiceCollection();
             var application = new ApplicationBuilder(services.BuildServiceProvider());
 
-            Assert.ThrowsException<SharedException>(application.ToRequiredEnvironment<IHostEnvironment>);
+            Assert.ThrowsExactly<SharedException>(application.ToRequiredEnvironment<IHostEnvironment>);
         }
 
         [TestMethod]
@@ -104,7 +104,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             var services = new ServiceCollection();
             var application = new ApplicationBuilder(services.BuildServiceProvider());
 
-            Assert.ThrowsException<SharedException>(application.ToRequiredEnvironment<IWebHostEnvironment>);
+            Assert.ThrowsExactly<SharedException>(application.ToRequiredEnvironment<IWebHostEnvironment>);
         }
 
         [TestMethod]
@@ -251,7 +251,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             ApplicationBuilder? application = null;
 
 #pragma warning disable CS8604 // Posible argumento de referencia nulo
-            var exceptionActual = Assert.ThrowsException<SharedException>(() => application.ToRequiredService<IWebHostEnvironment>());
+            var exceptionActual = Assert.ThrowsExactly<SharedException>(() => application.ToRequiredService<IWebHostEnvironment>());
 #pragma warning restore CS8604 // Posible argumento de referencia nulo
 
             Assert.IsNotNull(exceptionActual);
@@ -263,7 +263,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             var services = new ServiceCollection();
             var application = new ApplicationBuilder(services.BuildServiceProvider());
 
-            var exceptionActual = Assert.ThrowsException<SharedException>(() => application.ToRequiredService<IWebHostEnvironment>());
+            var exceptionActual = Assert.ThrowsExactly<SharedException>(() => application.ToRequiredService<IWebHostEnvironment>());
 
             Assert.IsNotNull(exceptionActual);
         }

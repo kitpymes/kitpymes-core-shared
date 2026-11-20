@@ -1,5 +1,5 @@
 ﻿// -----------------------------------------------------------------------
-// <copyright file="Environment.cs" company="Kitpymes">
+// <copyright file="Environment.Obsolete.cs" company="Kitpymes">
 // Copyright (c) Kitpymes. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project docs folder for full license information.
 // </copyright>
@@ -19,6 +19,8 @@ namespace Kitpymes.Core.Shared.Util;
 /// <remarks>
 /// <para>En este enum se pueden agregar todos los tipos de ambientes del Environment.</para>
 /// </remarks>
+[System.Obsolete("Usa AppEnvironment. Se elimina en 3.0.0.", DiagnosticId = "KPY0002")]
+[System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
 public class Environment
 {
     /// <summary>
@@ -65,6 +67,12 @@ public class Environment
     /// </summary>
     /// <returns>{Name}.</returns>
     public override string ToString() => Name;
+
+    /// <summary>
+    /// Convierte al ambiente equivalente de <see cref="AppEnvironment"/>.
+    /// </summary>
+    /// <returns>El ambiente equivalente.</returns>
+    internal AppEnvironment ToAppEnvironment() => AppEnvironment.FromName(Name) ?? throw new System.InvalidOperationException(Name);
 
     /// <summary>
     /// Inicializa una nueva instancia de la clase <see cref="Environment"/>.

@@ -18,7 +18,6 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Scrutor;
-using Environment = Util.Environment;
 
 /*
   Clase de extensión ServiceCollectionExtensions
@@ -32,7 +31,7 @@ using Environment = Util.Environment;
 /// <remarks>
 /// <para>En esta clase se pueden agregar todas las extensiones para la colección  de descriptores de los servicios.</para>
 /// </remarks>
-public static class ServiceCollectionExtensions
+public static partial class ServiceCollectionExtensions
 {
     #region ToEnvironment
 
@@ -97,7 +96,7 @@ public static class ServiceCollectionExtensions
     /// <param name="services">Define un mecanismo para recuperar un objeto del proveedor de servicios.</param>
     /// <returns>true | false.</returns>
     public static bool ToIsDevelopment(this IServiceCollection services)
-    => services.ToIsEnviroment(Environment.Development);
+    => services.ToIsEnvironment(AppEnvironment.Development);
 
     /// <summary>
     /// Obtiene un valor que indica si la aplicación se esta ejecutando en un ambiente de Testing.
@@ -105,7 +104,7 @@ public static class ServiceCollectionExtensions
     /// <param name="services">Define un mecanismo para recuperar un objeto del proveedor de servicios.</param>
     /// <returns>true | false.</returns>
     public static bool ToIsTesting(this IServiceCollection services)
-    => services.ToIsEnviroment(Environment.Testing);
+    => services.ToIsEnvironment(AppEnvironment.Testing);
 
     /// <summary>
     /// Obtiene un valor que indica si la aplicación se esta ejecutando en un ambiente de Staging.
@@ -113,7 +112,7 @@ public static class ServiceCollectionExtensions
     /// <param name="services">Define un mecanismo para recuperar un objeto del proveedor de servicios.</param>
     /// <returns>true | false.</returns>
     public static bool ToIsStaging(this IServiceCollection services)
-    => services.ToIsEnviroment(Environment.Staging);
+    => services.ToIsEnvironment(AppEnvironment.Staging);
 
     /// <summary>
     /// Obtiene un valor que indica si la aplicación se esta ejecutando en un ambiente de Production.
@@ -121,7 +120,7 @@ public static class ServiceCollectionExtensions
     /// <param name="services">Define un mecanismo para recuperar un objeto del proveedor de servicios.</param>
     /// <returns>true | false.</returns>
     public static bool ToIsProduction(this IServiceCollection services)
-    => services.ToIsEnviroment(Environment.Production);
+    => services.ToIsEnvironment(AppEnvironment.Production);
 
     /// <summary>
     /// Obtiene un valor que indica si la aplicación se esta ejecutando en un ambiente de producción.
@@ -129,7 +128,7 @@ public static class ServiceCollectionExtensions
     /// <param name="services">Define un mecanismo para recuperar un objeto del proveedor de servicios.</param>
     /// <param name="environment">Tipo de ambiente de ejecución.</param>
     /// <returns>true | false.</returns>
-    public static bool ToIsEnviroment(this IServiceCollection services, Environment environment)
+    public static bool ToIsEnvironment(this IServiceCollection services, AppEnvironment environment)
     => services.ToHostEnvironment()?.EnvironmentName == environment.Name
         || services.ToWebHostEnvironment()?.EnvironmentName == environment.Name;
 
@@ -196,7 +195,7 @@ public static class ServiceCollectionExtensions
     /// <param name="services">Define un mecanismo para recuperar un objeto del proveedor de servicios.</param>
     /// <returns>true | false.</returns>
     public static bool ToIsDevelopment(this IServiceProvider services)
-    => services.ToIsEnviroment(Environment.Development);
+    => services.ToIsEnvironment(AppEnvironment.Development);
 
     /// <summary>
     /// Obtiene un valor que indica si la aplicación se esta ejecutando en un ambiente de Testing.
@@ -204,7 +203,7 @@ public static class ServiceCollectionExtensions
     /// <param name="services">Define un mecanismo para recuperar un objeto del proveedor de servicios.</param>
     /// <returns>true | false.</returns>
     public static bool ToIsTesting(this IServiceProvider services)
-    => services.ToIsEnviroment(Environment.Testing);
+    => services.ToIsEnvironment(AppEnvironment.Testing);
 
     /// <summary>
     /// Obtiene un valor que indica si la aplicación se esta ejecutando en un ambiente de Staging.
@@ -212,7 +211,7 @@ public static class ServiceCollectionExtensions
     /// <param name="services">Define un mecanismo para recuperar un objeto del proveedor de servicios.</param>
     /// <returns>true | false.</returns>
     public static bool ToIsStaging(this IServiceProvider services)
-    => services.ToIsEnviroment(Environment.Staging);
+    => services.ToIsEnvironment(AppEnvironment.Staging);
 
     /// <summary>
     /// Obtiene un valor que indica si la aplicación se esta ejecutando en un ambiente de Production.
@@ -220,7 +219,7 @@ public static class ServiceCollectionExtensions
     /// <param name="services">Define un mecanismo para recuperar un objeto del proveedor de servicios.</param>
     /// <returns>true | false.</returns>
     public static bool ToIsProduction(this IServiceProvider services)
-    => services.ToIsEnviroment(Environment.Production);
+    => services.ToIsEnvironment(AppEnvironment.Production);
 
     /// <summary>
     /// Obtiene un valor que indica si la aplicación se esta ejecutando en un ambiente de producción.
@@ -228,7 +227,7 @@ public static class ServiceCollectionExtensions
     /// <param name="services">Define un mecanismo para recuperar un objeto del proveedor de servicios.</param>
     /// <param name="environment">Tipo de ambiente de ejecución.</param>
     /// <returns>true | false.</returns>
-    public static bool ToIsEnviroment(this IServiceProvider services, Environment environment)
+    public static bool ToIsEnvironment(this IServiceProvider services, AppEnvironment environment)
     => services.ToHostEnvironment()?.EnvironmentName == environment.Name
         || services.ToWebHostEnvironment()?.EnvironmentName == environment.Name;
 

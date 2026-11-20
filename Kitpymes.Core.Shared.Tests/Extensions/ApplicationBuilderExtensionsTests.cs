@@ -110,7 +110,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
         [TestMethod]
         public void ToIsDevelopment_Passing_IHostEnvironment_With_Valid_EnviromentName_Returns_True()
         {
-            var services = new ServiceCollection().FakeAddHostEnvironment(x => x.EnvironmentName = Shared.Util.Environment.Development.ToString());
+            var services = new ServiceCollection().FakeAddHostEnvironment(x => x.EnvironmentName = Shared.Util.AppEnvironment.Development.ToString());
             var application = new ApplicationBuilder(services.BuildServiceProvider());
 
             var result = application.ToIsDevelopment();
@@ -132,7 +132,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
         [TestMethod]
         public void ToIsDevelopment_Passing_IWebHostEnvironment_With_Valid_EnviromentName_Returns_True()
         {
-            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = Shared.Util.Environment.Development.ToString());
+            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = Shared.Util.AppEnvironment.Development.ToString());
             var application = new ApplicationBuilder(services.BuildServiceProvider());
 
             var result = application.ToIsDevelopment();
@@ -154,7 +154,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
         [TestMethod]
         public void ToIsEnviroment_Passing_IWebHostEnvironment_With_Valid_EnviromentName_Returns_True()
         {
-            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = Shared.Util.Environment.Development.ToString());
+            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = Shared.Util.AppEnvironment.Development.ToString());
             var application = new ApplicationBuilder(services.BuildServiceProvider());
 
             var result = application.ToIsDevelopment();

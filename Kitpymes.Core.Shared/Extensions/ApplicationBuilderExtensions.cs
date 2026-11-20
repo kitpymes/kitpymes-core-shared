@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using Environment = Util.Environment;
 
 /*
     Clase de extensión ApplicationBuilderExtensions
@@ -27,7 +26,7 @@ using Environment = Util.Environment;
 /// <remarks>
 /// <para>En esta clase se pueden agregar todas las extensiones para de la aplicación.</para>
 /// </remarks>
-public static class ApplicationBuilderExtensions
+public static partial class ApplicationBuilderExtensions
 {
     #region ToEnvironment
 
@@ -90,7 +89,7 @@ public static class ApplicationBuilderExtensions
     /// <param name="application">Extensión de la configurarción de la solicitud de una aplicación.</param>
     /// <returns>true | false.</returns>
     public static bool ToIsDevelopment(this IApplicationBuilder application)
-    => application.ToIsEnviroment(Environment.Development);
+    => application.ToIsEnvironment(AppEnvironment.Development);
 
     /// <summary>
     /// Obtiene un valor que indica si la aplicación se esta ejecutando en un ambiente de Testing.
@@ -98,7 +97,7 @@ public static class ApplicationBuilderExtensions
     /// <param name="application">Extensión de la configurarción de la solicitud de una aplicación.</param>
     /// <returns>true | false.</returns>
     public static bool ToIsTesting(this IApplicationBuilder application)
-    => application.ToIsEnviroment(Environment.Testing);
+    => application.ToIsEnvironment(AppEnvironment.Testing);
 
     /// <summary>
     /// Obtiene un valor que indica si la aplicación se esta ejecutando en un ambiente de Staging.
@@ -106,7 +105,7 @@ public static class ApplicationBuilderExtensions
     /// <param name="application">Extensión de la configurarción de la solicitud de una aplicación.</param>
     /// <returns>true | false.</returns>
     public static bool ToIsStaging(this IApplicationBuilder application)
-    => application.ToIsEnviroment(Environment.Staging);
+    => application.ToIsEnvironment(AppEnvironment.Staging);
 
     /// <summary>
     /// Obtiene un valor que indica si la aplicación se esta ejecutando en un ambiente de Production.
@@ -114,7 +113,7 @@ public static class ApplicationBuilderExtensions
     /// <param name="application">Extensión de la configurarción de la solicitud de una aplicación.</param>
     /// <returns>true | false.</returns>
     public static bool ToIsProduction(this IApplicationBuilder application)
-    => application.ToIsEnviroment(Environment.Production);
+    => application.ToIsEnvironment(AppEnvironment.Production);
 
     /// <summary>
     /// Obtiene un valor que indica si la aplicación se esta ejecutando en un ambiente de producción.
@@ -122,7 +121,7 @@ public static class ApplicationBuilderExtensions
     /// <param name="application">Extensión de la configurarción de la solicitud de una aplicación.</param>
     /// <param name="environment">Tipo de ambiente de ejecución.</param>
     /// <returns>true | false.</returns>
-    public static bool ToIsEnviroment(this IApplicationBuilder application, Environment environment)
+    public static bool ToIsEnvironment(this IApplicationBuilder application, AppEnvironment environment)
     => application.ToHostEnvironment()?.EnvironmentName == environment.Name ||
         application.ToWebHostEnvironment()?.EnvironmentName == environment.Name;
 

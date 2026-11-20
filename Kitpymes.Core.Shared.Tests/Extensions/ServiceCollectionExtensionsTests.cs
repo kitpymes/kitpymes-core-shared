@@ -105,12 +105,44 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
         [TestMethod]
         public void ToIsDevelopment_Passing_IHostEnvironment_With_Valid_EnviromentName_Returns_True()
         {
-            var services = new ServiceCollection().FakeAddHostEnvironment(x => x.EnvironmentName = Shared.Util.Environment.Development.ToString());
+            var services = new ServiceCollection().FakeAddHostEnvironment(x => x.EnvironmentName = Shared.Util.AppEnvironment.Development.ToString());
 
             var result = services.ToIsDevelopment();
 
             Assert.IsTrue(result);
         }
+
+        [DataTestMethod]
+        [DataRow("Development")]
+        [DataRow("Staging")]
+        [DataRow("Production")]
+        public void ToIsEnvironment_Passing_Matching_AppEnvironment_Returns_True(string name)
+        {
+            var services = new ServiceCollection().FakeAddHostEnvironment(x => x.EnvironmentName = name);
+
+            Assert.IsTrue(services.ToIsEnvironment(AppEnvironment.FromName(name)!));
+            Assert.IsTrue(services.BuildServiceProvider().ToIsEnvironment(AppEnvironment.FromName(name)!));
+        }
+
+        [TestMethod]
+        public void AppEnvironment_FromName_Ignores_Case_And_Returns_Null_When_Unknown()
+        {
+            Assert.AreSame(AppEnvironment.Production, AppEnvironment.FromName("production"));
+            Assert.IsNull(AppEnvironment.FromName("Otro"));
+            Assert.AreEqual(4, AppEnvironment.All.Length);
+        }
+
+#pragma warning disable KPY0002 // Se prueba que los métodos obsoletos siguen funcionando igual.
+        [TestMethod]
+        public void Obsolete_ToIsEnviroment_Still_Works()
+        {
+            var services = new ServiceCollection().FakeAddHostEnvironment(x => x.EnvironmentName = "Staging");
+
+            Assert.IsTrue(services.ToIsEnviroment(Shared.Util.Environment.Staging));
+            Assert.IsFalse(services.ToIsEnviroment(Shared.Util.Environment.Production));
+            Assert.IsTrue(services.BuildServiceProvider().ToIsEnviroment(Shared.Util.Environment.Staging));
+        }
+#pragma warning restore KPY0002
 
         [TestMethod]
         public void ToIsDevelopment_Passing_IHostEnvironment_With_Invalid_EnviromentName_Returns_False()
@@ -125,7 +157,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
         [TestMethod]
         public void ToIsDevelopment_Passing_IWebHostEnvironment_With_Valid_EnviromentName_Returns_True()
         {
-            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = Shared.Util.Environment.Development.ToString());
+            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = Shared.Util.AppEnvironment.Development.ToString());
 
             var result = services.ToIsDevelopment();
 
@@ -145,7 +177,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
         [TestMethod]
         public void ToIsEnviroment_Passing_IWebHostEnvironment_With_Valid_EnviromentName_Returns_True()
         {
-            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = Shared.Util.Environment.Development.ToString());
+            var services = new ServiceCollection().FakeAddWebHostEnvironment(x => x.EnvironmentName = Shared.Util.AppEnvironment.Development.ToString());
 
             var result = services.ToIsDevelopment();
 

@@ -1,3 +1,18 @@
+# v.2.1.0
+Versión menor: añade y corrige sin romper. Lo que se sustituye queda como obsoleto y se elimina en la 3.0.0.
+
+## Nuevo
+- ToIsNullOrEmptyCollection y ToThrowIfNullOrEmptyCollection: comprueban si una colección es nula o no tiene elementos (sólo leen el primero). Con un IQueryable lanzan la consulta.
+- AppEnvironment (Development, Testing, Staging, Production, FromName y All) y ToIsEnvironment para IApplicationBuilder, IServiceCollection e IServiceProvider.
+
+## Obsoleto (avisa al compilar; se elimina en la 3.0.0)
+- KPY0001: ToIsNullOrAny y ToThrowIfNullOrAny. Usar ToIsNullOrEmptyCollection y ToThrowIfNullOrEmptyCollection (el nombre antiguo decía lo contrario de lo que hacía).
+- KPY0002: la clase Environment y ToIsEnviroment. Usar AppEnvironment y ToIsEnvironment (Environment chocaba con System.Environment).
+
+## Corregido
+- ToPaged con ordenación fallaba con una tabla vacía y lanzaba una consulta extra a la base de datos.
+- README: requisitos con C# 14.
+
 # v.2.0.1
 Versión de corrección: no cambia la API pública.
 

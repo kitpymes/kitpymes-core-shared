@@ -20,12 +20,15 @@ namespace Kitpymes.Core.Shared.Tests.Fakes
         {
             var options = action.ToConfigureOrDefault();
 
+            // WebHost está obsoleto en .NET 10, pero estos tests prueban extensiones de IWebHostBuilder.
+#pragma warning disable ASPDEPR008
             var host = WebHost.CreateDefaultBuilder()
                 .UseStartup<TStartup>()
                 .UseEnvironment(options.EnvironmentName)
                 .ConfigureAppConfiguration((context, config) =>
                 {
                     var configPath = Path.Combine(options.DirectoryPath, options.JsonFile);
+#pragma warning restore ASPDEPR008
 
                     config.AddJsonFile(configPath, true);
                 });

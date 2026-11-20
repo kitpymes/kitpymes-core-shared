@@ -170,7 +170,7 @@ public static class ClaimsPrincipalExtensions
 
         var values = claimsPrincipal?.FindAll(claimType);
 
-        if (!values.ToIsNullOrAny())
+        if (!values.ToIsNullOrEmptyCollection())
         {
             var result = values.Select(x => x.Value.ToDeserialize<TResult>());
 

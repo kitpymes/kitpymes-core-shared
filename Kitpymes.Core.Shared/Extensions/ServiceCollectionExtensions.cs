@@ -317,7 +317,7 @@ public static class ServiceCollectionExtensions
         Assembly[] assemblies,
         ServiceLifetime lifetime = ServiceLifetime.Transient)
     {
-        assemblies.ToThrowIfNullOrAny();
+        assemblies.ToThrowIfNullOrEmptyCollection();
 
         services.Scan(scan => scan
            .FromAssemblies(assemblies)
@@ -356,7 +356,7 @@ public static class ServiceCollectionExtensions
         Assembly[] assemblies,
         ServiceLifetime lifetime = ServiceLifetime.Transient)
     {
-        assemblies.ToThrowIfNullOrAny();
+        assemblies.ToThrowIfNullOrEmptyCollection();
 
         services.Scan(scan => scan
             .FromAssemblies(assemblies)
@@ -382,7 +382,7 @@ public static class ServiceCollectionExtensions
         Assembly[] assemblies,
         ServiceLifetime lifetime = ServiceLifetime.Transient)
     {
-        assemblies.ToThrowIfNullOrAny();
+        assemblies.ToThrowIfNullOrEmptyCollection();
 
         services.Scan(scan => scan
             .FromAssemblies(assemblies)
@@ -468,7 +468,7 @@ public static class ServiceCollectionExtensions
         params (string jsonFileName, bool optional, bool reloadOnChange)[] files)
     {
         directoryPath.ToThrowIfDirectoryNotExists();
-        files.ToThrowIfNullOrAny();
+        files.ToThrowIfNullOrEmptyCollection();
 
         var configurationBuilder = new ConfigurationBuilder()
               .SetBasePath(directoryPath)
@@ -491,7 +491,7 @@ public static class ServiceCollectionExtensions
         this IServiceCollection services,
         params (string key, string? value)[] configuration)
     {
-        configuration.ToThrowIfNullOrAny();
+        configuration.ToThrowIfNullOrEmptyCollection();
 
         var list = new Dictionary<string, string?>();
 

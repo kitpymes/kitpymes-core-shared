@@ -2,6 +2,8 @@
 using Kitpymes.Core.Shared.Util;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection.Metadata;
 
 namespace Kitpymes.Core.Shared.Tests.Extensions
@@ -36,32 +38,69 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
 
         #endregion NullOrEmpty
 
-        #region NullOrAny
+        #region NullOrEmptyCollection
 
-        [TestMethod]
-        public void IsNullOrAny_Passing_InvalidValue_Returns_True()
+        [DataTestMethod]
+        [DataRow(null)]
+        [DataRow(new string[0])]
+        [DataRow("")]
+        [DataRow("   ")]
+        public void ToIsNullOrEmptyCollection_Passing_Null_Or_Empty_Returns_True(object? parameter)
         {
-            string[] parameter = [];
-            var valueExpected = true;
-
-            var valueActual = parameter.ToIsNullOrAny();
-
-            Assert.AreEqual(valueExpected, valueActual);
+            Assert.IsTrue(((System.Collections.IEnumerable?)parameter).ToIsNullOrEmptyCollection());
         }
 
         [TestMethod]
-        public void ThrowIfNullOrAny_Passing_InvalidValue_Returns_SharedExceptionWithMessage()
+        public void ToIsNullOrEmptyCollection_Passing_Items_Returns_False()
+        {
+            Assert.IsFalse(new[] { "a" }.ToIsNullOrEmptyCollection());
+            Assert.IsFalse(new List<int> { 1 }.ToIsNullOrEmptyCollection());
+            Assert.IsFalse("a".ToIsNullOrEmptyCollection());
+        }
+
+        [TestMethod]
+        public void ToIsNullOrEmptyCollection_Passing_Lazy_Sequence_Reads_Only_First_Item()
+        {
+            var read = 0;
+            IEnumerable<int> Sequence()
+            {
+                for (var i = 0; i < 10; i++)
+                {
+                    read++;
+                    yield return i;
+                }
+            }
+
+            Assert.IsFalse(Sequence().ToIsNullOrEmptyCollection());
+            Assert.AreEqual(1, read);
+            Assert.IsTrue(Enumerable.Empty<int>().Where(x => x > 0).ToIsNullOrEmptyCollection());
+        }
+
+        [TestMethod]
+        public void ToThrowIfNullOrEmptyCollection_Passing_Empty_Returns_SharedExceptionWithMessage()
         {
             string[] parameter = [];
             var paramName = nameof(parameter);
             var valueExpected = Messages.NullOrAny(paramName);
 
-            var result = Assert.ThrowsException<SharedException>(() => parameter.ToThrowIfNullOrAny(paramName));
+            var result = Assert.ThrowsException<SharedException>(() => parameter.ToThrowIfNullOrEmptyCollection(paramName));
 
             Assert.AreEqual(valueExpected, result.Message);
         }
 
-        #endregion NullOrAny
+#pragma warning disable KPY0001 // Se prueba que los métodos obsoletos siguen funcionando igual.
+        [TestMethod]
+        public void Obsolete_NullOrAny_Methods_Still_Work()
+        {
+            string[] parameter = [];
+
+            Assert.IsTrue(parameter.ToIsNullOrAny());
+            Assert.IsFalse(new[] { "a" }.ToIsNullOrAny());
+            Assert.ThrowsException<SharedException>(() => parameter.ToThrowIfNullOrAny());
+        }
+#pragma warning restore KPY0001
+
+        #endregion NullOrEmptyCollection
 
         #region Range
 

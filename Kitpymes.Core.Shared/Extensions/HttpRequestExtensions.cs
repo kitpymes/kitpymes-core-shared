@@ -40,7 +40,7 @@ public static class HttpRequestExtensions
 
         values = httpRequest.ToHeader(key);
 
-        var result = !values.ToIsNullOrAny();
+        var result = !values.ToIsNullOrEmptyCollection();
 
         return result;
     }
@@ -59,7 +59,7 @@ public static class HttpRequestExtensions
         {
             var result = httpRequest.Headers[key];
 
-            if (!result.ToIsNullOrAny())
+            if (!result.ToIsNullOrEmptyCollection())
             {
                 return result.AsReadOnly();
             }

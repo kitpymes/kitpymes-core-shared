@@ -29,7 +29,7 @@ using Kitpymes.Core.Shared.Util;
 /// <remarks>
 /// <para>En esta clase se pueden agregar todas las extensiones para las validaciones.</para>
 /// </remarks>
-public static class VerifyExtensions
+public static partial class VerifyExtensions
 {
     #region NullOrEmpty
 
@@ -57,42 +57,56 @@ public static class VerifyExtensions
 
     #endregion NullOrEmpty
 
-    #region NullOrAny
+    #region NullOrEmptyCollection
 
     /// <summary>
-    /// Verifica si una colección es nula o no contiene items.
+    /// Verifica si una colección es nula o no tiene elementos. Un texto vacío o sólo con espacios cuenta como vacío.
     /// </summary>
-    /// <param name="argument">Argumento a verificar.</param>
-    /// <returns>true | false.</returns>
-    public static bool ToIsNullOrAny([NotNullWhen(false)] this IEnumerable? argument)
+    /// <remarks>
+    /// Con un <see cref="System.Linq.IQueryable"/> (por ejemplo de Entity Framework) lanza la consulta para saber si tiene elementos.
+    /// Si sólo importa que no sea nula, usar <c>is null</c>.
+    /// </remarks>
+    /// <param name="argument">Colección a verificar.</param>
+    /// <returns>true si es nula o no tiene elementos; si no, false.</returns>
+    public static bool ToIsNullOrEmptyCollection([NotNullWhen(false)] this IEnumerable? argument)
     {
-        if (argument is null)
-        {
-            return true;
-        }
-
         switch (argument)
         {
-            case string s when s.ToIsNullOrEmpty() || s.Length < 1:
-            case Array a when a.Length < 1:
-            case ICollection c when c.Count < 1:
+            case null:
                 return true;
-            default:
-                return argument.Cast<object>()?.Any() == false;
+            case string text:
+                return string.IsNullOrWhiteSpace(text);
+            case ICollection collection:
+                return collection.Count == 0;
+        }
+
+        var enumerator = argument.GetEnumerator();
+
+        try
+        {
+            return !enumerator.MoveNext();
+        }
+        finally
+        {
+            (enumerator as IDisposable)?.Dispose();
         }
     }
 
     /// <summary>
-    /// Verifica si un argumento es nulo o no contiene valores.
+    /// Lanza una excepción si una colección es nula o no tiene elementos.
     /// </summary>
-    /// <exception cref="SharedException">Si un argumento es nulo o no contiene valores.</exception>
-    /// <param name="argument">Argumento a verificar.</param>
+    /// <remarks>
+    /// Con un <see cref="System.Linq.IQueryable"/> lanza la consulta para saber si tiene elementos.
+    /// </remarks>
+    /// <exception cref="SharedException">Si la colección es nula o no tiene elementos.</exception>
+    /// <typeparam name="TArgument">Tipo de los elementos.</typeparam>
+    /// <param name="argument">Colección a verificar.</param>
     /// <param name="argumentName">Nombre del argumento.</param>
-    /// <returns>argument | SharedException.</returns>
-    public static IEnumerable<TArgument> ToThrowIfNullOrAny<TArgument>([NotNull] this IEnumerable<TArgument>? argument, [CallerArgumentExpression(nameof(argument))] string? argumentName = null)
-        => argument.ToThrowIf(Messages.NullOrAny(argumentName), () => argument.ToIsNullOrAny());
+    /// <returns>La misma colección.</returns>
+    public static IEnumerable<TArgument> ToThrowIfNullOrEmptyCollection<TArgument>([NotNull] this IEnumerable<TArgument>? argument, [CallerArgumentExpression(nameof(argument))] string? argumentName = null)
+        => argument.ToThrowIf(Messages.NullOrAny(argumentName), () => argument.ToIsNullOrEmptyCollection());
 
-    #endregion NullOrAny
+    #endregion NullOrEmptyCollection
 
     #region Greater
 

@@ -60,7 +60,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             Assert.AreEqual(valueExpected, valueActual);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(int.MaxValue)]
         public void ToDefaultValue_Passing_int_Returns_Cero(int value)
         {
@@ -83,7 +83,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             Assert.AreEqual(valueExpected, valueActual);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(long.MaxValue)]
         public void ToDefaultValue_Passing_long_Returns_Cero(long value)
         {
@@ -122,7 +122,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             Assert.AreEqual(valueExpected, valueActual);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(double.MaxValue)]
         public void ToDefaultValue_Passing_double_Returns_Cero(double value)
         {
@@ -146,7 +146,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
 
         #endregion FloatingPointTypeNumbers
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow(true)]
         public void ToDefaultValue_Passing_bool_Returns_Cero(bool value)
         {

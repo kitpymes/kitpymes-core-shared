@@ -90,7 +90,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             var fakeEnvironmentExpected = new FakeHostEnvironment { };
             var services = new ServiceCollection();
 
-            Assert.ThrowsException<SharedException>(services.ToRequiredEnvironment<IHostEnvironment>);
+            Assert.ThrowsExactly<SharedException>(services.ToRequiredEnvironment<IHostEnvironment>);
         }
 
         [TestMethod]
@@ -99,7 +99,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             var fakeEnvironmentExpected = new FakeWebHostEnvironment { };
             var services = new ServiceCollection();
 
-            Assert.ThrowsException<SharedException>(services.ToRequiredEnvironment<IWebHostEnvironment>);
+            Assert.ThrowsExactly<SharedException>(services.ToRequiredEnvironment<IWebHostEnvironment>);
         }
 
         [TestMethod]
@@ -112,7 +112,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             Assert.IsTrue(result);
         }
 
-        [DataTestMethod]
+        [TestMethod]
         [DataRow("Development")]
         [DataRow("Staging")]
         [DataRow("Production")]
@@ -257,7 +257,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
 
             var services = new ServiceCollection();
 
-            var exceptionActual = Assert.ThrowsException<SharedException>
+            var exceptionActual = Assert.ThrowsExactly<SharedException>
             (
                 () => services.ToServiceMatchingInterface(assemblies)
             );
@@ -300,7 +300,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
 
             var services = new ServiceCollection();
 
-            var exceptionActual = Assert.ThrowsException<SharedException>
+            var exceptionActual = Assert.ThrowsExactly<SharedException>
             (
                 () => services.ToServiceMatchingClass(typeof(FakeLoggerService), assemblies)
             );
@@ -344,7 +344,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             var expectedMessage = Messages.Directory(directoryPath, nameof(directoryPath));
 
             var services = new ServiceCollection();
-            var exceptionActual = Assert.ThrowsException<SharedException>
+            var exceptionActual = Assert.ThrowsExactly<SharedException>
             (
                 () => services.ToConfiguration(directoryPath, (jsonFileName, false, true))
             );
@@ -360,7 +360,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             var expectedMessage = Messages.Directory(directoryPath, nameof(directoryPath));
 
             var services = new ServiceCollection();
-            var exceptionActual = Assert.ThrowsException<SharedException>
+            var exceptionActual = Assert.ThrowsExactly<SharedException>
             (
                 () => services.ToConfiguration(directoryPath, (jsonFileName, false, true))
             );
@@ -376,7 +376,7 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             var expectedMessage = Messages.File($"{directoryPath}/{jsonFileName}.json", "filePath");
 
             var services = new ServiceCollection();
-            var exceptionActual = Assert.ThrowsException<SharedException>
+            var exceptionActual = Assert.ThrowsExactly<SharedException>
             (
                 () => services.ToConfiguration(directoryPath, (jsonFileName, false, true))
             );

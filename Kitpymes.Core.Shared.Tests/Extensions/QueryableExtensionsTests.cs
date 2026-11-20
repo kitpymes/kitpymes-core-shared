@@ -143,6 +143,32 @@ namespace Kitpymes.Core.Shared.Tests.Extensions
             Assert.ThrowsException<Kitpymes.Core.Shared.Util.SharedException>(() => fakeListExpected.AsQueryable().ToPaged("Age", true, index, size).ToList());
         }
 
+        [TestMethod]
+        public void ToPaged_Passing_Empty_List_With_Order_Returns_Empty()
+        {
+            var fakeListActual = new List<FakeUser>().AsQueryable().ToPaged("Age", true).ToList();
+
+            Assert.AreEqual(0, fakeListActual.Count);
+        }
+
+        [TestMethod]
+        public void ToPaged_With_Order_Does_Not_Run_The_Query()
+        {
+            // Construir la consulta no debe recorrer el origen: contra una base de datos sería una consulta extra.
+            var source = new NotEnumerable<FakeUser>().AsQueryable();
+
+            var query = source.ToPaged("Age", true);
+
+            Assert.IsNotNull(query);
+        }
+
+        private sealed class NotEnumerable<T> : IEnumerable<T>
+        {
+            public IEnumerator<T> GetEnumerator() => throw new InvalidOperationException("Se ha recorrido el origen.");
+
+            System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
+        }
+
         #endregion ToPaged
     }
 }

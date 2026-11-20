@@ -104,7 +104,8 @@ public static class QueryableExtensions
         string properties,
         bool ascending)
     {
-        queryable.ToThrowIfNullOrAny();
+        // Sólo se comprueba null: comprobar si tiene elementos lanzaría la consulta y fallaría con una lista vacía.
+        queryable.ToThrowIfNullOrEmpty();
         properties.ToThrowIfNullOrEmpty();
 
         var propertiesOrder = properties.Split('.');

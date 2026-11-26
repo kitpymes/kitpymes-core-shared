@@ -37,7 +37,7 @@ jobs:
       - name: Comprobar las notas de la versión
         run: |
           p=$(git ls-files '*.csproj' | grep -vi test | head -n 1)
-          version=$(dotnet msbuild "$p" -getProperty:Version -p:Configuration=Release)
+          version=$(dotnet msbuild "$p" -getProperty:Version -p:Configuration=Release -p:SolutionDir="$PWD/")
           comprobar() { [ "$(head -n 1 "$1" | tr -d '\r')" = "# v.$version" ]; }
           if ! comprobar docs/RELEASE_NOTES.txt; then
             echo "::error::docs/RELEASE_NOTES.txt tiene que empezar por '# v.$version' (sin BOM). Empieza por: $(head -n 1 docs/RELEASE_NOTES.txt | od -c | head -n 2)"
